@@ -1,0 +1,15 @@
+[0] Config.pm:312> INFO - This is Biber 2.15
+[0] Config.pm:315> INFO - Logfile is 'Relazione_individuale.blg'
+[49] biber:330> INFO - === Mon Oct 26, 2020, 16:47:50
+[58] Biber.pm:415> INFO - Reading 'Relazione_individuale.bcf'
+[100] Biber.pm:952> INFO - Found 1 citekeys in bib section 0
+[109] Biber.pm:4334> INFO - Processing section 0
+[116] Biber.pm:4523> INFO - Looking for bibtex format file '/home/giorgio/Documents/bibliography.bib' for section 0
+[116] bibtex.pm:1682> INFO - LaTeX decoding ...
+[117] bibtex.pm:1494> INFO - Found BibTeX data source '/home/giorgio/Documents/bibliography.bib'
+[135] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[135] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[135] Biber.pm:4162> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
+[135] Biber.pm:4168> INFO - No sort tailoring available for locale 'en-US'
+[136] bbl.pm:651> INFO - Writing 'Relazione_individuale.bbl' with encoding 'UTF-8'
+[137] bbl.pm:754> INFO - Output to Relazione_individuale.bbl

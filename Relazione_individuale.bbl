@@ -1,0 +1,49 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{example}{book}{}
+      \name{author}{1}{}{%
+        {{hash=d4c25c7a36b2fb5b0cb61bfa74e4cef8}{%
+           family={Higashikata},
+           familyi={H\bibinitperiod},
+           given={Josuke},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Speedwagon Foundation}%
+      }
+      \strng{namehash}{d4c25c7a36b2fb5b0cb61bfa74e4cef8}
+      \strng{fullhash}{d4c25c7a36b2fb5b0cb61bfa74e4cef8}
+      \strng{bibnamehash}{d4c25c7a36b2fb5b0cb61bfa74e4cef8}
+      \strng{authorbibnamehash}{d4c25c7a36b2fb5b0cb61bfa74e4cef8}
+      \strng{authornamehash}{d4c25c7a36b2fb5b0cb61bfa74e4cef8}
+      \strng{authorfullhash}{d4c25c7a36b2fb5b0cb61bfa74e4cef8}
+      \field{sortinit}{H}
+      \field{sortinithash}{6db6145dae8dc9e1271a8d556090b50a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{How to be a Stand User}
+      \field{year}{2018}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
