@@ -173,9 +173,13 @@ grid on
 %% AGGIUNGERE LA PARTE RELATIVA ALLA FAMIGLIA DI VELIVOLI!!!!! %%
 
 %% Matching Chart
+clear all 
+clc
+close all
+
 rho0 = 1.225;                         % [kg/m^3]
 T0 = 288;                             % [K]
-z = 12500;                            % [m]
+z = 12000;                            % [m]
 h = -0.0065;                          % [K/m]
 rho = rho0*((T0+h*z)/T0)^4.2561;      % [kg/m^3]
 
@@ -186,7 +190,7 @@ rho = rho0*((T0+h*z)/T0)^4.2561;      % [kg/m^3]
 % preso un valore simile a quello dell'a350-900 pari a V_approccio = 140 kts e
 % quello dell'a350-1000 = 147 kts
 
-v_approach = 145*0.514444;            % [m/s]
+v_approach = 140*0.514444;            % [m/s]
 v_stallo = v_approach/1.3;            % [m/s]
 
 % Si è controllato come la massa che avrebbe il velivolo al landing,
@@ -197,45 +201,77 @@ v_stallo = v_approach/1.3;            % [m/s]
 % Dal Raymer si è ricavato che valori tipici per il cl_max di un jet
 % transport stanno tra 2.2 e 3.2 quindi noi scegliamo un valore pari a 3
 
+% si utilizza dal Raymer il valore della rho al take off ovvero rho0 =
+% 1.225 kg/m^3
+
 cl_max = 3;
+
+W_S = 0.5*rho0*(v_stallo^2)*cl_max/9.81;
 
 figure()
 hold on
-xline(0.5*rho*v_stallo^2*cl_max,'b','Linewidth',1.5)
-xlabel('W/S')
+xline(W_S,'b','Linewidth',1.5)
+xlabel('W/S [kg/m^2]')
 ylabel('T/W')
-title('Matching Chart')
+title('Matching Chart') 
 grid on
 
- % Passo 2 -> Requisiti di cruise %
+% Passo 2 -> Requisiti di cruise 
+
+% Attenzione che in questo caso per rendere adimensionale la T/W si
+% moltiplica la W/S che sul grafico è considerata in kg/m^2 per la
+% accelerazione di gravità considerata come 9.81
+
 v = 0.85*sqrt(1.4*287*(-50+273.15));
 v_max = 1.25*v;
-cd0 = 0.0175;
-AR = 9.5;
+cd0 = 0.015;
+AR = 12;
 e = 0.921;
 K = 1/(pi*e*AR);
 sigma = rho/rho0;
 
-x2 = linspace(1000,2000);
-y2 = @(x) rho0*cd0*(v_max^2)./(2*x)+2*K*x./(rho*sigma*(v_max^2))
+x2 = linspace(0,700);            % [kg/m^2]
 
-plot(x2,y2(x2))
+y2 = @(x) rho0*cd0*(v_max^2)./(2*9.81*x)+2*9.81*K*x./(rho*sigma*(v_max^2))
+
+plot(x2,y2(x2),'LineWidth',1.5)
+
+y2(W_S)
 
 % Passo 3 -> Take Off distance %
-TOP = 500;
-y3 = @(x) x./(TOP*rho0*(cl_max/1.21));
-plot(x2,y3(x2))
+
+% la ground roll distance considerata è di 888 [m] ovvero circa 3000 [ft],
+% ma la over 50 ft distance è maggiore e considerata come 888*1.7 [m] a cui
+% corrisponde un valore di TOP pari a circa 230 [lbs/(ft^2)]
+% e inoltre si considera un valore di clto pari a cl_max/1.21 come
+% suggerito dal Roskam a pag 107
+
+TOP = 230*0.45/(0.3048^2);           % [kg/m^2]
+cl_to = cl_max/1.21;                
+
+y3 = @(x) (x)./(TOP*cl_to);
+
+plot(x2,y3(x2),'LineWidth',1.5)
+axis([0 700 0 1])
+
+Efficienza_max = 20;
 
 % Passo 4 %
-
+cd0_to = 0.075+0.02;
 ROC = 3000*0.00508;     % [m/s]
-y4 = @(x) ROC./sqrt(2*x./(rho0*sqrt(cd0/K)))+1/Efficienza_max;
-plot(x2,y4(x2))
+y4 = @(x) ROC./sqrt(2*9.81*x./(rho0*sqrt(cd0_to/K)))+1/Efficienza_max;
+plot(x2,y4(x2),'LineWidth',1.5)
+
 
 % Passo 5 %
-yline(1/Efficienza_max)
+yline(1/Efficienza_max,'LineWidth',1.5)
 
-legend('STALLO','CRUISE','TOP','ROC','CEILING')
+% Punto di design
+plot(W_S,y4(W_S),'*r','LineWidth',2)
+
+legend('STALLO','CRUISE','TOP','ROC','CEILING','Design Point','Location','best')
+
+
 
 
 
