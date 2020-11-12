@@ -1,6 +1,8 @@
 \documentclass{article}
 \usepackage[backend=biber]{biblatex}
-\addbibresource{Sources/bibliography.bib}
+\usepackage{graphicx}
+\usepackage[]{hyperref}
+\addbibresource{bibliography.bib}
 \author{Giorgio De Trane s275514}
 \title{ASSIGNMENTS}
 
@@ -16,25 +18,43 @@ Please, while listing the requirements, refer to the categories
 reported in Sect.1.4
 \newline
 \newline
-\textbf{\textit{List of Requirements}}
+\textbf{\textit{List of Requirements}}\\\\ (Mainly based on Airbus A350-900 \autocite*{Airbus_A350-900})
+\\ 
 
+\textbf{Deisgn and Performance}
 \begin{itemize}
-    \item Item 1
-    \item Item 2
-    \item Item 3
-    \item Item 4
-    \item \dots
-    \item Item N
-    \begin{itemize}
-        \item SubItem 1 
-        \item SubItem 2
-        \item \dots
-        \item Subitem M
-    
-    \end{itemize}
-    \item Item N+1
+    \item Number of pilots: 2
+    \item Cruise Mach: 1.25
+    \item Max Operating Speed Mach: 0.9
+    \item Cabin Crew: 8 (2 for each emergency exit)
+    \item Number of passengers: 440
+    \item Wing Span: under 70 m
+    \item Fuselage Length: under 75 m
+    \item Range: over 16000 km
+    \item Height: under 18 m
+    \item Wing Surface: 450 m²
+    \item Max Payload: over 50 metric tonnes
+    \item Number of engines: 2
 \end{itemize}
-
+\pagebreak
+\textbf{Operational requirements}
+\begin{itemize}
+    \item Cruise altitude: 10 - 13 [km]
+    \item Turn around time: under 60 mins
+    \item Takeoff distance: under 1 km
+    \item Landing distance: under 2.5 km
+    \item Rate of climb: 3000 ft/min (Initial climb)
+    \item Ceiling: 13.15 km (FL431)
+\end{itemize}
+\textbf{Analysis of applicable regulations}
+\begin{itemize}
+    \item Number of exits: 8
+    \item External noise (a terra a 5km di distanza) decollo: under 90 dB
+    \item External noise (a terra a 5km di distanza) atterraggio: under 95 dB
+    \item N max in condizioni operative: 2.5
+    \item N min in condizioni operative: -1
+\end{itemize}
+\pagebreak
 \section{Assignment 1.2}
 \textbf{Assignment}: On the basis of the list of Requirements elicited
 in the previous step, identify a good list of reference aircraft and
@@ -51,11 +71,9 @@ mathematical models (e.g. updates of coefficients).
 case study}. Apply the original or improved statistical trends to
 perform the first guess data estimation for the reference case
 study. Please, report all iterations needed to convergence to the
-design maximum take-off mass. An example of iterations is
-reported into [1], pages 43-52.
-\newline 
+design maximum take-off mass.
+\pagebreak
 
-As \textcite{example} says, this is a book
 \printbibliography
     
 \end{document}
