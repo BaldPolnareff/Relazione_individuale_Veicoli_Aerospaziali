@@ -71,7 +71,7 @@ mcrew=8*85; %[kg]  massa media  di 85 kg
 % e un range medio pari a 11000 [km], considerando che diminuendo in parte
 % il payload si possono raggiungere range più lunghi (vedi dopo)
 
-mpayload=55*10^3; %[kg] 
+mpayload=50*10^3; %[kg] 
 mto=@(x) x-(mcrew+mpayload)/(1-1.06*(1-COEFF)-a_new*(x^b_new));
 mto_design=fzero(mto,mTO);
 display(mto_design)
@@ -164,18 +164,62 @@ range4 = -log((1-massa_max_avgas/mto4)/(0.97*0.985*0.985*0.995))*v*Efficienza_ma
 ypr = [mpayload ; mpayload ; mpayload3 ; mpayload4];
 xpr = [0 ; R ; range3 ; range4]*10^(-3);
 figure()
+hold on
 plot(xpr,ypr,'r')
 xlabel('range [km]')
 ylabel('payload [kg]')
 title('Grafico Payload - Range')
 grid on
+hold on
 
-%% AGGIUNGERE LA PARTE RELATIVA ALLA FAMIGLIA DI VELIVOLI!!!!! %%
+% si è considerato per calcolare il diagramma della famiglia di velivoli un
+% a variazione della MTOW pari al 0.88*mto_design per il velivolo a più
+% alto range, con un payload più piccolo di 5e+3 kg (si è considerata la variazione percentuale della famiglia del 
+% 737 presente nelle slide) e una variazione per il velivolo a più alto 
+% payload di MTOW pari a 1.077*mto_design con un payload maggiore di 5e+3
+% kg -> il procedimento seguito è sempre lo stesso. Si è variato anche il
+% range del punto 2 ponendolo +- 500000 m
+
+mpayload1 = 50e+3;
+mto_design1 = mto_design*0.88;
+R1 = 11500000;
+mpayload3 = mto_design1*(1-massa_max_avgas/mto_design1-a_new*(mto_design1^b_new))-mcrew;
+range3= -log((1-massa_max_avgas/mto_design1)/(0.97*0.985*0.985*0.995))*v*Efficienza_max/SFC1;
+m_empty = (a_new*mto_design1^b_new)*mto_design1;
+mpayload4 = 0;
+mto4 = massa_max_avgas + m_empty; 
+range4 = -log((1-massa_max_avgas/mto4)/(0.97*0.985*0.985*0.995))*v*Efficienza_max/SFC1;
+ypr = [mpayload1 ; mpayload1 ; mpayload3 ; mpayload4];
+xpr = [0 ; R1 ; range3 ; range4]*10^(-3);
+plot(xpr,ypr,'b')
+xlabel('range [km]')
+ylabel('payload [kg]')
+title('Grafico Payload - Range')
+grid on
+
+mpayload2 = 60e+3;
+R2 = 10500000;
+mto_design2 = mto_design*1.077;
+mpayload3 = mto_design2*(1-massa_max_avgas/mto_design2-a_new*(mto_design2^b_new))-mcrew;
+range3= -log((1-massa_max_avgas/mto_design2)/(0.97*0.985*0.985*0.995))*v*Efficienza_max/SFC1;
+m_empty = (a_new*mto_design2^b_new)*mto_design2;
+mpayload4 = 0;
+mto4 = massa_max_avgas + m_empty; 
+range4 = -log((1-massa_max_avgas/mto4)/(0.97*0.985*0.985*0.995))*v*Efficienza_max/SFC1;
+ypr = [mpayload2 ; mpayload2 ; mpayload3 ; mpayload4];
+xpr = [0 ; R2 ; range3 ; range4]*10^(-3);
+plot(xpr,ypr,'g')
+xlabel('range [km]')
+ylabel('payload [kg]')
+title('Grafico Payload - Range')
+grid on
+axis([0 2.5e+4 0 6.5e+4])
+legend('MTOW = 304685 [kg]','MTOW = 268123 [kg]','MTOW = 328146 [kg]','Location','best')
+
+
 
 %% Matching Chart
-clear all 
-clc
-close all
+
 
 rho0 = 1.225;                         % [kg/m^3]
 T0 = 288;                             % [K]
@@ -190,7 +234,7 @@ rho = rho0*((T0+h*z)/T0)^4.2561;      % [kg/m^3]
 % preso un valore simile a quello dell'a350-900 pari a V_approccio = 140 kts e
 % quello dell'a350-1000 = 147 kts
 
-v_approach = 140*0.514444;            % [m/s]
+v_approach = 145*0.514444;            % [m/s]
 v_stallo = v_approach/1.3;            % [m/s]
 
 % Si è controllato come la massa che avrebbe il velivolo al landing,
@@ -204,7 +248,7 @@ v_stallo = v_approach/1.3;            % [m/s]
 % si utilizza dal Raymer il valore della rho al take off ovvero rho0 =
 % 1.225 kg/m^3
 
-cl_max = 3;
+cl_max = 2.8;
 
 W_S = 0.5*rho0*(v_stallo^2)*cl_max/9.81;
 
@@ -225,7 +269,7 @@ grid on
 v = 0.85*sqrt(1.4*287*(-50+273.15));
 v_max = 1.25*v;
 cd0 = 0.015;
-AR = 12;
+AR = 9.5;
 e = 0.921;
 K = 1/(pi*e*AR);
 sigma = rho/rho0;
@@ -247,7 +291,8 @@ y2(W_S)
 % suggerito dal Roskam a pag 107
 
 TOP = 230*0.45/(0.3048^2);           % [kg/m^2]
-cl_to = cl_max/1.21;                
+cl_max_to = 2.5;
+cl_to =cl_max_to/1.21;                
 
 y3 = @(x) (x)./(TOP*cl_to);
 
@@ -264,16 +309,35 @@ plot(x2,y4(x2),'LineWidth',1.5)
 
 
 % Passo 5 %
-yline(1/Efficienza_max,'LineWidth',1.5)
+yline(1/(sigma*Efficienza_max),'LineWidth',1.5)
 
 % Punto di design
-plot(W_S,y4(W_S),'*r','LineWidth',2)
+plot(W_S,y3(W_S),'*r','LineWidth',2)
 
 legend('STALLO','CRUISE','TOP','ROC','CEILING','Design Point','Location','best')
+%% PROGETTO ALA
+%Spinta di progetto
+T=y3(W_S)*mto_design*9.81; %[N] è un pò strano, da capire se bisogna suddidividerlo nei motori che si installano [valori tipici 300/360 kN]
+S=mto_design/W_S; %[m^2]
 
+%procedura di studio del profilo alare..
 
+%prendere media fra fine e inizio crociera
 
-
-
-
+m_avg=254.5e+3; %valore presso ad cazzum (NON PIU')
+cl_c=2*m_avg*9.81/(rho*v^2*S);
+k_w=0.95;  %tradizionalmente 95% della spinta verticale
+cl_cw=cl_c/k_w; 
+k_a=0.9;
+cl_i=cl_cw/k_a;
+CL_MAX=2*mto_design*9.81/(rho0*v_stallo^2*S)
+CL_MAXW=CL_MAX/k_w;
+CL_maxgross=CL_MAXW/k_a;
+%considerando la presenza di slat e flap , dal Sadrey abbiamo considerato
+%1.3 il valore degli HLD, per cui si entra con un CL=CLMAXgross-CL_HLD(1.8)=1.47
+%(0.4 slat 0.9 flap) Sadrey pg 236
+%dopo una lunga riflessione siamo giunti alla scelta del profilo: NACA
+%4412!! %cl_i(0.5842) a 1 deg e cl_max(1.67) a 16 deg
+%ASPECT RATIO=9.6 DELTA LEADING EDGE=
+%profili segnalati: GOE 286, goe 596, GOE 682
 
