@@ -67,7 +67,7 @@ coeff=[0.97;0.985;exp(-R*SFC1/(v*Efficienza_max));0.985;0.995];
 COEFF=prod(coeff);
 mcrew=8*85; %[kg]  massa media  di 85 kg 
 
-% si considera come punto di design un valore di payload max pari a 55 [t]
+% si considera come punto di design un valore di payload max pari a 50 [t]
 % e un range medio pari a 11000 [km], considerando che diminuendo in parte
 % il payload si possono raggiungere range più lunghi (vedi dopo)
 
@@ -336,8 +336,79 @@ CL_maxgross=CL_MAXW/k_a;
 %considerando la presenza di slat e flap , dal Sadrey abbiamo considerato
 %1.3 il valore degli HLD, per cui si entra con un CL=CLMAXgross-CL_HLD(1.8)=1.47
 %(0.4 slat 0.9 flap) Sadrey pg 236
-%dopo una lunga riflessione siamo giunti alla scelta del profilo: NACA
-%4412!! %cl_i(0.5842) a 1 deg e cl_max(1.67) a 16 deg
 %ASPECT RATIO=9.6 DELTA LEADING EDGE=
 %profili segnalati: GOE 286, goe 596, GOE 682
+%scelto il GOE 682
+%% Metodo 1
+% Si considera da pagina 53 del Raymer uno Sweep Angle di SW = 30° 
+S = 490;                                              % [m^2]
+AR = 9.5;
+b = sqrt(AR*S);                                       % [m]
+Sw_ang = 29;                                          % [deg]
+Sw_ang_te = 18;                                       % [deg]
+Gamma = 5;                                            % [deg]
+b_med = b/2;                                          % [m]
+Corda_mag = (S/(b_med) + b_med*(tand(Sw_ang)-tand(Sw_ang_te)))/2;       % [m]
+Corda_min = Corda_mag - b_med*(tand(Sw_ang)-tand(Sw_ang_te));           % [m]
+TR = Corda_min/Corda_mag
+y1 = Corda_mag - b_med*tand(Sw_ang);
+y2 = y1 - Corda_min;
+figure()
+plot([0 b_med],[0 y2])
+hold on
+plot([0 b_med],[Corda_mag y1])
+plot([0 0],[0 Corda_mag])
+plot([b_med b_med],[y2 y1])
+grid on
+xlabel('asse y')
+ylabel('asse x')
+%% ES4
+%pag 376 Sadraey
+n_business=26; %posti in business
+n_fc=48; %posti in first class
+n_ec=315; %posti in economy (9 a fila)
+W_pax_ec=n_ec*(82+23+14) %pag 376 SAdraey (massa raccomandata per ogni pax)
+W_pax_oth=(n_fc+n_business)*(82+32+14) %per first class e business
+%VALUTARE SE ABBASSARE A 45t DI PAYLOAD
+%scelta 1 configurazione 1-2-1 business 2-2-2 first class e 3-3-3 per la
+%economy
+wa_bn=70e-2; %[m] larghezza corridoio
+wa_fc=60e-2; %[m]
+wa_ec=50e-2; %[m]
+ps_ec=72e-2; %[m]             %lunghezza tra sedile e l'altro (spazio fra due file (NO RYANAIR))
+ps_fc=92e-2; %[m]
+ps_bn=104e-2; %[m]
+ws_ec=46e-2; %[m] %larghezza sedili
+ws_fc=60e-2; %[m]
+ws_bn=75e-2;%[m]
+%BUSINESS
+w_bn=4*ws_bn+2*wa_bn; 
+l_bn=n_business/4*ps_bn;
+%FIRST CLASS
+w_fc=6*ws_fc+2*wa_fc;
+l_fc=n_fc/6*ps_fc;
+%ECONOMY
+w_ec=9*ws_ec+2*wa_ec;
+l_ec=n_ec/9*ps_ec;
+% Lunghezza del Nose
+l_nose = 1.5*(w_ec + 2*0.102);
+% portelloni -> dalla CS-25.807 Amendment 3 Book 1 a pag 80 si è ricavatp
+% il numero di portelloni totale: 2 do tipa A (1.07 [m] larghezza, 1.83
+% [m])mentre 2 di tipo 1 (larghezza di 0.61 [m] e altezza di 1.22 [m])
+l_portelloni = 4*1.07;    %[m]
+% dal Raymer pag 297 pdf si è ricavato un numeor totale di bagni pari a 10 ma
+% organizzati in modo tale che stiano in 4 m di lunghezza sommata
+l_bath = 4;
+% coda
+l_coda = l_nose +1;
+% lunghezza totale
+l_tot = l_bn + l_fc + l_ec +l_nose + l_portelloni + l_bath + l_coda
+
+
+
+
+
+
+
+
 
