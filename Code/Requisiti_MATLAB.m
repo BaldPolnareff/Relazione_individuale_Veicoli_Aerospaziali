@@ -16,7 +16,7 @@ xlabel('Takeoff Weight [kg]')
 ylabel('Empty weight fraction')
 grid on
 
-%% Miglioramento con dati più aggiornati formula del Rymer
+%% Miglioramento con dati piï¿½ aggiornati formula del Rymer
 n=length(x1);
 A1=[ones(n,1) log(x1)];
 c=A1\log(y1);
@@ -54,7 +54,7 @@ legend('Trend equation','B-787','A350','A330 Neo-900','B777-300','B777 X-900','B
 % ylim([0.4,0.7]);
 
 %% Studio preliminare
-%velocità usata TAS, quota 10000 metri perchè condizione peggiore del
+%velocitï¿½ usata TAS, quota 10000 metri perchï¿½ condizione peggiore del
 %requisito, Mach 0.85
 
 v=0.85*sqrt(1.4*287*(-50+273.15)); %m/s
@@ -69,7 +69,7 @@ mcrew=8*85; %[kg]  massa media  di 85 kg
 
 % si considera come punto di design un valore di payload max pari a 50 [t]
 % e un range medio pari a 11000 [km], considerando che diminuendo in parte
-% il payload si possono raggiungere range più lunghi (vedi dopo)
+% il payload si possono raggiungere range piï¿½ lunghi (vedi dopo)
 
 mpayload=50*10^3; %[kg] 
 mto=@(x) x-(mcrew+mpayload)/(1-1.06*(1-COEFF)-a_new*(x^b_new));
@@ -93,7 +93,7 @@ xlabel('range [m]')
 ylabel('mTO [kg]')
 grid on
 
-% dato che il grafico da problemi di stabilità intorno ad un valore di
+% dato che il grafico da problemi di stabilitï¿½ intorno ad un valore di
 % 15000 [km] si prova a vedere come si comporta diminuendo il payload e
 % ponendolo a 40 [t]
 
@@ -172,12 +172,12 @@ title('Grafico Payload - Range')
 grid on
 hold on
 
-% si è considerato per calcolare il diagramma della famiglia di velivoli un
-% a variazione della MTOW pari al 0.88*mto_design per il velivolo a più
-% alto range, con un payload più piccolo di 5e+3 kg (si è considerata la variazione percentuale della famiglia del 
-% 737 presente nelle slide) e una variazione per il velivolo a più alto 
+% si ï¿½ considerato per calcolare il diagramma della famiglia di velivoli un
+% a variazione della MTOW pari al 0.88*mto_design per il velivolo a piï¿½
+% alto range, con un payload piï¿½ piccolo di 5e+3 kg (si ï¿½ considerata la variazione percentuale della famiglia del 
+% 737 presente nelle slide) e una variazione per il velivolo a piï¿½ alto 
 % payload di MTOW pari a 1.077*mto_design con un payload maggiore di 5e+3
-% kg -> il procedimento seguito è sempre lo stesso. Si è variato anche il
+% kg -> il procedimento seguito ï¿½ sempre lo stesso. Si ï¿½ variato anche il
 % range del punto 2 ponendolo +- 500000 m
 
 mpayload1 = 50e+3;
@@ -227,22 +227,22 @@ z = 12000;                            % [m]
 h = -0.0065;                          % [K/m]
 rho = rho0*((T0+h*z)/T0)^4.2561;      % [kg/m^3]
 
-% Passo 1 -> Velocità di stallo %
+% Passo 1 -> Velocitï¿½ di stallo %
 
-% il Raymer dice di prendere la velocità di approccio dai velivoli simili
-% in quanto non è presente nelle normative vigenti, allora noi abbiamo
+% il Raymer dice di prendere la velocitï¿½ di approccio dai velivoli simili
+% in quanto non ï¿½ presente nelle normative vigenti, allora noi abbiamo
 % preso un valore simile a quello dell'a350-900 pari a V_approccio = 140 kts e
 % quello dell'a350-1000 = 147 kts
 
 v_approach = 145*0.514444;            % [m/s]
 v_stallo = v_approach/1.3;            % [m/s]
 
-% Si è controllato come la massa che avrebbe il velivolo al landing,
+% Si ï¿½ controllato come la massa che avrebbe il velivolo al landing,
 % consumando il fuel necessario per il range di riferimento (R=11000 [km])
-% veniva 214 [t] che è inlinea con i velivoli di riferimento che erano tra
+% veniva 214 [t] che ï¿½ inlinea con i velivoli di riferimento che erano tra
 % le 205 e 236 [ton]
 
-% Dal Raymer si è ricavato che valori tipici per il cl_max di un jet
+% Dal Raymer si ï¿½ ricavato che valori tipici per il cl_max di un jet
 % transport stanno tra 2.2 e 3.2 quindi noi scegliamo un valore pari a 3
 
 % si utilizza dal Raymer il valore della rho al take off ovvero rho0 =
@@ -254,7 +254,7 @@ W_S = 0.5*rho0*(v_stallo^2)*cl_max/9.81;
 
 figure()
 hold on
-xline(W_S,'b','Linewidth',1.5)
+line("xdata", [W_S, W_S], "ydata", [-1000, 1000], "linewidth", 3)
 xlabel('W/S [kg/m^2]')
 ylabel('T/W')
 title('Matching Chart') 
@@ -263,8 +263,8 @@ grid on
 % Passo 2 -> Requisiti di cruise 
 
 % Attenzione che in questo caso per rendere adimensionale la T/W si
-% moltiplica la W/S che sul grafico è considerata in kg/m^2 per la
-% accelerazione di gravità considerata come 9.81
+% moltiplica la W/S che sul grafico ï¿½ considerata in kg/m^2 per la
+% accelerazione di gravitï¿½ considerata come 9.81
 
 v = 0.85*sqrt(1.4*287*(-50+273.15));
 v_max = 1.25*v;
@@ -284,8 +284,8 @@ y2(W_S)
 
 % Passo 3 -> Take Off distance %
 
-% la ground roll distance considerata è di 888 [m] ovvero circa 3000 [ft],
-% ma la over 50 ft distance è maggiore e considerata come 888*1.7 [m] a cui
+% la ground roll distance considerata ï¿½ di 888 [m] ovvero circa 3000 [ft],
+% ma la over 50 ft distance ï¿½ maggiore e considerata come 888*1.7 [m] a cui
 % corrisponde un valore di TOP pari a circa 230 [lbs/(ft^2)]
 % e inoltre si considera un valore di clto pari a cl_max/1.21 come
 % suggerito dal Roskam a pag 107
@@ -309,7 +309,7 @@ plot(x2,y4(x2),'LineWidth',1.5)
 
 
 % Passo 5 %
-yline(1/(sigma*Efficienza_max),'LineWidth',1.5)
+line("xdata", [-1000, 1000], "ydata", [1/(sigma*Efficienza_max), 1/(sigma*Efficienza_max)], "linewidth", 3)
 
 % Punto di design
 plot(W_S,y3(W_S),'*r','LineWidth',2)
@@ -317,7 +317,7 @@ plot(W_S,y3(W_S),'*r','LineWidth',2)
 legend('STALLO','CRUISE','TOP','ROC','CEILING','Design Point','Location','best')
 %% PROGETTO ALA
 %Spinta di progetto
-T=y3(W_S)*mto_design*9.81; %[N] è un pò strano, da capire se bisogna suddidividerlo nei motori che si installano [valori tipici 300/360 kN]
+T=y3(W_S)*mto_design*9.81; %[N] ï¿½ un pï¿½ strano, da capire se bisogna suddidividerlo nei motori che si installano [valori tipici 300/360 kN]
 S=mto_design/W_S; %[m^2]
 
 %procedura di studio del profilo alare..
@@ -340,7 +340,7 @@ CL_maxgross=CL_MAXW/k_a;
 %profili segnalati: GOE 286, goe 596, GOE 682
 %scelto il GOE 682
 %% Metodo 1
-% Si considera da pagina 53 del Raymer uno Sweep Angle di SW = 30° 
+% Si considera da pagina 53 del Raymer uno Sweep Angle di SW = 30ï¿½ 
 S = 490;                                              % [m^2]
 AR = 9.5;
 b = sqrt(AR*S);                                       % [m]
@@ -392,11 +392,11 @@ w_ec=9*ws_ec+2*wa_ec;
 l_ec=n_ec/9*ps_ec;
 % Lunghezza del Nose
 l_nose = 1.5*(w_ec + 2*0.102);
-% portelloni -> dalla CS-25.807 Amendment 3 Book 1 a pag 80 si è ricavatp
+% portelloni -> dalla CS-25.807 Amendment 3 Book 1 a pag 80 si ï¿½ ricavatp
 % il numero di portelloni totale: 2 do tipa A (1.07 [m] larghezza, 1.83
 % [m])mentre 2 di tipo 1 (larghezza di 0.61 [m] e altezza di 1.22 [m])
 l_portelloni = 4*1.07;    %[m]
-% dal Raymer pag 297 pdf si è ricavato un numeor totale di bagni pari a 10 ma
+% dal Raymer pag 297 pdf si ï¿½ ricavato un numeor totale di bagni pari a 10 ma
 % organizzati in modo tale che stiano in 4 m di lunghezza sommata
 l_bath = 4;
 % coda
