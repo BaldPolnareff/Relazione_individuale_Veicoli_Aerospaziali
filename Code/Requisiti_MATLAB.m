@@ -5,7 +5,7 @@ x = 1e4:1e6;
 A=0.97;
 b=-0.06;
 y_lett = A.*(x.^b);
-MTO = [250000 ; 275000 ; 251000 ; 351535 ; 352000 ; 227940 ; 365000 ; 242000 ;380000 ; 230000 ;	158758 ; 362870 ; 447696 ; 299370 ; 78245 ; 273294  ; 103000]; 
+MTO = [250000 ; 275000 ; 251000 ; 351535 ; 352000 ; 227940 ; 365000 ; 242000 ; 380000 ; 230000 ; 158758 ; 362870 ; 447696 ; 299370 ; 78245 ; 273294  ; 103000]; 
 Me = [135500 ; 142400 ; 137000 ; 167829 ; 181400 ; 119950 ; 177755 ; 109400 ; 174000 ; 120600 ; 86069 ; 182480 ; 220128 ; 160530 ; 41413 ; 128808 ; 58300]; 
 x1 = MTO;
 y1 = Me./MTO;
@@ -403,6 +403,36 @@ l_bath = 4;
 l_coda = l_nose +1;
 % lunghezza totale
 l_tot = l_bn + l_fc + l_ec +l_nose + l_portelloni + l_bath + l_coda
+
+%% Esercitazione 5
+
+% Si sceglie come profilo simmetrico di riferimento il NACA 0012 come
+% riportato sulle slude poichè è simmetrico e non eccessivamente spesso per
+% cui va bene per il piano di coda -> da rivedere con Matteo 
+
+% calcolo corda media aerodinamica tramite una approssimazione presa dal
+% Raymer a pagine 104 del PDF
+MAC = 2/3*Corda_mag*(1+TR+TR^2)/(1+TR);
+% Il valore di Vh è stato preso dalle slide della prof a slide 12 ovvero a
+% pagina 324 del PDF ovvero tabella 6.4 del Sadraey
+Vh = 1.1;
+% l_opt è stato stimato tramite apposite formule proposte dal Sadraey a
+% pagina 324 del PDF prendendo k_c = 1
+k_c = 1.4;
+l_opt = k_c*sqrt(4*MAC*S*Vh/(pi*w_ec));
+S_tail = Vh*MAC*S/l_opt;
+% Si stima l'AR del tail tramite le slide della prof
+AR_tail = 2/3*AR;
+% Il Taper Ratio deve stare tra 0.4 e 0.7
+TR_tail = 0.6;
+% si fa un po' di geometria mantenendo gli angoli di Sweep uguali a quelli
+% dell'ala come consigliato da pagina 339 del Sadraey
+Sweep_tail = 29;
+Sweep_te_tail = 18;
+b_tail = 2*sqrt(S_tail*(1-TR_tail)/((1+TR)*(tand(Sweep_tail)-tand(Sweep_te_tail))));
+c_root_tail = (b_tail/2)*(tand(Sweep_tail)-tand(Sweep_te_tail))/(1-TR_tail);
+c_tip_tail = TR*c_root_tail;
+
 
 
 
