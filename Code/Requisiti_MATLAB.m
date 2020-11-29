@@ -16,7 +16,7 @@ xlabel('Takeoff Weight [kg]')
 ylabel('Empty weight fraction')
 grid on
 
-%% Miglioramento con dati pi� aggiornati formula del Rymer
+%% Miglioramento con dati piú aggiornati formula del Raymer
 n=length(x1);
 A1=[ones(n,1) log(x1)];
 c=A1\log(y1);
@@ -362,6 +362,8 @@ plot([b_med b_med],[y2 y1])
 grid on
 xlabel('asse y')
 ylabel('asse x')
+
+
 %% ES4
 %pag 376 Sadraey
 n_business=26; %posti in business
@@ -404,6 +406,7 @@ l_coda = l_nose +1;
 % lunghezza totale
 l_tot = l_bn + l_fc + l_ec +l_nose + l_portelloni + l_bath + l_coda
 
+
 %% Esercitazione 5
 
 % Si sceglie come profilo simmetrico di riferimento il NACA 0012 come
@@ -424,15 +427,41 @@ S_tail = Vh*MAC*S/l_opt;
 % Si stima l'AR del tail tramite le slide della prof
 AR_tail = 2/3*AR;
 % Il Taper Ratio deve stare tra 0.4 e 0.7
-TR_tail = 0.6;
+TR_tail = 0.45;
 % si fa un po' di geometria mantenendo gli angoli di Sweep uguali a quelli
 % dell'ala come consigliato da pagina 339 del Sadraey
 Sweep_tail = 29;
 Sweep_te_tail = 18;
 b_tail = 2*sqrt(S_tail*(1-TR_tail)/((1+TR)*(tand(Sweep_tail)-tand(Sweep_te_tail))));
-c_root_tail = (b_tail/2)*(tand(Sweep_tail)-tand(Sweep_te_tail))/(1-TR_tail);
-c_tip_tail = TR*c_root_tail;
-
+c_root_tail = (b_tail/2)*(tand(Sweep_tail)-tand(Sweep_te_tail))/(1-TR_tail)
+c_tip_tail = TR*c_root_tail
+%studio aerodinamica profilo coda
+cm0_af=-0.0947; %da airofoiltools GOE682 (CI SERVE PER LA FORMULA SUCCESSIVA)
+alpha_t=1; %angolo incidenza ala (preso a 1)
+cm0_wf=cm0_af*(AR*cosd(Sw_ang)^2)/(AR+2*cosd(Sw_ang))+0.01;
+CL_H=(cm0_wf+cl_c*(0.2))/Vh;  %il delta h è stato preso a pag 330 del Sadraey (valore medio)
+l_h=l_opt-0.2*MAC;
+MAC_t=2/3*c_root_tail*(1+TR_tail+TR_tail^2)/(1+TR_tail);
+Gamma_t=5; %[deg] %come detto dal Sadraey pag 340 si utlilizza come valore iniziale un angolo di diedro pari a quello dell'ala, con iterazioni successive per stabilità e controllo si procede a cambiare i valori
+%per calcolare l'angolo di calettamento del tail si sono utilizzate le
+%formule a pag 310/311 del Sadraey, in particolare si considera una
+%condizione di volo rettilineo uniforme orizzontale in crociera, in cui
+%alfa_f=0 alfa_w=iw=4° alfah=1° eps_0=1° deps/dalfa=0.3
+alfa_h=1;                                           %[deg]
+alfa_f=0;                                           %[deg]
+i_w=4;                                              %[deg]
+alfa_w=i_w+alfa_f;                                  %[deg]
+eps_0=1;                                        
+deps_dalfa=0.3;
+eps=eps_0+deps_dalfa*alfa_w;
+i_h=alfa_h-alfa_f+eps;                              %[deg]
+%% SIZE VERTICAL TAIL
+c_root_rudder=7.79;                                  %[m]
+c_tip_rudder=3.04;                                   %[m]
+TR_rudder=c_tip_rudder/c_root_rudder;
+b_rudder=9.42;                                       %[m]
+S_rudder=(c_root_rudder+c_tip_rudder)*b_rudder/2;    %[m^2]
+%dalla figura pag 319 del Sadraey (vertical tail parameters)
 
 
 
