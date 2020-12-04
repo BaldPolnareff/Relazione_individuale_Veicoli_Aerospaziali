@@ -410,7 +410,7 @@ l_tot = l_bn + l_fc + l_ec +l_nose + l_portelloni + l_bath + l_coda
 %% Esercitazione 5
 
 % Si sceglie come profilo simmetrico di riferimento il NACA 0012 come
-% riportato sulle slude poichè è simmetrico e non eccessivamente spesso per
+% riportato sulle slide poichè è simmetrico e non eccessivamente spesso per
 % cui va bene per il piano di coda -> da rivedere con Matteo 
 
 % calcolo corda media aerodinamica tramite una approssimazione presa dal
@@ -455,17 +455,107 @@ eps_0=1;
 deps_dalfa=0.3;
 eps=eps_0+deps_dalfa*alfa_w;
 i_h=alfa_h-alfa_f+eps;                              %[deg]
+
 %% SIZE VERTICAL TAIL
-c_root_rudder=7.79;                                  %[m]
-c_tip_rudder=3.04;                                   %[m]
-TR_rudder=c_tip_rudder/c_root_rudder;
-b_rudder=9.42;                                       %[m]
-S_rudder=(c_root_rudder+c_tip_rudder)*b_rudder/2;    %[m^2]
-%dalla figura pag 319 del Sadraey (vertical tail parameters)
+% si definisce il rapporto volumetrico di coda del vertical tail pari a
+% 0.09 come da riferimento sul Sadraey a pagina 303 -> infatti il suo
+% valore puō variare tra 0.02 e 0.12
+V_vtail = 0.08;
+% si determina la distanza tra il centro aerodinamico dell'ala e quello del
+% vertical tail ponendolo uguale a quello dell'impennaggio orizzontale come
+% indicato a pagina 322 del Sadraey -> questa assunzione verrā poi
+% modificata successivamente nel processo di design
+l_vtail = l_opt;
+S_vtail = V_vtail*(S*b)/l_vtail;
+% ovviamente l'angolo di calettamento č posto a 0 essendo l'aereo
+% simmetrico e non deve creare nessun momento attorno all'asse z
+i_vtail = 0;
+% si ipotizza un TR e AR del vertical tail analoghi a quello dell'A350 e quindi
+% pari a 0.3902 e  
+TR_vtail = 0.3902;
+AR_vtail = 1.72;
+b_vtail = sqrt(AR_vtail*S_vtail);
+c_root_vtail = 2*S_vtail/((1+TR_vtail)*b_vtail);
+c_tip_vtail = TR_vtail*c_root_vtail;
+% Dalla tabella 6.6 del Sadraey si ricava un valore di Sweep angle del
+% vertical tail pari a 35° che č il valore pių prossimo a quelli di
+% riferimento dei velivoli pių vicini al nostro in termini di dimensioni
+Sweep_vtail = 35;  % [deg]
+% geometricamente si ricava anche quello del bordo di fuga
+Sweep_vtail_te = (180/pi)*atan((c_tip_vtail-c_root_vtail+b_vtail*tand(35))/b_vtail);
 
+% Si riportano i valori relativi al vertical tail dell'a350:
+% c_root_rudder=7.79;                                  %[m]
+% c_tip_rudder=3.04;                                   %[m]
+% TR_rudder=c_tip_rudder/c_root_rudder;
+% b_rudder=9.42;                                       %[m]
+% S_rudder=(c_root_rudder+c_tip_rudder)*b_rudder/2;    %[m^2]
 
+%% Feasibility analysis -> Aerodynamic
+% si ricorda come l'analisi della portanza sull'ala sia molto sensibile
+% al valore del TR ratio che da letteratura si prende tra 0.3 e 0.4 che
+% sono i valori di TR che minimizzano la resistenza indotta e quindi la
+% distribuzione migliore
 
+% N. B:!!!!!!!!!!!!!!! Questo codice molto semplificato va bene per
+% valutare le prestazioni dell'ala in condizione di crociera, quindi quando
+% si andrā a fare la verifica bisogna utilizzare i valori relativi alla
+% crociera. Non va bene per le condizioni di Take Off e Landing anche se
+% sarebbero quelle che richiedono i Cl maggiori
 
+N_segmenti = 200; % [number of segments-1]
+alpha_twist = -2; % Twist angle [deg]
+a_2d = 6.3; % lift curve slope [1/rad]
+alpha_0 = -1.5; % flap down zero-lift angle of attack [deg]
+theta = pi/(2*N_segmenti):pi/(2*N_segmenti):pi/2;
+alpha = i_w+alpha_twist:-alpha_twist/(N_segmenti-1):i_w;
+% segment's angle of attack
+z = (b/2)*cos(theta);
+MAC_segmento = Corda_mag * (1 - (1-TR)*cos(theta)); % MAC at each segment
+mu = MAC_segmento * a_2d / (4 * b);
+LHS = mu .* (alpha-alpha_0)/57.3; % Left Hand Side
+% Solving N equations to find coefficients A(i)
+for i = 1:N_segmenti
+for j = 1:N_segmenti
+B(i,j) = sin((2*j-1) * theta(i)) * (1 + (mu(i) * (2*j-1)) / sin(theta(i)));
+end
+end
+AA = B\transpose(LHS);
+for i = 1:N_segmenti
+sum1(i) = 0;
+sum2(i) = 0;
+for j = 1 : N_segmenti
+sum1(i) = sum1(i) + (2*j-1) * AA(j)*sin((2*j-1)*theta(i));
+sum2(i) = sum2(i) + AA(j)*sin((2*j-1)*theta(i));
+end
+end
+CL = 4*b*sum2./MAC_segmento;
+CL1 = [0,CL];
+y_s = [b/2,z];
+figure()
+plot(y_s,CL1,'-o')
+grid on
+xlabel('semiala [m]')
+ylabel('Cl - Lift Coefficient')
+title('Andamento Cl - Teoria della Linea Portante')
+CL_wing = pi * AR * AA(1); % Cl di tutta l'ala
+
+% si considera il contributo alla portanza dato dall'ala come pari all'85%
+% della portanza totale generta dal velivolo
+
+if CL_wing >= 0.85*m_avg*9.81*2/(rho*v^2*S)
+    display('Bella ragaaaaaaaaa é uscito va bene possiamo andare avanti ;)')
+else 
+    display('No buono, tornare indietro')
+end
+
+% Il cefficiente é soddisfatto ma per poter arrivare a profili di
+% distribuzione di portanza ottimale é necessario impostare valori di
+% svergolamento piú negativi (-1/-3°) e provare ad aumentare il TR -> 0.4
+% -> lo svergolamento é NECESSARIO
+
+L = 0.5*rho*v^2*S*CL_wing/0.8;
+W = m_avg*9.81;
 
 
 
