@@ -557,6 +557,24 @@ end
 L = 0.5*rho*v^2*S*CL_wing/0.8;
 W = m_avg*9.81;
 
+%% Dimensionamento motore
+
+% A fronte di una richiesta di spinta pari a T = 345.924 kN
+% viene scelto il seguente motore:
+
+%% General Electric GE9X 
+
+% Lunghezza = 5.689 m
+% Massa = 9630 kg
+% Take-off Thrust = 490 kN
+% Diametro Fan = 3.40 m
+
+%% Rolls Royce Trent XWB-97
+
+% Lunghezza = 5.812 m
+% Massa = 7550 kg
+% Take-off Thrust = 431 kN
+% Diametro Fan = 3.00 m
 
 
 

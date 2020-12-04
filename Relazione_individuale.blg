@@ -1,17 +1,15 @@
 [0] Config.pm:312> INFO - This is Biber 2.15
 [0] Config.pm:315> INFO - Logfile is 'Relazione_individuale.blg'
-[47] biber:330> INFO - === Thu Nov 12, 2020, 23:09:28
-[55] Biber.pm:415> INFO - Reading 'Relazione_individuale.bcf'
-[99] Biber.pm:952> INFO - Found 1 citekeys in bib section 0
-[107] Biber.pm:4334> INFO - Processing section 0
-[113] Biber.pm:4523> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
-[114] bibtex.pm:1682> INFO - LaTeX decoding ...
-[122] bibtex.pm:1494> INFO - Found BibTeX data source 'bibliography.bib'
-[129] Utils.pm:384> WARN - fastsort option no longer required/supported, defaulting to UCA
-[136] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[136] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[136] Biber.pm:4162> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
-[136] Biber.pm:4168> INFO - No sort tailoring available for locale 'en-US'
-[138] bbl.pm:651> INFO - Writing 'Relazione_individuale.bbl' with encoding 'UTF-8'
-[138] bbl.pm:754> INFO - Output to Relazione_individuale.bbl
-[138] Biber.pm:128> INFO - WARNINGS: 1
+[51] biber:330> INFO - === Fri Dec  4, 2020, 17:26:56
+[61] Biber.pm:415> INFO - Reading 'Relazione_individuale.bcf'
+[108] Biber.pm:952> INFO - Found 1 citekeys in bib section 0
+[117] Biber.pm:4334> INFO - Processing section 0
+[125] Biber.pm:4523> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
+[126] bibtex.pm:1682> INFO - LaTeX decoding ...
+[135] bibtex.pm:1494> INFO - Found BibTeX data source 'bibliography.bib'
+[144] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[145] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[145] Biber.pm:4162> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
+[145] Biber.pm:4168> INFO - No sort tailoring available for locale 'en-US'
+[146] bbl.pm:651> INFO - Writing 'Relazione_individuale.bbl' with encoding 'UTF-8'
+[146] bbl.pm:754> INFO - Output to Relazione_individuale.bbl
