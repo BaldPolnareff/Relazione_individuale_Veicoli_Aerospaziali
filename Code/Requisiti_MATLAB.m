@@ -29,46 +29,49 @@ a_new = exp(c(1));
 b_new = c(2);
 y_new = a_new .* (x .^ b_new);
 hold on
-semilogx(x, y_new, 'r--')  
-legend('Trend equation', 'B-787', 'A350', 'A330 Neo-900', 'B777-300', 'B777 X-900', 'B787-8', 'A340-500', 'Improved trend', 'location', 'SouthWest')
-
-
-    %%%%%%% Commento vecchio che va tolto(???)%%%%%%    
+semilogx(x, y_new, 'r--')
+legend('Statistical trend', 'B-787', 'A350', 'A330 Neo-900', 'B777-300', 'B777 X-900', 'B787-8', 'A340-500', 'A330-3000', 'A340-600', 'A330-200', 'B767-300', 'B747-400', 'B747-8', 'B777-300', 'B737-800', 'MD11', 'Improved trend', 'location', 'SouthWest')
+    
 
         %% Grafico Efficienza
 
-        % A=[10.03,9.49,11,9.82,9.96];
-        % Sref=[377,443,465,436.8,516.7];
+        % A = [10.03, 9.49, 11, 9.82, 9.96];
+        % S_ref = [377, 443, 465, 436.8, 516.7];
         % figure(2)
-        % LD=15.5*sqrt(A/6.2);
-        % plot(A(1)/6.2,LD(1),'*',A(2)/6.2,LD(2),'*',A(3)/6.2,LD(3),'*',A(4)/6.2,LD(4),'*',A(5)/6.2,LD(5),'*')
+        % LD = 15.5 * sqrt(A / 6.2);
+        % plot(A(1) / 6.2, LD(1), '*', A(2) / 6.2, LD(2), '*', A(3) / 6.2, LD(3), '*', A(4) / 6.2, LD(4), '*', A(5) / 6.2, LD(5), '*')
         % title("Max Efficiency")
-        % xlabel('Wetted Aspect Ratio [=A/(Swet/Sref)]')
+        % xlabel('Wetted Aspect Ratio [= A / (S_wet / S_ref)]')
         % ylabel('L/D max')
-        % legend('B-787','A350','A330 Neo-900','B777-300','B777 X-900','location','SouthEast')
+        % legend('B-787', 'A350', 'A330 Neo-900', 'B777-300', 'B777 X-900', 'location', 'SouthEast')
         % grid on
 
 
 
         %% Grafico SFC
 
-        % SFC=[0.506,0.478,0.506,0.56,0.545];
-        % M_cruise=[0.85,0.85,0.81,0.84,0.84];
+        % SFC = [0.506, 0.478, 0.506, 0.56, 0.545];
+        % M_cruise = [0.85, 0.85, 0.81, 0.84, 0.84];
         % figure(3)
-        % plot(M_cruise(1),SFC(1),'*',M_cruise(2),SFC(2),'*',M_cruise(3),SFC(3),'*',M_cruise(4),SFC(4),'*',M_cruise(5),SFC(5),'*')
-        % legend('B-787','A350','A330 Neo-900','B777-300','B777 X-900','location','best')
+        % plot(M_cruise(1), SFC(1), '*', M_cruise(2), SFC(2), '*', M_cruise(3), SFC(3), '*', M_cruise(4), SFC(4), '*', M_cruise(5), SFC(5), '*')
+        % legend('B-787', 'A350', 'A330 Neo-900', 'B777-300', 'B777 X-900', 'location', 'NorthEast')
         % title("Equivalent Jet SFC")
         % xlabel('Mach')
         % ylabel('SFC [lb/lbh]')
-        % legend('B-787','A350','A330 Neo-900','B777-300','B777 X-900','location','best')
+        % legend('B-787', 'A350', 'A330 Neo-900', 'B777-300', 'B777 X-900', 'location', 'NorthEast')
         % grid on
-        % xlim([0.8,0.9]);
-        % ylim([0.4,0.7]);
+        % xlim([0.8, 0.9]);
+        % ylim([0.4, 0.7]);
+
+
+
+
+
 
     %% Studio preliminare
 
-    % Velocitá usata TAS, quota 10000 metri perché condizione peggiore del requisito, Mach 0.85
-
+    % Viene scelta la True Air Speed a 10000 m di quota, in quanto un worse case scenario 
+    % rispetto al requisito di Mach 0.85
 
 v = 0.85 * sqrt(1.4 * 287 * (-50 + 273.15));        % [m/s]
 v= v * 3600;                                        % [m/h]
@@ -85,7 +88,7 @@ m_crew = 8 * 85;                                    % [kg]           (massa medi
     % il payload, si possono raggiungere range piú lunghi 
 
 m_payload = 50 * 10^3;                              % [kg] 
-m_to = @(x) x - (m_crew + m_payload) / (1 - 1.06 * (1 - COEFF) - a_new * (x^b_new));
+m_to = @(x) x - (m_crew + m_payload) / (1 - 1.06 * (1 - COEFF) - a_new * (x ^ b_new));
 m_to_design = fzero(m_to, m_TO);
 display(m_to_design)
 
@@ -131,7 +134,7 @@ grid on
 
 
  
-    %% VALUTAZIONE PAYLOAD
+%% VALUTAZIONE PAYLOAD
 
     % Si considera come range quello di design, pari a 11000 km
 
@@ -152,7 +155,7 @@ ylabel('m_TO [kg]')
 grid on
 
 
-% Si considera ora come varia il payload in funzione del range, uguale o maggiore di 15000 km
+    % Si considera ora come varia il payload in funzione del range, uguale o maggiore di 15000 km
 
 R_payload_2 = 15000e+3;                                % [m]
 massa_payload = linspace(20e+3, 80e+3, 100);           % [kg]
@@ -165,14 +168,14 @@ for i = 1 : length(massa_payload)
 end
 
 figure()
-plot(massa_payload,m_to_payload,'b')
+plot(massa_payload, m_to_payload, 'b')
 xlabel('payload [kg]')
 ylabel('m_TO [kg]')
 grid on
 
 
 
-    %% Diagramma Payload-Range
+%% Diagramma Payload-Range
 
     % Si diagramma il payload in funzione del range del velivolo, considerando come
     % valore di riferimento del fuel quello dell'A350, pari a 141000 L di Avgas.
@@ -186,7 +189,7 @@ Range_3 = -log((1 - massa_max_avgas / m_to_design) / (0.97 * 0.985 * 0.985 * 0.9
 m_empty = (a_new * m_to_design ^ b_new) * m_to_design;
 m_payload_4 = 0;
 m_to_4 = massa_max_avgas + m_empty; 
-Range_4 = -log((1 - massa_max_avgas / m_to_4) / (0.97 * 0.985 * 0.985 * 0.995)) * v *Efficienza_max / SFC1;
+Range_4 = -log((1 - massa_max_avgas / m_to_4) / (0.97 * 0.985 * 0.985 * 0.995)) * v * Efficienza_max / SFC1;
 ypr = [m_payload; m_payload; m_payload_3; m_payload_4];
 xpr = [0; R; Range_3; Range_4] * 10 ^(-3);
 figure()
@@ -207,7 +210,7 @@ hold on
     % il procedimento seguito é sempre lo stesso. 
     % Viene fatto variare anche il range del punto 2 ponendolo ± 500000 m
 
-m_payload_1 = 50e+3;
+m_payload_1 = 45e+3;
 m_to_design1 = m_to_design * 0.88;
 R_1 = 11500000;
 m_payload_3 = m_to_design1 * (1 - massa_max_avgas / m_to_design1 - a_new * (m_to_design1 ^ b_new)) - m_crew;
@@ -224,11 +227,11 @@ ylabel('payload [kg]')
 title('Payload - Range')
 grid on
 
-m_payload_2 = 60e+3;
+m_payload_2 = 55e+3;
 R_2 = 10500000;
 m_to_design_2 = m_to_design * 1.077;
 m_payload_3 = m_to_design_2 * (1 - massa_max_avgas / m_to_design_2 - a_new * (m_to_design_2 ^ b_new)) - m_crew;
-Range_3 = -log((1 - massa_max_avgas / m_to_design_2)/(0.97 * 0.985 * 0.985 * 0.995)) * v * Efficienza_max / SFC1;
+Range_3 = -log((1 - massa_max_avgas / m_to_design_2) / (0.97 * 0.985 * 0.985 * 0.995)) * v * Efficienza_max / SFC1;
 m_empty = (a_new * m_to_design_2 ^ b_new) * m_to_design_2;
 m_payload_4 = 0;
 m_to_4 = massa_max_avgas + m_empty; 
@@ -241,7 +244,7 @@ ylabel('payload [kg]')
 title('Payload - Range')
 grid on
 axis([0 2.5e+4 0 6.5e+4])
-legend('M_TOW = 304685 [kg]','M_TOW = 268123 [kg]','M_TOW = 328146 [kg]','Location','best')
+legend('M_TOW = 304685 [kg]','M_TOW = 268123 [kg]','M_TOW = 328146 [kg]','Location','NorthEast')
 
 
 
@@ -308,7 +311,7 @@ grid on
 v = 0.85 * sqrt(1.4 * 287 * (-50 + 273.15));        % [m / s]
 v_max = 1.25 * v;                                   % [m / s]
 C_D_0 = 0.015;
-AR = 9.5;
+AR = 9;
 e = 0.921;
 K = 1 / (pi * e * AR);
 sigma = rho / rho_0;
@@ -357,10 +360,22 @@ line("xdata", [-1000, 1000], "ydata", [1 / (sigma * Efficienza_max), 1 / (sigma 
 
 
 
-    %% Punto di design
+%% Punto di design
 
 plot(W_S, y3(W_S), '*r', 'LineWidth', 2)
-legend('STALLO', 'CRUISE', 'TOP', 'ROC', 'CEILING', 'Design Point', 'Location', 'best')
+legend('STALLO', 'CRUISE', 'TOP', 'ROC', 'CEILING', 'Design Point', 'Location', 'NorthEast')
+
+    % Il punto di design scelto é y3 che, come visibile nel matching chart,
+    % é il punto in grado di minimizzare la superficie alare, a discapito di un
+    % leggero aumento della spinta necessaria.
+    % Tale scelta é motivata dalla necessitá di ridurre la superficie alare,
+    % inizialmente troppo alta, dato che il motore scelto ha una spinta
+    % disponibile piú che sufficiente a coprire la spinta necessaria,
+    % anche con un ampio margine.
+
+
+
+
 
 
 
@@ -375,8 +390,15 @@ T = y3(W_S) * m_to_design * g;                                                  
 S = m_to_design / W_S;                                                          % [m²]
 
     % N.B. Si fa riferimento ad una massa media tra inizio e fine crociera
+    
+m_in_c = coeff(1) * coeff(2) * m_to_design;
+m_fin_c = coeff(1) * coeff(2) * coeff(3) * m_to_design;
 
-m_avg = 254.5e+3;                                                               % [kg]
+m_avg_tmp = (m_in_c + m_fin_c) / 2;
+
+    %m_avg = 254.5e+3; valore ipotizzato prima                                                              % [kg]
+    
+m_avg = m_avg_tmp;
 C_L_cruise = 2 * m_avg * g / (rho * v ^2 * S);
 k_w = 0.95;                                                                     % Tipicamente 95% della spinta verticale
 C_L_cruise_w = C_L_cruise / k_w; 
@@ -389,12 +411,18 @@ CL_MAX_gross = CL_MAX_W / k_a;
     % Secondo indicazione del Sadraey, é stata ipotizzata la presenza di 
     % HLD (flap e slat) con un coefficiente di portanza rispettivamente di
     % 0.9 e 0.4 (pag. 236), dei quali si tiene conto nel calcolare la portanza.
+    %considerando la presenza di slat e flap , dal Sadrey abbiamo considerato
+    %1.3 il valore degli HLD, per cui si entra con un CL=CLMAXgross-CL_HLD(1.8)=1.47
+    %(0.4 slat 0.9 flap) Sadrey pg 236
 
     % Tra i profili segnalati viene scelto il GOE 682, con uno sweep angle di
     % 30 deg, come suggerito dal Raymer (pag. 53).
-
-S = 490;                                                                         % [m²]
-AR = 9.5;
+    
+    %Valutare il NACA 2412 che andrebbe calettato a 2.5 gradi e rispetterebbe
+    %i requisiti di Cl_id e Cl_max (ha 1.58 a fronte di 1.48)
+    %Oppure il NACA 1412 che avrebbe un calettamento tra 3.5 e 3.75 gradi e
+    %un Cl_max di 1.51 a fronte di 1.47 richiesto
+                                                                         
 b = sqrt(AR * S);                                                                % [m]
 S_w_ang = 29;                                                                    % [deg]
 S_w_ang_te = 18;                                                                 % [deg]
@@ -402,7 +430,7 @@ Gamma = 5;                                                                      
 b_med = b / 2;                                                                   % [m]
 Corda_mag = (S / (b_med) + b_med * (tand(S_w_ang) - tand(S_w_ang_te))) / 2;      % [m]
 Corda_min = Corda_mag - b_med * (tand(S_w_ang) - tand(S_w_ang_te));              % [m]
-TR = Corda_min / Corda_mag                                                       % (Tapernig Ratio)
+TR = Corda_min / Corda_mag;                                                      % (Tapering Ratio)
 y1 = Corda_mag - b_med * tand(S_w_ang);
 y2 = y1 - Corda_min;
 figure()
@@ -469,45 +497,47 @@ ws_bn = 75e-2;                                                                  
 
     % BUSINESS
 
-w_bn=4*ws_bn+2*wa_bn;                                                           % [m]
-l_bn=n_business/4*ps_bn;                                                        % [m]
+w_bn = 4 * ws_bn + 2 * wa_bn;                                                           % [m]
+l_bn = n_business / 4 * ps_bn;                                                          % [m]
 
     % FIRST CLASS
 
-w_fc=6*ws_fc+2*wa_fc;                                                           % [m]
-l_fc=n_fc/6*ps_fc;                                                              % [m]
+w_fc = 6 * ws_fc + 2 * wa_fc;                                                           % [m]
+l_fc = n_fc / 6 * ps_fc;                                                                % [m]
 
     % ECONOMY
 
-w_ec=9*ws_ec+2*wa_ec;                                                           % [m]
-l_ec=n_ec/9*ps_ec;                                                              % [m]
+w_ec = 9 * ws_ec + 2 * wa_ec;                                                           % [m]
+l_ec = n_ec / 9 * ps_ec;                                                                % [m]
 
 
+    % Vengono aggiunti 102 mm di spessore per ogni lato, come stabilito da normativa
 
 
+   
+    % Lunghezza del Nose 
+    % Calcolata secondo quanto stabilito dal Sadraey (pag. 429)
 
-    % Lunghezza del Nose
-
-l_nose = 1.5 * (w_ec + 2 * 0.102);                                              % [m]
+l_nose = 1.75 * (w_ec + 2 * 0.102);                                                     % [m]
 
     % Lunghezza dei portelloni:
     % stabilita basandosi sulla CS-25.807 Amendment 3 (Book 1, pag. 80)
 
-l_portelloni = 4 * 1.07;                                                        % [m]
+l_portelloni = 4 * 1.07;                                                                % [m]
 
     % Lunghezza dei bagni:
     % Dal Raymer si ricava il numero di bagni, ogni modulo é lungo un metro
 
-l_bath = 4;                                                                     % [m]
+l_bath = 4;                                                                             % [m]
 
     % Lunghezza della coda
 
-l_coda = l_nose +1;                                                             % [m]
+l_coda = l_nose + 1;                                                                    % [m]
 
 
     % lunghezza totale
 
-l_tot = l_bn + l_fc + l_ec +l_nose + l_portelloni + l_bath + l_coda             % [m]
+l_tot = l_bn + l_fc + l_ec +l_nose + l_portelloni + l_bath + l_coda                     % [m]
 
 
 
@@ -546,9 +576,10 @@ S_tail = V_h * MAC * S / l_opt;
 
 AR_tail = 2 / 3 * AR;
 
-    % Il Taper Ratio é compreso tra 0.4 e 0.7
+    % Il Taper Ratio é compreso tra 0.4 e 0.7, prendiamo 0.65 per ottenere
+    % un b_tail di 20m paragonabile con i 18m dell'A350
 
-TR_tail = 0.45;
+TR_tail = 0.65;
 
     % Da considerazioni trigonometriche e, come suggerito dal Sadraey (pag. 339),
     % mantenendo l'angolo di sweep uguale all'ala, si ottengono i seguenti risultati:
@@ -561,7 +592,7 @@ c_tip_tail = TR * c_root_tail;
 
     % Aerodinamica dell'impennaggio orizzontale
 C_M0_af = -0.0947;                                                                  % (Da airofoiltools GOE682)
-alpha_t = 1;                                                                        % (Angolo incidenza)
+alpha_t = 0;                                                                        % (Angolo incidenza)
 C_M0_wf = C_M0_af * (AR * cosd(S_w_ang) ^ 2) / (AR + 2 * cosd(S_w_ang)) + 0.01;
 CL_H = (C_M0_wf + C_L_cruise * (0.2)) / V_h;                                        % Valore medio del delta h preso dal Sadraey
 l_h = l_opt - 0.2 * MAC;
@@ -621,7 +652,7 @@ c_tip_vtail = TR_vtail * c_root_vtail;
 Sweep_vtail = 35;                                                                                       % [deg]
 Sweep_vtail_te = (180 / pi) * atan((c_tip_vtail - c_root_vtail + b_vtail * tand(35)) / b_vtail);        % [deg]
 
-    % Si riportano i valori relativi al vertical tail dell'a350:
+    % Si riportano i valori relativi al vertical tail dell'A350:
     % c_root_rudder = 7.79;                                                                             % [m]
     % c_tip_rudder = 3.04;                                                                              % [m]
     % TR_rudder = c_tip_rudder / c_root_rudder;
