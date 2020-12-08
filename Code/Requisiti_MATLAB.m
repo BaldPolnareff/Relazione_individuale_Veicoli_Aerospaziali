@@ -84,13 +84,12 @@ COEFF = prod(coeff);
 m_crew = 8 * 85;                                    % [kg]           (massa media di 85 kg per persona)
 
     % Si considera come punto di design un valore di payload max pari a 50 [t]
-    % ed un range medio pari a 11000 [km], considerando che, diminuendo in parte
+    % ed un range medio (in crociera) pari a 11000 [km], considerando che, diminuendo in parte
     % il payload, si possono raggiungere range piú lunghi 
 
 m_payload = 50 * 10^3;                              % [kg] 
 m_to = @(x) x - (m_crew + m_payload) / (1 - 1.06 * (1 - COEFF) - a_new * (x ^ b_new));
 m_to_design = fzero(m_to, m_TO);
-display(m_to_design)
 
 
     %% Valutazione Range: 
@@ -289,7 +288,7 @@ W_S = 0.5 * rho_0 * (v_stallo ^2) * cl_max / g;
 
 figure()
 hold on
-line("xdata", [W_S, W_S], "ydata", [-1000, 1000], "linewidth", 3)
+line("xdata", [W_S, W_S], "ydata", [-1000, 1000], "linewidth", 2)
 xlabel('W/S [kg / m²]')
 ylabel('T/W')
 title('Matching Chart') 
@@ -362,7 +361,7 @@ line("xdata", [-1000, 1000], "ydata", [1 / (sigma * Efficienza_max), 1 / (sigma 
 
 %% Punto di design
 
-plot(W_S, y3(W_S), '*r', 'LineWidth', 2)
+plot(W_S, y3(W_S), '*r', 'LineWidth', 3)
 legend('STALLO', 'CRUISE', 'TOP', 'ROC', 'CEILING', 'Design Point', 'Location', 'NorthEast')
 
     % Il punto di design scelto é y3 che, come visibile nel matching chart,
@@ -396,48 +395,51 @@ m_fin_c = coeff(1) * coeff(2) * coeff(3) * m_to_design;
 
 m_avg_tmp = (m_in_c + m_fin_c) / 2;
 
-    %m_avg = 254.5e+3; valore ipotizzato prima                                                              % [kg]
-    
 m_avg = m_avg_tmp;
 C_L_cruise = 2 * m_avg * g / (rho * v ^2 * S);
 k_w = 0.95;                                                                     % Tipicamente 95% della spinta verticale
 C_L_cruise_w = C_L_cruise / k_w; 
 k_a = 0.9;
 C_L_i = C_L_cruise_w / k_a;
-CL_MAX = 2 * m_to_design * g / (rho_0 * v_stallo ^2 * S)
+CL_MAX = 2 * m_to_design * g / (rho_0 * (v_stallo * 1.1) ^2 * S);
 CL_MAX_W = CL_MAX / k_w;
 CL_MAX_gross = CL_MAX_W / k_a;
 
     % Secondo indicazione del Sadraey, é stata ipotizzata la presenza di 
     % HLD (flap e slat) con un coefficiente di portanza rispettivamente di
     % 0.9 e 0.4 (pag. 236), dei quali si tiene conto nel calcolare la portanza.
-    %considerando la presenza di slat e flap , dal Sadrey abbiamo considerato
-    %1.3 il valore degli HLD, per cui si entra con un CL=CLMAXgross-CL_HLD(1.8)=1.47
-    %(0.4 slat 0.9 flap) Sadrey pg 236
 
-    % Tra i profili segnalati viene scelto il GOE 682, con uno sweep angle di
+
+    % Tra i profili segnalati era stato inzialmente scelto il GOE 682, con uno sweep angle di
     % 30 deg, come suggerito dal Raymer (pag. 53).
+    % Ci si é poi resi conto che la scelta iniziale non era ottimale, poiché avrebbe
+    % fornito un calettamento di circa 1 deg, mentre i valori tipici sono compresi tra 3 e 5 deg.
+    % É stato quindi scelto il profilo NACA1412, poiché fornisce un coefficiente di portanza
+    % ideale per 3.5 deg, oltre che possededere un coefficiente di portanza massimo di 1.51,
+    % a fronte del valore richiesto di 1.3
+    % Questo valore é abbastanza conservativo e fornisce un buon margine di sicurezza dallo
+    % Il Reynolds massimo riportato da AirfoilTools é di 10^6. 
+    % Una volta calcolata la corda media aerodinamica (vedi sezioni successive), si potrá
+    % verificare il Reynolds ottenuto e validare (o scartare) i dati presi dal sito.
     
-    %Valutare il NACA 2412 che andrebbe calettato a 2.5 gradi e rispetterebbe
-    %i requisiti di Cl_id e Cl_max (ha 1.58 a fronte di 1.48)
-    %Oppure il NACA 1412 che avrebbe un calettamento tra 3.5 e 3.75 gradi e
-    %un Cl_max di 1.51 a fronte di 1.47 richiesto
-                                                                         
+
+ %% Dimensionamento geometrico dell'ala 
+
 b = sqrt(AR * S);                                                                % [m]
 S_w_ang = 29;                                                                    % [deg]
 S_w_ang_te = 18;                                                                 % [deg]
 Gamma = 5;                                                                       % [deg]
 b_med = b / 2;                                                                   % [m]
-Corda_mag = (S / (b_med) + b_med * (tand(S_w_ang) - tand(S_w_ang_te))) / 2;      % [m]
-Corda_min = Corda_mag - b_med * (tand(S_w_ang) - tand(S_w_ang_te));              % [m]
-TR = Corda_min / Corda_mag;                                                      % (Tapering Ratio)
-y1 = Corda_mag - b_med * tand(S_w_ang);
-y2 = y1 - Corda_min;
+c_root_wing = (S / (b_med) + b_med * (tand(S_w_ang) - tand(S_w_ang_te))) / 2;      % [m]
+c_tip_wing = c_root_wing - b_med * (tand(S_w_ang) - tand(S_w_ang_te));              % [m]
+TR = c_tip_wing / c_root_wing;                                                      % (Tapering Ratio)
+y1 = c_root_wing - b_med * tand(S_w_ang);
+y2 = y1 - c_tip_wing;
 figure()
 plot([0 b_med], [0 y2])
 hold on
-plot([0 b_med], [Corda_mag y1])
-plot([0 0], [0 Corda_mag])
+plot([0 b_med], [c_root_wing y1])
+plot([0 0], [0 c_root_wing])
 plot([b_med b_med], [y2 y1])
 grid on
 xlabel('asse y')
@@ -472,7 +474,7 @@ n_business = 26;                                                                
 n_fc = 48;                                                                      % Posti in first class
 n_ec = 315;                                                                     % Posti in economy (9 per fila)
 W_pax_ec = n_ec * (82 + 23 + 14);                                               % Massa raccomandata per ogni passeggero in economy
-W_pax_oth = (n_fc + n_business) * (82 + 32 + 14)                                % Massa raccomandata per ogni passeggero in first class e business
+W_pax_oth = (n_fc + n_business) * (82 + 32 + 14);                               % Massa raccomandata per ogni passeggero in first class e business
 
 
     % Configurazione scelta
@@ -537,7 +539,7 @@ l_coda = l_nose + 1;                                                            
 
     % lunghezza totale
 
-l_tot = l_bn + l_fc + l_ec +l_nose + l_portelloni + l_bath + l_coda                     % [m]
+l_tot = l_bn + l_fc + l_ec +l_nose + l_portelloni + l_bath + l_coda;                    % [m]
 
 
 
@@ -560,7 +562,7 @@ l_tot = l_bn + l_fc + l_ec +l_nose + l_portelloni + l_bath + l_coda             
     % La cordia media aerodinamica viene calcolata con una formula approssimata,
     % fornita dal Raymer (pag. 104) ed in seguito usata anche per gli impennaggi
 
-MAC = 2 / 3 * Corda_mag * (1 + TR + TR ^ 2) / (1 + TR);
+MAC = 2 / 3 * c_root_wing * (1 + TR + TR ^ 2) / (1 + TR);
 
     % Il coefficiente volumetrico é preso dal Sadraey (pag. 324, tabella 6.4)
 
@@ -572,28 +574,45 @@ k_c = 1.4;
 l_opt = k_c * sqrt(4 * MAC * S * V_h / (pi * w_ec));
 S_tail = V_h * MAC * S / l_opt;
 
-    % La stima dell'aspect ratio per l'impennaggio orizzontale é preso dalle slide
 
-AR_tail = 2 / 3 * AR;
+    % Il Taper Ratio é compreso tra 0.4 e 0.7, prendiamo 0.6 per ottenere
+    % un b_tail di 20 m, paragonabile con i 18 m dell'A350
 
-    % Il Taper Ratio é compreso tra 0.4 e 0.7, prendiamo 0.65 per ottenere
-    % un b_tail di 20m paragonabile con i 18m dell'A350
-
-TR_tail = 0.65;
+TR_tail = 0.6;
 
     % Da considerazioni trigonometriche e, come suggerito dal Sadraey (pag. 339),
     % mantenendo l'angolo di sweep uguale all'ala, si ottengono i seguenti risultati:
 
 Sweep_tail = 29;
 Sweep_te_tail = 18;
-b_tail = 2 * sqrt(S_tail * (1 - TR_tail) / ((1 + TR) * (tand(Sweep_tail) - tand(Sweep_te_tail))));
+b_tail = 2 * sqrt(S_tail * (1 - TR_tail) / ((1 + TR_tail) * (tand(Sweep_tail) - tand(Sweep_te_tail))));
 c_root_tail = (b_tail / 2) * (tand(Sweep_tail) - tand(Sweep_te_tail)) / (1 - TR_tail);
-c_tip_tail = TR * c_root_tail;
+c_tip_tail = TR_tail * c_root_tail;
+AR_tail = b_tail ^ 2 / S_tail;
+
+    % Controllo sul Reynolds
+
+delta_CL_HLD = 1.4;                                                                % prendiamo 1 di Fowler Flap e 0.3 di Leading Edge slat dal Sadrey ( prendiamo i valori più bassi per essere conservativi)
+Cl_max = CL_MAX_gross - delta_CL_HLD;
+dyn_viscosity = 1.46e-5;
+Reynolds = rho * v * MAC / dyn_viscosity; 
+
+    % Come si puó vedere, i valori di AirfoilTools sono stati validati.
+
+
+
+
+
+
+
+
+
+
 
     % Aerodinamica dell'impennaggio orizzontale
-C_M0_af = -0.0947;                                                                  % (Da airofoiltools GOE682)
-alpha_t = 0;                                                                        % (Angolo incidenza)
-C_M0_wf = C_M0_af * (AR * cosd(S_w_ang) ^ 2) / (AR + 2 * cosd(S_w_ang)) + 0.01;
+C_M0_af = -0.0230;                                                                  % (Da airofoiltools NACA1412)
+alpha_t = 0;                                                                        % (Angolo di twist)
+C_M0_wf = C_M0_af * (AR * cosd(S_w_ang) ^ 2) / (AR + 2 * cosd(S_w_ang)) + 0.01 * alpha_t;
 CL_H = (C_M0_wf + C_L_cruise * (0.2)) / V_h;                                        % Valore medio del delta h preso dal Sadraey
 l_h = l_opt - 0.2 * MAC;
 MAC_t = 2 / 3 * c_root_tail * (1 + TR_tail + TR_tail ^ 2) / (1 + TR_tail);
@@ -607,7 +626,7 @@ Gamma_t = 5;                                                                    
 
 alfa_h = 1;                                                                         % [deg]
 alfa_f = 0;                                                                         % [deg]
-i_w = 4;                                                                            % [deg]
+i_w = 3.5;                                                                          % [deg]
 alfa_w = i_w + alfa_f;                                                              % [deg]
 eps_0 = 1;                                        
 deps_dalfa = 0.3;
@@ -683,7 +702,7 @@ theta = pi / (2 * N_segmenti) : pi / (2 * N_segmenti) : pi/2;
 alpha = i_w + alpha_twist : -alpha_twist / (N_segmenti - 1) : i_w;
     % Angolo d'attacco del segmento
 z = (b / 2) * cos(theta);
-MAC_segmento = Corda_mag * (1 - (1 - TR) * cos(theta));                                                 % MAC ad ogni segmento
+MAC_segmento = c_root_wing * (1 - (1 - TR) * cos(theta));                                                 % MAC ad ogni segmento
 mu = MAC_segmento * a_2d / (4 * b);
 LHS = mu .* (alpha - alpha_0) / 57.3;                                                                   % Left Hand Side
     % Risoluzione di N equazioni per trovare i coefficienti A(i)
@@ -741,20 +760,109 @@ W = m_avg * g;
     % A fronte di una richiesta di spinta pari a T = 345.924 kN
     % viene scelto il seguente motore:
 
-    %% General Electric GE9X 
 
-    % Lunghezza = 5.689 m
-    % Massa = 9630 kg
-    % Take-off Thrust = 490 kN
-    % Diametro Fan = 3.40 m
-
-    %% Rolls Royce Trent XWB-97
+    %% Rolls Roy_ce Trent XWB-97
 
     % Lunghezza = 5.812 m
     % Massa = 7550 kg
     % Take-off Thrust = 431 kN
     % Diametro Fan = 3.00 m
 
+W = m_to_design * g;                                                                    % [N]
+CL_TO = 2;                                                                              % Coefficiente di portanza in take off
+    % T_12 = 379000;                                                                    % [N] (Trent XWB 84)
+T_12 = 360400;                                                                          % [N] (TRENT 1000-R3 (2017))
+N_engine = 2;                                                                           % Numero motori
+T = T_12 * N_engine;                                                                    % Total thrust
+friction = 0.05;                                                                        % Coefficiente di attrito
+h_0 = 10.67;                                                                            % Distanza ostacolo in metri
+k = 1 / (pi * e * AR);
+C_lift = friction / (2 * k);
+n_x = 0.3;                                                                              % Fattore di carico lungo x
 
+    % Decollo
+
+V_min = 57.3803;
+V_R = 1.2 * V_min;                                                                      % [m/s] Velocità di rotazione
+A_gr = g * (T / W - friction);
+B = (rho * g) / (2 * W / S) * (C_D_0 - (friction ^ 2) / (4 * k));
+d_roll = 1 / (2 * B) * (log(A_gr) - log(A_gr - B * (V_R ^ 2)));
+d_liftoff = 2 * V_R;
+n_z = (0.734 * V_R ^ 2) / (V_min ^ 2); 
+cosgamma = 1 - (h_0) / R;
+gamma = acos(cosgamma); 
+d_H = R * sin(gamma);
+d_takeoff = d_roll + d_liftoff + d_H;
+
+    % BFL
+
+V_fail = linspace(0, V_R, 1000);
+d_aeo = 1 / (2 * B) * (log(A_gr) - log(A_gr - B * (V_fail .^ 2)));
+
+    % Nel tratto successivo vi é una variazione di A
+
+A_oei = g * (0.5 * T / W - friction);
+d_oei = 1 / (2 * B) * (log(A_oei - B * (V_fail .^ 2)) - log(A_oei - B * (V_R ^ 2)));
+d_AAG = d_aeo + d_oei + d_H + d_liftoff;
+d_react = 2 * V_fail;
+d_stop = (V_fail .^ 2) / (2 * g * n_x);
+d_AAS = d_aeo + d_react + d_stop;
+figure()
+plot(V_fail, d_AAG, 'r', 'linewidth', 1.5)
+hold on
+plot(V_fail, d_AAS, 'b', 'linewidth', 1.5)
+grid on
+title('Calcolo della distanza di BFL')
+xlabel('Velocità della piantata motore V_F_A_I_L[m/s]')
+ylabel('Distanza [m]')
+legend('Acceleration & GO','Acceleration & STOP')
+
+    % L'ultimo passo da fare è ricavare la Takeoff Run, 
+    % definita dalla normativa CS-25.113C (Emendamento 2)
+
+
+d_TO_run = (d_roll + d_liftoff + d_H / 2);
+
+    % Vengono plottate la Takeoff Distance e la Goll
+
+x_c = d_roll + d_liftoff;
+y_c = R;
+xx = linspace(x_c, d_takeoff);
+yy = y_c - sqrt(R ^ 2 - (xx - x_c) .^ 2);
+xx_1 = linspace(0, x_c);
+yy_1 = zeros(1, length(xx_1));
+
+figure()
+plot([0 d_TO_run], [0 0], 'LineWidth', 1.5)
+grid on
+xlabel('Distanza [m]')
+ylabel('Quota [m]')
+title('Take Off Run')
+
+
+figure()
+plot([0 d_takeoff], [0 0], 'LineWidth', 1.5)
+grid on
+xlabel('Distanza [m]')
+ylabel('Quota [m]')
+title('Take Off Distance')
+
+figure()
+plot([xx_1, xx], [yy_1, yy], 'LineWidth', 1.5)
+grid on
+xlabel('Distanza [m]')
+ylabel('Quota [m]')
+title('Traiettoria effettiva del velivolo')
+
+figure()
+hold on
+plot([xx_1, xx], [yy_1, yy], 'LineWidth', 1.5)
+plot([0 d_takeoff], [0 0], 'LineWidth', 1.5)
+plot([0 d_TO_run], [0 0], 'LineWidth', 1)
+grid on
+xlabel('Distanza [m]')
+ylabel('Quota [m]')
+title('Take Off Distance')
+legend('Traiettoria effettiva del velivolo','Take off Distance','Take Off Run','Location','northeast')
 
 
