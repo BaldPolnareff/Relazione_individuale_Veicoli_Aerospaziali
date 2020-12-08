@@ -383,7 +383,7 @@ legend('STALLO', 'CRUISE', 'TOP', 'ROC', 'CEILING', 'Design Point', 'Location', 
 %% PROGETTO ALA
 
 
-    %Spinta di progetto
+    % Spinta di progetto
 
 T = y3(W_S) * m_to_design * g;                                                  % [N] 
 S = m_to_design / W_S;                                                          % [m²]
