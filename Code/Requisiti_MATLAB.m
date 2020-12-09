@@ -20,7 +20,7 @@ xlabel('Takeoff Weight [kg]')
 ylabel('Empty weight fraction')
 grid on
 
-    %% Miglioramento con dati piú aggiornati formula del Raymer
+    %% Miglioramento con dati piú aggiornati, formula del Raymer
 
 n = length(x1);
 A1 = [(ones(n, 1)) log(x1)];
@@ -33,61 +33,27 @@ semilogx(x, y_new, 'r--')
 legend('Statistical trend', 'B-787', 'A350', 'A330 Neo-900', 'B777-300', 'B777 X-900', 'B787-8', 'A340-500', 'A330-3000', 'A340-600', 'A330-200', 'B767-300', 'B747-400', 'B747-8', 'B777-300', 'B737-800', 'MD11', 'Improved trend', 'location', 'SouthWest')
     
 
-        %% Grafico Efficienza
-
-        % A = [10.03, 9.49, 11, 9.82, 9.96];
-        % S_ref = [377, 443, 465, 436.8, 516.7];
-        % figure(2)
-        % LD = 15.5 * sqrt(A / 6.2);
-        % plot(A(1) / 6.2, LD(1), '*', A(2) / 6.2, LD(2), '*', A(3) / 6.2, LD(3), '*', A(4) / 6.2, LD(4), '*', A(5) / 6.2, LD(5), '*')
-        % title("Max Efficiency")
-        % xlabel('Wetted Aspect Ratio [= A / (S_wet / S_ref)]')
-        % ylabel('L/D max')
-        % legend('B-787', 'A350', 'A330 Neo-900', 'B777-300', 'B777 X-900', 'location', 'SouthEast')
-        % grid on
-
-
-
-        %% Grafico SFC
-
-        % SFC = [0.506, 0.478, 0.506, 0.56, 0.545];
-        % M_cruise = [0.85, 0.85, 0.81, 0.84, 0.84];
-        % figure(3)
-        % plot(M_cruise(1), SFC(1), '*', M_cruise(2), SFC(2), '*', M_cruise(3), SFC(3), '*', M_cruise(4), SFC(4), '*', M_cruise(5), SFC(5), '*')
-        % legend('B-787', 'A350', 'A330 Neo-900', 'B777-300', 'B777 X-900', 'location', 'NorthEast')
-        % title("Equivalent Jet SFC")
-        % xlabel('Mach')
-        % ylabel('SFC [lb/lbh]')
-        % legend('B-787', 'A350', 'A330 Neo-900', 'B777-300', 'B777 X-900', 'location', 'NorthEast')
-        % grid on
-        % xlim([0.8, 0.9]);
-        % ylim([0.4, 0.7]);
-
-
-
-
-
 
     %% Studio preliminare
 
     % Viene scelta la True Air Speed a 10000 m di quota, in quanto un worse case scenario 
     % rispetto al requisito di Mach 0.85
 
-v = 0.85 * sqrt(1.4 * 287 * (-50 + 273.15));        % [m/s]
-v= v * 3600;                                        % [m/h]
-R = 11000 * 10^3;                                   % [m]
-m_TO = 275000;                                      % [kg]           (Valore dell'A350, guess iniziale)
-SFC1 = 0.478;                                       % [lb/lbh]
-Efficienza_max = 20;                                % [\]            (Valore ipotizzato)
+v = 0.85 * sqrt(1.4 * 287 * (-50 + 273.15));                                        % [m/s]
+v = v * 3600;                                                                       % [m/h]
+R = 11000 * 10^3;                                                                   % [m]
+m_TO = 275000;                                                                      % [kg]           (Valore dell'A350, guess iniziale)
+SFC1 = 0.478;                                                                       % [lb/lbh]
+Efficienza_max = 20;                                                                % [\]            (Valore ipotizzato)
 coeff = [0.97; 0.985; (exp(-R * SFC1 / (v * Efficienza_max))); 0.985; 0.995];
 COEFF = prod(coeff);
-m_crew = 8 * 85;                                    % [kg]           (massa media di 85 kg per persona)
+m_crew = 8 * 85;                                                                    % [kg]           (massa media di 85 kg per persona)
 
     % Si considera come punto di design un valore di payload max pari a 50 [t]
     % ed un range medio (in crociera) pari a 11000 [km], considerando che, diminuendo in parte
     % il payload, si possono raggiungere range piú lunghi 
 
-m_payload = 50 * 10^3;                              % [kg] 
+m_payload = 50 * 10^3;                                                              % [kg] 
 m_to = @(x) x - (m_crew + m_payload) / (1 - 1.06 * (1 - COEFF) - a_new * (x ^ b_new));
 m_to_design = fzero(m_to, m_TO);
 
@@ -95,7 +61,7 @@ m_to_design = fzero(m_to, m_TO);
     %% Valutazione Range: 
     % si valuta come influisce il payload max sulla variazione percentuale del range
 
-range = linspace(10000e+3, 18000e+3, 100);          % [km]
+range = linspace(10000e+3, 18000e+3, 100);                                          % [km]
 
 for i = 1 : (length(range))
     coeff = [0.97; 0.985; (exp (-range(i) * SFC1 / (v * Efficienza_max))); 0.985; 0.995];
