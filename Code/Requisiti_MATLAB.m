@@ -114,7 +114,7 @@ for i = 1 : (length(massa_payload))
 end
 
 figure()
-plot(massa_payload,m_to_payload, 'b')
+plot(massa_payload, m_to_payload, 'b')
 xlabel('payload [kg]')
 ylabel('m_TO [kg]')
 grid on
@@ -128,7 +128,7 @@ coeff = [0.97; 0.985; (exp(-R_payload_2 * SFC1 / (v * Efficienza_max))); 0.985; 
 COEFF = prod(coeff);
 
 for i = 1 : length(massa_payload)
-   m_to_p = @(x) x - (m_crew + massa_payload(i)) / (1 - 1.06 * (1 - COEFF) - a_new * (x^b_new));
+   m_to_p = @(x) x - (m_crew + massa_payload(i)) / (1 - 1.06 * (1 - COEFF) - a_new * (x ^ b_new));
    m_to_payload(i) = fzero(m_to_p, 275000);
 end
 
@@ -180,7 +180,7 @@ m_to_design1 = m_to_design * 0.88;
 R_1 = 11500000;
 m_payload_3 = m_to_design1 * (1 - massa_max_avgas / m_to_design1 - a_new * (m_to_design1 ^ b_new)) - m_crew;
 Range_3 = -log((1 - massa_max_avgas / m_to_design1) / (0.97 *0.985 *0.985 *0.995)) * v * Efficienza_max / SFC1;
-m_empty = (a_new*m_to_design1^b_new)*m_to_design1;
+m_empty = (a_new * m_to_design1 ^ b_new) * m_to_design1;
 m_payload_4 = 0;
 m_to_4 = massa_max_avgas + m_empty; 
 Range_4 = -log((1 - massa_max_avgas / m_to_4) / (0.97 * 0.985 * 0.985 * 0.995)) * v * Efficienza_max / SFC1;
@@ -285,7 +285,7 @@ x2 = linspace(0, 700);                              % [kg / m²]
 y2 = @(x) rho_0 * C_D_0 * (v_max ^2) ./ (2 * g * x) + 2 * g * K * x ./ (rho * sigma * (v_max ^2));
 
 plot(x2, y2(x2), 'LineWidth', 1.5)
-y2(W_S)
+y2(W_S);
 
     % Passo 3 -> Take Off distance %
 
