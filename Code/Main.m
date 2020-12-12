@@ -21,7 +21,7 @@ close all
        
 
 
-    %% Studio preliminare
+%% Studio preliminare
 
         % Viene scelta la True Air Speed a 10000 m di quota, in quanto un worse case scenario 
         % rispetto al requisito di Mach 0.85
@@ -42,13 +42,13 @@ close all
         N_crew = 8;
         Efficienza_max = 20;
 
-    %% Diagramma MTOW-Range
+%% Diagramma MTOW-Range
 
         [MTOW] = mtow_range_plotter (velocity, Range, N_crew, SFC_1, Efficienza_max, m_payload, MTOW_guess, a_new, b_new);
         mtow_design = MTOW(1);
         mtow_range = MTOW(2);
 
-    %% Diagramma MTOW-Payload 
+%% Diagramma MTOW-Payload 
 
         % Si considera il range di design, pari a 11000 km
 
@@ -58,7 +58,7 @@ close all
 
         mtow_payload_plotter (velocity, Range_max, N_crew, SFC_1, Efficienza_max, MTOW_guess, a_new, b_new);
 
-    %% Diagramma Payload-Range
+%% Diagramma Payload-Range
 
         % Si plotta il payload in funzione del range del velivolo, considerando come
         % fuel volume di riferimento quello dell'A350, pari a 141000 L di Avgas.
@@ -92,7 +92,7 @@ close all
         % N.B. Per una questione di implementazione i tre colori delle curve sono casuali e diversi tra loro, potrebbe venire generata una palette
         % non gradita, in tal caso é sufficiente ripetere il plot fino ad uno schema colori ritenuto buono (o editarlo manualmente)
 
-    %% Matching Chart
+%% Matching Chart
 
         % Si fa riferimento ad una quota di 12 km
 
@@ -190,7 +190,7 @@ close all
         plot(W_S, T_W_takeoff(W_S), 'or', 'Linewidth', 3)
         legend('STALLO', 'CRUISE', 'TOP', 'ROC', 'CEILING', 'Design Point', 'Location', 'NorthEast')
 
-    %% Progetto Ala
+%% Progetto Ala
 
         % Spinta di design
 
@@ -209,77 +209,121 @@ close all
         % a fronte del valore richiesto di 1.3
         % Questo valore é abbastanza conservativo e fornisce un buon margine di sicurezza dallo
         % Il Reynolds massimo riportato da AirfoilTools é di 10^6. 
-        % Una volta calcolata la corda media aerodinamica (vedi sezioni successive), si potrá
+        % Una volta calcolata la corda media aerodinamica, si potrá
         % verificare il Reynolds ottenuto e validare (o scartare) i dati presi dal sito.
      
-        [coeff, COEFF] = mass_coefficient_generator (SFC_1, Efficienza_max, velocity, Range); % (coefficienti di massa in coeff, loro produttoria in COEFF)
+        [coeff, COEFF] = mass_coefficient_generator (SFC_1, Efficienza_max, velocity, Range);   % (coefficienti di massa in coeff, loro produttoria in COEFF)
 
         Thrust_design = thrust_design (T_W_takeoff, mtow_design, W_S);
-        Surface_w = mtow_design / W_S;                                                        % [m²]
+        Surface_w = mtow_design / W_S;                                                          % [m²]
 
         CL_max_gross = max_gross_lift_coeff_calculator (coeff, mtow_design, rho_air, Velocity, stall_velocity, Surface_w);
 
         % Dimensionamento geometrico dell'ala
 
-        Sweep_Angles = [29 18];                                                               % [deg]
-        Gamma = 5;                                                                            % [deg]
+        % La corda media aerodinamica viene calcolata con una formula approssimata,
+        % fornita dal Raymer (pag. 104) ed in seguito usata anche per gli impennaggi
 
-        [Taper_Ratio, Corde_estreme] = wing_profile_plotter (Surface_w, Aspect_Ratio, Sweep_Angles, Gamma);
+        Sweep_Angles = [29 18];                                                                 % [deg]
+        Gamma = 5;                                                                              % [deg]
 
-    %% Progetto Fusoliera
+        [Taper_Ratio, Corde_estreme] = wing_profile_plotter(Surface_w, Aspect_Ratio, Sweep_Angles, 'Main');
+        MAC = mean_aerodynamic_center(Corde_estreme, Taper_Ratio);
+        Dynamic_Viscosity = 1.46e-5;
+        Reynolds = reynolds_check(MAC, rho_air, Velocity, Dynamic_Viscosity);
+
+%% Progetto Fusoliera
 
         % I parametri sono stati scelti seguendo i suggerimenti del Sadraey (pag. 376)
 
-        wa_bn = 70e-2;                                                                  % [m] (larghezza corridoio)
-        wa_fc = 60e-2;                                                                  % [m]
-        wa_ec = 50e-2;                                                                  % [m]
-        ps_ec = 72e-2;                                                                  % [m] (lunghezza tra sedili)
-        ps_fc = 92e-2;                                                                  % [m]
-        ps_bn = 104e-2;                                                                 % [m]
-        ws_ec = 46e-2;                                                                  % [m] (larghezza sedili)
-        ws_fc = 60e-2;                                                                  % [m]
-        ws_bn = 75e-2;  
+        N_business = 26;                                                                        % Posti in business
+        N_first_class = 48;                                                                     % Posti in first class
+        N_economy = 315;                                                                        % Posti in economy (9 per fila)
+
+        Passengers_mass = passenger_mass_calculator(N_business, N_first_class, N_economy);      % [kg kg kg] (Massa Business, Massa First Class, Massa Economy)
+
+        N_seats = [N_business, N_first_class, N_economy];                                       
+        Business_geometry = [70, 104, 75] * 10 ^ -2;                                            % [m, m, m] (Larghezza corridoio, Spazio tra sedili, Larghezza sedili)
+        First_class_geometry = [60, 92, 60] * 10 ^ -2;                                          % [m, m, m] (Larghezza corridoio, Spazio tra sedili, Larghezza sedili)
+        Economy_geometry = [50, 72, 46] * 10 ^ -2;                                              % [m, m, m] (Larghezza corridoio, Spazio tra sedili, Larghezza sedili)
 
         % Configurazione scelta:
 
         % Business:     1-2-1
-
-        w_bn = 4 * ws_bn + 2 * wa_bn;                                                   % [m]
-        l_bn = n_business / 4 * ps_bn;                                                  % [m]       
-
         % First Class:  2-2-2 
-
-        w_fc = 6 * ws_fc + 2 * wa_fc;                                                   % [m]
-        l_fc = n_fc / 6 * ps_fc;                                                        % [m]
-
         % Economy:      3-3-3
 
-        w_ec = 9 * ws_ec + 2 * wa_ec;                                                   % [m]
-        l_ec = n_ec / 9 * ps_ec;                                                        % [m]
-
-
-        % Alle dimensioni precedentemente elencate é stato preventivamente aggiunto uno spessore di 102 mm per ogni lato, come da normativa
+        % Alle dimensioni é stato preventivamente aggiunto uno spessore di 102 mm per ogni lato, come da normativa
 
         % Lunghezza del Nose: 
         % Calcolata secondo quanto stabilito dal Sadraey (pag. 429)
 
-        l_nose = 1.75 * (w_ec + 2 * 0.102);                                             % [m]
-
         % Lunghezza dei portelloni:
         % stabilita basandosi sulla CS-25.807 Amendment 3 (Book 1, pag. 80)
-
-        l_portelloni = 4 * 1.07;                                                        % [m]
 
         % Lunghezza dei bagni:
         % Dal Raymer si ricava il numero di bagni, ogni modulo é lungo un metro
 
-        l_bath = 4;                                                                     % [m]
-
         % Lunghezza della coda:
         % Assunta come la lunghezza del nose, maggiorata di un metro
 
-        l_coda = l_nose + 1;                                                            % [m]
+        % X_dim = [width, length]
 
-        % Lunghezza totale:
+        [Business_dim, FC_dim, Economy_dim, Fuselage_Total_Length] = fuselage_size_calculator(Business_geometry, First_class_geometry, Economy_geometry, N_seats);
 
-        l_tot = l_bn + l_fc + l_ec +l_nose + l_portelloni + l_bath + l_coda;            % [m]
+%% Impennaggi
+
+        % Impennaggio orizzontale
+
+        % Come suggerito dal Sadraey, é stato scelto un profilo NACA 0012
+        % per l'impennaggio orizzontale, in quanto simmetrico e non eccessivamente spesso
+
+        % Il coefficiente volumetrico é preso dal Sadraey (pag. 324, tabella 6.4)
+        % Il valore ottimale di l é stimato dal Sadraey, prendendo uyn coefficiente k_c = 1 (pag. 324)
+        % Il Taper Ratio é compreso tra 0.4 e 0.7, prendiamo 0.6 (é restituito dalla funzione) per ottenere
+        % un b_tail di 20 m, paragonabile con i 18 m dell'A350
+        % Da considerazioni trigonometriche e, come suggerito dal Sadraey (pag. 339),
+        % mantenendo l'angolo di sweep uguale all'ala, si ottiene un determinato impennaggio orizzontale, di seguito plottato
+
+        % Come spiegato dal Sadraey (pag. 340), si parte da un angolo di diedro pari a quello dell'ala, 
+        % iterando successivamente (da considerazioni di stabilitá e controllo) fino al valore desiderato
+
+        % L'angolo di calettamento dell'impennaggio orizzontale viene calcolato tramite le formule del Sadraey (pag. 310-311),
+        % considerando un volo rettilineo uniforme orizzontale in crociera
+
+        k_c = 1.4;
+        Volume_coeff_tail = 1.1;
+        Tail_Surface = tail_surface_calculator (k_c, Volume_coeff_tail, MAC, Surface_w, Economy_dim, 'Horizontal');              % [m²]
+        alpha_f = 0;
+        alpha_h = 1;
+        i_w = 3.5;
+        i_set_tail = set_angle_calculator (alpha_h, alpha_f, i_w);
+        
+        [TR_tail, Corde_estreme_tail] = wing_profile_plotter(Tail_Surface, Aspect_Ratio, Sweep_Angles, 'Tail');           % Stessi sweep angles dell'ala, stesso gamma
+        MAC_tail = mean_aerodynamic_center(Corde_estreme_tail, TR_tail);
+
+        % Impennaggio verticale
+
+        % Il coefficiente volumetrico dell'impennaggio verticale é preso 
+        % dal Sadraey (pag. 303), nel range suggerito (0.02 % 0.12)
+        % Come suggerito dal Sadraey (pag. 322), inizialmente, la distanza tra il centro aerodinamico
+        % dell'ala e dell'impennaggio verticale é uguale a quella dell'impennaggio orizzontale
+
+        % L'angolo di calettamento é posto nullo, in quanto il velivolo possiede una configurazione
+        % di spinta simmetrica bimotore, a differenza di velivoli con un fan frontale che possono
+        % necessitare di un calettamento non nullo, in modo da compensare la coppia di reazione
+        % generata dalla singola ventola
+        % L'aspect ratio ed il taper ratio sono stati supposti uguali a quelli dell'A350
+        % Dal Sadraey (tabella 6.6) si prende uno sweep angle di 35 deg per 
+        % l'impennaggio verticale, valore in linea con i velivoli 
+        % nella stessa popolazione statistica di quello in studio.
+        % Da considerazioni geometriche si ricava poi quello del bordo di fuga.
+
+        i_set_vert = 0;
+        Volume_coeff_vert = 0.08;
+        Vert_surface = tail_surface_calculator (k_c, Volume_coeff_vert, MAC, Surface_w, Economy_dim, 'Vertical');
+        Sweep_Angles_vert = [35, 10.767];
+
+        [TR_vert, Corde_estreme_vert] = wing_profile_plotter(Vert_surface, Aspect_Ratio, Sweep_Angles_vert, 'Vertical');
+
+        % Fin qui tutto ok, hai dimenticato di fare "% Aerodinamica dell'impennaggio orizzontale", poi devi fare la Feasibility e poi il motore e hai finito
