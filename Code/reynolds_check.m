@@ -2,7 +2,7 @@ function [Re] = reynolds_check (Mean_Aero_Center, Density, Velocity, Dynamic_Vis
 
     Re = Density * Velocity * Mean_Aero_Center / Dynamic_Viscosity;
 
-    if Re > 500000
+    if ((Re >= 50e4) && (Re <= 50e6))
 
         display('Reynolds check: pass');
     

@@ -293,14 +293,20 @@ close all
 
         k_c = 1.4;
         Volume_coeff_tail = 1.1;
+        C_M0_af = -0.0230;
         Tail_Surface = tail_surface_calculator (k_c, Volume_coeff_tail, MAC, Surface_w, Economy_dim, 'Horizontal');              % [m²]
         alpha_f = 0;
         alpha_h = 1;
+        alpha_t = 0;
         i_w = 3.5;
         i_set_tail = set_angle_calculator (alpha_h, alpha_f, i_w);
         
         [TR_tail, Corde_estreme_tail] = wing_profile_plotter(Tail_Surface, Aspect_Ratio, Sweep_Angles, 'Tail');           % Stessi sweep angles dell'ala, stesso gamma
         MAC_tail = mean_aerodynamic_center(Corde_estreme_tail, TR_tail);
+
+        Avg_Mass = average_cruise_mass_calculator (mtow_design, coeff);
+        CL_cruise = lift_coefficient_calculator (Avg_Mass, rho_air, Velocity, Surface_w);
+        [C_M0_Wing_Body, CL_tail] = horizontal_tail_aero_coefficients_calculator (C_M0_af, alpha_t, Aspect_Ratio, Sweep_Angles, CL_cruise, Volume_coeff_tail);
 
         % Impennaggio verticale
 
@@ -326,4 +332,41 @@ close all
 
         [TR_vert, Corde_estreme_vert] = wing_profile_plotter(Vert_surface, Aspect_Ratio, Sweep_Angles_vert, 'Vertical');
 
-        % Fin qui tutto ok, hai dimenticato di fare "% Aerodinamica dell'impennaggio orizzontale", poi devi fare la Feasibility e poi il motore e hai finito
+
+%% Aerodynamic Feasibility Analysis 
+
+        % L'analisi della portanza alare é molto sensibile alla variazione
+        % del taper ratio, in letteratura tipicamente tra 0.3 e 0.4, che risulta
+        % essere il range migliore per minimizzare la resistenza indotta, 
+        % garantendo quindi la migliore distribuzione di portanza
+
+        % N.B. La funzione della lifting line é implementata a partire da uno script 
+        % del Sadraey ed é un modello fisico con forti approssimazioni,
+        % per cui é opportuno mettere in evidenza che é adeguato
+        % per valutare le prestazioni alari solamente in crociera,
+        % non durante manovre critiche o in fase di decollo e atterraggio
+
+        % N.B. Il valore di svergolamento scelto inizialmente era nullo,
+        % ma non puó esserlo nell'implementazione numerica del modello, per cui era 
+        % inizialmente stato scelto un valore non nullo molto piccolo.
+        % Successivamente, si é optato per un valore negativo tra 1 e 3 deg, 
+        % in modo da avvicinarsi ad una distribuzione di portanza ellittica, che risulterebbe
+        % aerodinamicamente ottimale
+        
+        Wing_span = wing_span_calculator(Aspect_Ratio, Surface_w);
+        CL_wing = lifting_line_plotter (CL_cruise, Corde_estreme, Wing_span, Aspect_Ratio, i_w, Taper_Ratio);
+        Lift_wing = lift_calculator (rho_air, Velocity, Surface_w, CL_wing);
+        Lift = Lift_wing / 0.8;
+        Avg_Weight = Avg_Mass * g;
+
+%% Dimensionamento motore
+
+        % A fronte di una richiesta di spinta (per motore) pari a T = 345.924 kN  viene scelto il seguente motore:
+
+        % Rolls Roy_ce Trent XWB-97
+
+        % Lunghezza = 5.812 m
+        % Massa = 7550 kg
+        % Take-off Thrust = 431 kN
+        % Diametro Fan = 3.00 m
+

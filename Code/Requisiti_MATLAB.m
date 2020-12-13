@@ -674,7 +674,7 @@ LHS = mu .* (alpha - alpha_0) / 57.3;                                           
     % Risoluzione di N equazioni per trovare i coefficienti A(i)
 for i = 1 : N_segmenti
     for j = 1 : N_segmenti
-    B(i, j) = sin((2 * j - 1) * theta(i)) * (1 + (mu(i) * (2 * j - 1)) / sin(theta(i)));
+        B(i, j) = sin((2 * j - 1) * theta(i)) * (1 + (mu(i) * (2 * j - 1)) / sin(theta(i)));
     end
 end
 AA = B \ transpose(LHS);
@@ -682,8 +682,8 @@ for i = 1 : N_segmenti
     sum1(i) = 0;
     sum2(i) = 0;
     for j = 1 : N_segmenti
-    sum1(i) = sum1(i) + (2 * j - 1) * AA(j) * sin((2 * j - 1) * theta(i));
-    sum2(i) = sum2(i) + AA(j) * sin((2 * j - 1) * theta(i));
+        sum1(i) = sum1(i) + (2 * j - 1) * AA(j) * sin((2 * j - 1) * theta(i));
+        sum2(i) = sum2(i) + AA(j) * sin((2 * j - 1) * theta(i));
     end
 end
 CL = 4 * b * sum2 ./ MAC_segmento;
