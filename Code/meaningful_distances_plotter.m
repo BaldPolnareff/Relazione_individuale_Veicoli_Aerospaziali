@@ -6,9 +6,10 @@ function [Ground_Roll_D, Takeoff_D, Takeoff_D_run, Acc_Go_D, Acc_Stop_D] = meani
     K = 1 / (pi * e_oswald * Aspect_Ratio);
     T = N_engines * Thrust;
     t_liftoff = 2;
-    Acceleration = g * (T / g * Weight - friction);
-    Acceleration_oei = g * (0.5 * T / Weight - friction);
-    b_factor = ((C_D_0 - (friction ^ 2) / 4 * K) * Density * g / 2 * Weight * g / Wing_surface);
+    Acceleration = g * (T / Weight - friction);
+    Acceleration_oei = g * (Thrust / Weight - friction);
+    %b_factor = ((C_D_0 - (friction ^ 2) / 4 * K) * Density / 2 * Weight / Wing_surface);
+    b_factor = (Density * g) / (2 * Weight / Wing_surface) * (C_D_0 - (friction ^ 2) / (4 * K));
     V_2 = 1.2 * Min_velocity;
     n_z = (0.734 * V_2 ^ 2) / (Min_velocity ^ 2);
     n_x = 0.3;
@@ -68,13 +69,13 @@ function [Ground_Roll_D, Takeoff_D, Takeoff_D_run, Acc_Go_D, Acc_Stop_D] = meani
 
     figure()
     hold on
-    plot([xx1, xx], [yy1, yy], 'LineWidth', 1.5)
-    plot([0 Takeoff_D], [0 0], 'LineWidth', 1.5)
-    plot([0 Takeoff_D_run], [0 0], 'LineWidth', 1)
+    plot([xx1, xx], [yy1, yy], 'LineWidth', 3.5)
+    plot([0 Takeoff_D], [0 0], 'LineWidth', 3.5)
+    plot([0 Takeoff_D_run], [0 0], 'g', 'LineWidth', 3.5)
     grid on
     xlabel('Distance [m]')
     ylabel('Altitude [m]')
     title('Take-Off Distance')
-    legend('Trajectory', 'Take-Off Distance', 'Take-Off Run', 'Location', 'NorthEast')
+    legend('Trajectory', 'Take-Off Distance', 'Take-Off Run', 'Location', 'NorthWest')
 
 end

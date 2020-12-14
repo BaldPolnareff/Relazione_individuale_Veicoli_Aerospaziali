@@ -24,7 +24,7 @@ function [MTOW] = mtow_range_plotter (Velocity, Range, Crew_members, Specific_fu
 
     MTOW = [mtow_design, mtow_range];
     figure()
-    plot(range, mtow_range)
+    plot(range, mtow_range, 'Linewidth', 2)
     xlabel('range [m]')
     ylabel('MTOW [kg]')
     grid on

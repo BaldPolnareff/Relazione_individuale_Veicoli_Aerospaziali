@@ -14,11 +14,11 @@ function [Ratio, Corde_estreme] = wing_profile_plotter (Wing_Surface, Aspect_Rat
         y1 = c_root - b_avg * tand(max(Sweep_Angles));
         y2 = y1 - c_tip;
         figure()
-        plot([0 b_avg], [0, y2])
+        plot([0 b_avg], [0, y2], 'Linewidth', 2)
         hold on
-        plot([0 b_avg], [c_root y1])
-        plot([0 0], [0 c_root])
-        plot([b_avg b_avg], [y2 y1])
+        plot([0 b_avg], [c_root y1], 'Linewidth', 2)
+        plot([0 0], [0 c_root], 'Linewidth', 2)
+        plot([b_avg b_avg], [y2 y1], 'Linewidth', 2)
         grid on
         title('Main Wing')
         xlabel('X')
@@ -36,11 +36,11 @@ function [Ratio, Corde_estreme] = wing_profile_plotter (Wing_Surface, Aspect_Rat
         y1 = c_root - b_avg * tand(max(Sweep_Angles));
         y2 = y1 - c_tip;
         figure()
-        plot([0 b_avg], [0, y2])
+        plot([0 b_avg], [0, y2], 'Linewidth', 2)
         hold on
-        plot([0 b_avg], [c_root y1])
-        plot([0 0], [0 c_root])
-        plot([b_avg b_avg], [y2 y1])
+        plot([0 b_avg], [c_root y1], 'Linewidth', 2)
+        plot([0 0], [0 c_root], 'Linewidth', 2)
+        plot([b_avg b_avg], [y2 y1], 'Linewidth', 2)
         grid on
         title('Tail wing')
         xlabel('X')
@@ -59,11 +59,11 @@ function [Ratio, Corde_estreme] = wing_profile_plotter (Wing_Surface, Aspect_Rat
         z1 = c_root - b_avg * tand(max(Sweep_Angles));
         z2 = z1 - c_tip;
         figure()
-        plot([0 b_avg], [0, z2])
+        plot([0 b_avg], [0, z2], 'Linewidth', 2)
         hold on
-        plot([0 b_avg], [c_root z1])
-        plot([0 0], [0 c_root])
-        plot([b_avg b_avg], [z2 z1])
+        plot([0 b_avg], [c_root z1], 'Linewidth', 2)
+        plot([0 0], [0 c_root], 'Linewidth', 2)
+        plot([b_avg b_avg], [z2 z1], 'Linewidth', 2)
         grid on
         title('Vertical wing')
         xlabel('X')

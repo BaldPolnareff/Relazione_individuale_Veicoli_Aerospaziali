@@ -19,7 +19,7 @@ function [] = payload_range_plotter (Velocity, Range, Specific_fuel_consumption,
     Y = [m_payload_design; m_payload_design; Payload_mass; m_payload_null];
     X = [m_payload_null; Range; Range_a; Range_b] * 10e-3;
 
-    plot(X, Y, 'Color', rand(1, 3), 'LineWidth', 1.5)
+    plot(X, Y, 'Color', rand(1, 3), 'LineWidth', 2)
     xlabel('Range [km]')
     ylabel('Payload [kg]')
     title('Payload - Range')

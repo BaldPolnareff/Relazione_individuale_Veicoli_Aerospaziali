@@ -16,7 +16,7 @@ function [] = mtow_payload_plotter (Velocity, Range, Crew_members, Specific_fuel
     end
 
     figure()
-    plot(payload, mtow_payload, 'b')
+    plot(payload, mtow_payload, 'b', 'Linewidth', 2)
     xlabel('payload [kg]')
     ylabel('MTOW [kg]')
     grid on
