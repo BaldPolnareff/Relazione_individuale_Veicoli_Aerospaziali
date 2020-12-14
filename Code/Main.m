@@ -170,7 +170,7 @@ close all
 
         [T_W_takeoff, TOP] = thrust_weight_TOP (CL_takeoff);
 
-        plot(x_space, T_W_takeoff(x_space, 'Linewidth', 1.5))
+        plot(x_space, T_W_takeoff(x_space), 'Linewidth', 1.5)
         axis([0 700 0 1])
 
         % Rapporto peso-spinta in base al Rate of Climb

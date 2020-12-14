@@ -53,7 +53,7 @@ function [Ratio, Corde_estreme] = wing_profile_plotter (Wing_Surface, Aspect_Rat
         Ratio = TR;
         b = sqrt(AR * Wing_Surface);
         c_root = 2 * Wing_Surface / ((1 + TR) * b);
-        c_tip = c_tip = TR * c_root;
+        c_tip = TR * c_root;
         Corde_estreme = [c_root, c_tip];
         b_avg = b / 2;
         z1 = c_root - b_avg * tand(max(Sweep_Angles));
