@@ -1,15 +1,15 @@
 [0] Config.pm:312> INFO - This is Biber 2.15
 [0] Config.pm:315> INFO - Logfile is 'Relazione_individuale.blg'
-[51] biber:330> INFO - === Fri Dec  4, 2020, 17:26:56
-[61] Biber.pm:415> INFO - Reading 'Relazione_individuale.bcf'
-[108] Biber.pm:952> INFO - Found 1 citekeys in bib section 0
-[117] Biber.pm:4334> INFO - Processing section 0
-[125] Biber.pm:4523> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
-[126] bibtex.pm:1682> INFO - LaTeX decoding ...
-[135] bibtex.pm:1494> INFO - Found BibTeX data source 'bibliography.bib'
-[144] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[145] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[145] Biber.pm:4162> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
-[145] Biber.pm:4168> INFO - No sort tailoring available for locale 'en-US'
-[146] bbl.pm:651> INFO - Writing 'Relazione_individuale.bbl' with encoding 'UTF-8'
-[146] bbl.pm:754> INFO - Output to Relazione_individuale.bbl
+[48] biber:330> INFO - === Mon Dec 14, 2020, 19:51:38
+[56] Biber.pm:415> INFO - Reading 'Relazione_individuale.bcf'
+[98] Biber.pm:952> INFO - Found 1 citekeys in bib section 0
+[106] Biber.pm:4334> INFO - Processing section 0
+[112] Biber.pm:4523> INFO - Looking for bibtex format file '/home/giorgio/Bibliography/bibliography.bib' for section 0
+[113] bibtex.pm:1682> INFO - LaTeX decoding ...
+[123] bibtex.pm:1494> INFO - Found BibTeX data source '/home/giorgio/Bibliography/bibliography.bib'
+[137] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[137] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[137] Biber.pm:4162> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
+[137] Biber.pm:4168> INFO - No sort tailoring available for locale 'en-US'
+[138] bbl.pm:651> INFO - Writing 'Relazione_individuale.bbl' with encoding 'UTF-8'
+[139] bbl.pm:754> INFO - Output to Relazione_individuale.bbl

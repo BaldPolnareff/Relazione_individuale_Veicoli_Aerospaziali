@@ -79,7 +79,7 @@
       <file>Relazione_individuale.bcf</file>
     </requires>
     <requires type="editable">
-      <file>bibliography.bib</file>
+      <file>/home/giorgio/Bibliography/bibliography.bib</file>
     </requires>
   </external>
 </requests>
