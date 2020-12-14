@@ -363,10 +363,26 @@ close all
 
         % A fronte di una richiesta di spinta (per motore) pari a T = 345.924 kN  viene scelto il seguente motore:
 
-        % Rolls Roy_ce Trent XWB-97
+        % General Electric GE90-94B
 
-        % Lunghezza = 5.812 m
-        % Massa = 7550 kg
-        % Take-off Thrust = 431 kN
-        % Diametro Fan = 3.00 m
+        % Overall Length: 7.283 [m]
+        % Overall WIdth: 3.871 [m]
+        % Overall Height: 3.952 [m]
+        % Dry Weight: 7892 [kg]
+        % Sea Level Static Thrust (Maximum Continuous): 402.920 [kN] 
 
+        % Calcolo delle distanze caratteristiche
+
+        % La Ground Roll Distance é la distanza di rollio in pista, dalla partenza da fermo fino all'istante iniziale del take-off.
+        % La Take-Off Distance é la distanza data dalla proiezione della traiettoria di decollo sulla pista, nel punto in cui
+        % il velivolo ha superato un ostacolo immaginario di 35 piedi.
+        % La BFL (Balanced Field Length) é la lunghezza in cui le distanze percorse in Acc&Go mode e Acc&Stop mode coincidono.
+        % La Take Off Run è definita come la distanza percorsa dal punto di inizio decollo al punto medio tra il lift-off e l'ostacolo di 35 piedi.
+
+        Jet_Thrust = 402920;                                                                            % [N]
+        N_engines = 2;
+        V_min = 57.3803;                                                                                % [m/s]
+        friction = 0.05;
+        Clearance_Height = 10.67;                                                                       % [m]
+
+        [Ground_Roll_D, Takeoff_D, Takeoff_D_run, Acc_Go_D, Acc_Stop_D] = meaningful_distances_plotter (N_engines, Jet_Thrust, rho_0, V_min, mtow_design, friction, Clearance_Height, Aspect_Ratio, CD_0, Surface_w);
