@@ -3,7 +3,11 @@
 \usepackage{graphicx}
 \usepackage[]{hyperref}
 \usepackage{graphicx}
+\usepackage{lscape}
 \usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
 \usepackage{siunitx}
 \usepackage[]{amsmath}
 \usepackage{gensymb}
@@ -32,7 +36,7 @@
 \tableofcontents
 \pagebreak
 
-\section{Assignment 1.1}
+\section{Assignment 1.1\label{Assignment_1.1}}
 
 \textbf{Assignment}: Write down an initial list of requirements for an
 aircraft that shall replace A350, with an entry into service in 2030.
@@ -40,10 +44,10 @@ Please, while listing the requirements, refer to the categories
 reported in Sect.1.4
 \newline
 \newline
-\textbf{\textit{List of Requirements}}\\\\ (Mainly based on Airbus A350-900 \autocite*{Airbus_A350-900})
+\textbf{\textit{List of Requirements}}\\\\ (Mainly based on Airbus A350-900 \autocite{Airbus_A350-900})
 \\ 
 
-\textbf{Deisgn and Performance}
+\textbf{Design and Performance\label{Design_and_performance}}
 \begin{itemize}
     \item Number of pilots: 2
     \item Cruise Mach: 0.85
@@ -59,7 +63,7 @@ reported in Sect.1.4
     \item Number of engines: 2
 \end{itemize}
 \pagebreak
-\textbf{Operational requirements}
+\textbf{Operational requirements\label{Operational_requirements}}
 \begin{itemize}
     \item Cruise altitude: 10 - 13 km
     \item Turn around time: under 60 mins
@@ -68,7 +72,8 @@ reported in Sect.1.4
     \item Rate of climb: 3000 ft/min (Initial climb)
     \item Ceiling: 13.15 km (FL431)
 \end{itemize}
-\textbf{Analysis of applicable regulations}
+
+\textbf{Analysis of applicable regulations\label{Analysis_applicable_regulations}}
 \begin{itemize}
     \item Number of exits: 8
     \item External noise (a terra a 5km di distanza) decollo: under 90 dB
@@ -77,18 +82,79 @@ reported in Sect.1.4
     \item N min in condizioni operative: -1
 \end{itemize}
 \pagebreak
-\section{Assignment 1.2}
+\section{Assignment 1.2\label{Assignment_1.2}}
 \textbf{Assignment}: On the basis of the list of Requirements elicited
 in the previous step, identify a good list of reference aircraft and
-collect data to be used as meaningful statistical population.
+collect data to be used as meaningful statistical population.\newline
 
-\section{Assignment 1.3}
+Several commercial aicrafts from \textit{Airbus} and \textit{Boeing} have been chosen, with
+the goal in mind of having a statistical population to compare to, as well as a reference list for 
+inspiration with consolidated concept designs and technologies.\\
+
+
+\newpage
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+% \usepackage{lscape}
+\begin{landscape}
+    \begin{table}[]
+    \centering
+    \resizebox{1.7\textwidth}{!}{%
+    \begin{tabular}{@{}lccccccccccc@{}}
+    \rowcolor[HTML]{FF7A7A} 
+    \cellcolor[HTML]{FFC99B}Design \& Performance parameters &
+      \multicolumn{1}{l}{\cellcolor[HTML]{FF7A7A}B787-10 Dre} &
+      \multicolumn{1}{l}{\cellcolor[HTML]{FF2C2C}A350 XWB-900} &
+      \multicolumn{1}{l}{\cellcolor[HTML]{FF7A7A}A330 Neo -900} &
+      \multicolumn{1}{l}{\cellcolor[HTML]{FF7A7A}B777-300ER} &
+      \multicolumn{1}{l}{\cellcolor[HTML]{FF7A7A}B777 X-900} &
+      \multicolumn{1}{l}{\cellcolor[HTML]{FF7A7A}B787-8} &
+      \multicolumn{1}{l}{\cellcolor[HTML]{FF7A7A}A340-500} &
+      \multicolumn{1}{l}{\cellcolor[HTML]{FF7A7A}A330-300} &
+      \multicolumn{1}{l}{\cellcolor[HTML]{FF7A7A}A340-600} &
+      \multicolumn{1}{l}{\cellcolor[HTML]{FF7A7A}A330-200} &
+      \multicolumn{1}{l}{\cellcolor[HTML]{FF7A7A}B767-300} \\
+    \rowcolor[HTML]{EFEFEF} 
+    \cellcolor[HTML]{FFEF98}Number of pilots                & 2     & 2     & 2     & 2     & 2     & 2      & 2     & 2     & N.A.  & 2    & 2    \\
+    \cellcolor[HTML]{FCF1B3}Cruise Mach number              & 0.85  & 0.85  & 0.81  & 0.84  & 0.84  & 0.85   & 0.83  & 0.86  & N.A.  & 0.86 & 0.86 \\
+    \rowcolor[HTML]{EFEFEF} 
+    \cellcolor[HTML]{FFEF98}Max Operating Speed Mach        & N.A.  & N.A.  & N.A.  & N.A.  & N.A.  & N.A.   & N.A.  & N.A.  & N.A.  & N.A. & N.A. \\
+    \cellcolor[HTML]{FCF1B3}Cabin Crew                      & 8-9   & 8-9   & 8-9   & 14    & N.A.  & N.A.   & N.A.  & N.A.  & N.A.  & N.A. & N.A. \\
+    \rowcolor[HTML]{EFEFEF} 
+    \cellcolor[HTML]{FFEF98}Number of passengers            & 330   & 440   & 440   & 550   & 426   & 359    & 375   & 275   & N.A.  & N.A. & N.A. \\
+    \cellcolor[HTML]{FCF1B3}Wing Span {[}m²{]}              & 60.81 & 64.75 & 64    & 64.8  & 72.8  & 60.12  & 60.3  & N.A.  & N.A.  & N.A. & N.A. \\
+    \rowcolor[HTML]{EFEFEF} 
+    \cellcolor[HTML]{FFEF98}Fuselage Length {[}m{]}         & 68    & 66.8  & 63.66 & 73.86 & 76.72 & 56.72  & 67.93 & N.A.  & N.A.  & N.A. & N.A. \\
+    \cellcolor[HTML]{FCF1B3}Range {[}km{]}                  & 11750 & 15000 & 13334 & 13650 & 13500 & 13620  & 12400 & 11750 & 14450 & N.A. & N.A. \\
+    \rowcolor[HTML]{EFEFEF} 
+    \cellcolor[HTML]{FFEF98}Wing Surface {[}m²{]}           & 377   & 443   & 465   & 436.8 & 516.7 & 377    & 437.3 & N.A.  & N.A.  & N.A. & N.A. \\
+    \cellcolor[HTML]{FCF1B3}Height {[}m{]}                  & 17.02 & 17.47 & 16.79 & 18.76 & 19.53 & 16.92  & 17.53 & N.A.  & N.A.  & N.A. & N.A. \\
+    \rowcolor[HTML]{EFEFEF} 
+    \cellcolor[HTML]{FFEF98}Max Payload {[}metric tonnes{]} & 57    & 53    & 44    & 69.8  & 73.5  & 43.318 & 54    & N.A.  & N.A.  & N.A. & N.A. \\
+    \cellcolor[HTML]{FCF1B3}Number of engines               & 2     & 2     & 2     & 2     & 2     & 2      & 4     & N.A.  & N.A.  & N.A. & N.A.
+    \end{tabular}%
+    }
+    \caption{Statistical Population}
+    \label{tab:stat_pop}
+    \end{table}
+\end{landscape}
+
+    \clearpage
+    \newpage
+
+    \clearpage
+\section{Assignment 1.3\label{Assignment_1.3}}
 \textbf{Assignment}: \textit{Critical Analysis of statistical trends}.
 Verify whether your statistical population fits the trend reported in
 literature (e.g. Raymer) or suggest improvements to the simple
 mathematical models (e.g. updates of coefficients).
 
-\section{Assignment 1.4}
+\pagebreak
+\section{Assignment 1.4\label{Assignments_1.4}}
 \textbf{Assignment}: \textit{Guess data estimation for the reference
 case study}. Apply the original or improved statistical trends to
 perform the first guess data estimation for the reference case
