@@ -2183,6 +2183,13 @@
   </bcf:bibdata>
   <bcf:section number="0">
     <bcf:citekey order="1">Airbus_A350-900</bcf:citekey>
+    <bcf:citekey order="2">Octave</bcf:citekey>
+    <bcf:citekey order="3">Airbus_replacement_repo</bcf:citekey>
+    <bcf:citekey order="4">Raymer_Daniel</bcf:citekey>
+    <bcf:citekey order="5">Airbus_replacement_repo</bcf:citekey>
+    <bcf:citekey order="6">Airbus_replacement_repo</bcf:citekey>
+    <bcf:citekey order="7">Airbus_replacement_repo</bcf:citekey>
+    <bcf:citekey order="8">Airbus_A350-900</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

@@ -39,6 +39,83 @@
       \field{note}{Accessed on 2020-11-11}
       \field{title}{A350-900}
     \endentry
+    \entry{Octave}{misc}{}
+      \name{author}{2}{}{%
+        {{hash=a789af59278b89f0b2c01d3480e87176}{%
+           family={Eaton},
+           familyi={E\bibinitperiod},
+           given={John\bibnamedelima W.},
+           giveni={J\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=8b880490ac1f48e94c717ffc3f30d4da}{%
+           family={others},
+           familyi={o\bibinitperiod},
+           prefix={many},
+           prefixi={m\bibinitperiod}}}%
+      }
+      \strng{namehash}{7359b980dbea6a33ece72a88d0f716d2}
+      \strng{fullhash}{7359b980dbea6a33ece72a88d0f716d2}
+      \strng{bibnamehash}{7359b980dbea6a33ece72a88d0f716d2}
+      \strng{authorbibnamehash}{7359b980dbea6a33ece72a88d0f716d2}
+      \strng{authornamehash}{7359b980dbea6a33ece72a88d0f716d2}
+      \strng{authorfullhash}{7359b980dbea6a33ece72a88d0f716d2}
+      \field{sortinit}{E}
+      \field{sortinithash}{c554bd1a0b76ea92b9f105fe36d9c7b0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.gnu.org/software/octave/index}}
+      \field{title}{GNU Octave}
+      \field{year}{2020}
+    \endentry
+    \entry{Raymer_Daniel}{book}{}
+      \name{author}{1}{}{%
+        {{hash=bcef5fc0e03f7cfe5bf32971fa60cbeb}{%
+           family={Raymer},
+           familyi={R\bibinitperiod},
+           given={Daniel\bibnamedelima P.},
+           giveni={D\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \list{publisher}{2}{%
+        {American Institute of Aeronautics}%
+        {Astronautics Inc.}%
+      }
+      \strng{namehash}{bcef5fc0e03f7cfe5bf32971fa60cbeb}
+      \strng{fullhash}{bcef5fc0e03f7cfe5bf32971fa60cbeb}
+      \strng{bibnamehash}{bcef5fc0e03f7cfe5bf32971fa60cbeb}
+      \strng{authorbibnamehash}{bcef5fc0e03f7cfe5bf32971fa60cbeb}
+      \strng{authornamehash}{bcef5fc0e03f7cfe5bf32971fa60cbeb}
+      \strng{authorfullhash}{bcef5fc0e03f7cfe5bf32971fa60cbeb}
+      \field{sortinit}{R}
+      \field{sortinithash}{b9c68a358aea118dfa887b6e902414a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{6}
+      \field{isbn}{1624104908,9781624104909}
+      \field{title}{Aircraft Design: A Conceptual Approach}
+      \field{year}{2018}
+    \endentry
+    \entry{Airbus_replacement_repo}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=f1135c1601dac8fe71e92c62c7736132}{%
+           family={Trane},
+           familyi={T\bibinitperiod},
+           given={Giorgio\bibnamedelima De},
+           giveni={G\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \strng{namehash}{f1135c1601dac8fe71e92c62c7736132}
+      \strng{fullhash}{f1135c1601dac8fe71e92c62c7736132}
+      \strng{bibnamehash}{f1135c1601dac8fe71e92c62c7736132}
+      \strng{authorbibnamehash}{f1135c1601dac8fe71e92c62c7736132}
+      \strng{authornamehash}{f1135c1601dac8fe71e92c62c7736132}
+      \strng{authorfullhash}{f1135c1601dac8fe71e92c62c7736132}
+      \field{sortinit}{T}
+      \field{sortinithash}{51f9faf24c60c62ca764a77f78cf5666}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://github.com/BaldPolnareff/Relazione_individuale_Veicoli_Aerospaziali/tree/main}}
+      \field{note}{Accessed on 2020-15-12}
+      \field{title}{Airbus A-350 Replacement Project, Personal Repository}
+      \field{year}{2020}
+    \endentry
   \enddatalist
 \endrefsection
 \endinput
