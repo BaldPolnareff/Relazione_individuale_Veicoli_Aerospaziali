@@ -19,6 +19,27 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global}
+    \entry{Leaflet}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=5394be402511a06b16521a9b58b8acbf}{%
+           family={Agafonkin},
+           familyi={A\bibinitperiod},
+           given={Vladimir},
+           giveni={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{5394be402511a06b16521a9b58b8acbf}
+      \strng{fullhash}{5394be402511a06b16521a9b58b8acbf}
+      \strng{bibnamehash}{5394be402511a06b16521a9b58b8acbf}
+      \strng{authorbibnamehash}{5394be402511a06b16521a9b58b8acbf}
+      \strng{authornamehash}{5394be402511a06b16521a9b58b8acbf}
+      \strng{authorfullhash}{5394be402511a06b16521a9b58b8acbf}
+      \field{sortinit}{A}
+      \field{sortinithash}{a3dcedd53b04d1adfd5ac303ecd5e6fa}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://leafletjs.com/}}
+      \field{title}{Leaflet}
+    \endentry
     \entry{Airbus_A350-900}{misc}{}
       \name{author}{1}{}{%
         {{hash=b110aa10dc3e3aa939ba099440938e65}{%
@@ -38,6 +59,20 @@
       \field{howpublished}{\url{https://www.airbus.com/aircraft/passenger-aircraft/a350xwb-family/a350-900.html}}
       \field{note}{Accessed on 2020-11-11}
       \field{title}{A350-900}
+    \endentry
+    \entry{Airfoiltools}{misc}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{a3dcedd53b04d1adfd5ac303ecd5e6fa}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{http://airfoiltools.com/}}
+      \field{title}{Airfoiltools}
+    \endentry
+    \entry{City_Distance_Calculator}{misc}{}
+      \field{sortinit}{D}
+      \field{sortinithash}{c438b3d5d027251ba63f5ed538d98af5}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.distancefromto.net/}}
+      \field{title}{DistanceFromTo}
     \endentry
     \entry{Octave}{misc}{}
       \name{author}{2}{}{%
@@ -66,6 +101,67 @@
       \field{title}{GNU Octave}
       \field{year}{2020}
     \endentry
+    \entry{Gnome_maps}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=41439715a59be0104628a93b484b05f7}{%
+           family={Foundation},
+           familyi={F\bibinitperiod},
+           given={The\bibnamedelima GNOME},
+           giveni={T\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \strng{namehash}{41439715a59be0104628a93b484b05f7}
+      \strng{fullhash}{41439715a59be0104628a93b484b05f7}
+      \strng{bibnamehash}{41439715a59be0104628a93b484b05f7}
+      \strng{authorbibnamehash}{41439715a59be0104628a93b484b05f7}
+      \strng{authornamehash}{41439715a59be0104628a93b484b05f7}
+      \strng{authorfullhash}{41439715a59be0104628a93b484b05f7}
+      \field{sortinit}{F}
+      \field{sortinithash}{fb0c0faa89eb6abae8213bf60e6799ea}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://wiki.gnome.org/Apps/Maps}}
+      \field{title}{GNOME Maps}
+    \endentry
+    \entry{Open_Street_Map}{misc}{}
+      \field{sortinit}{O}
+      \field{sortinithash}{ff8d4eeb5101e3cf3809959b3592d942}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.openstreetmap.org}}
+      \field{title}{Open Street Map}
+    \endentry
+    \entry{OSM_radius_plotter}{misc}{}
+      \field{sortinit}{O}
+      \field{sortinithash}{ff8d4eeb5101e3cf3809959b3592d942}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://jopf.re/osmaps-radius/}}
+      \field{title}{OSMaps Radius}
+    \endentry
+    \entry{GIMP}{misc}{}
+      \name{author}{2}{}{%
+        {{hash=684ecd1d1aa57cdc1536ecb2ac81b303}{%
+           family={Pagès},
+           familyi={P\bibinitperiod},
+           given={Øyvind\bibnamedelimb Kolås;\bibnamedelima Jehan},
+           giveni={Ø\bibinitperiod\bibinitdelim K\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=8b880490ac1f48e94c717ffc3f30d4da}{%
+           family={others},
+           familyi={o\bibinitperiod},
+           prefix={many},
+           prefixi={m\bibinitperiod}}}%
+      }
+      \strng{namehash}{9f4993078c173c4e0a27397eb664a84c}
+      \strng{fullhash}{9f4993078c173c4e0a27397eb664a84c}
+      \strng{bibnamehash}{9f4993078c173c4e0a27397eb664a84c}
+      \strng{authorbibnamehash}{9f4993078c173c4e0a27397eb664a84c}
+      \strng{authornamehash}{9f4993078c173c4e0a27397eb664a84c}
+      \strng{authorfullhash}{9f4993078c173c4e0a27397eb664a84c}
+      \field{sortinit}{P}
+      \field{sortinithash}{bb5b15f2db90f7aef79bb9e83defefcb}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.gimp.org/}}
+      \field{title}{GNU Image Manipulation Program}
+    \endentry
     \entry{Raymer_Daniel}{book}{}
       \name{author}{1}{}{%
         {{hash=bcef5fc0e03f7cfe5bf32971fa60cbeb}{%
@@ -92,6 +188,56 @@
       \field{isbn}{1624104908,9781624104909}
       \field{title}{Aircraft Design: A Conceptual Approach}
       \field{year}{2018}
+    \endentry
+    \entry{Roskam}{book}{}
+      \name{author}{1}{}{%
+        {{hash=d196913c72044bcd6517e6969c2c56de}{%
+           family={Roskam},
+           familyi={R\bibinitperiod},
+           given={Jan},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{2}{%
+        {ROSKAM AVIATION}%
+        {ENGINEERING}%
+      }
+      \strng{namehash}{d196913c72044bcd6517e6969c2c56de}
+      \strng{fullhash}{d196913c72044bcd6517e6969c2c56de}
+      \strng{bibnamehash}{d196913c72044bcd6517e6969c2c56de}
+      \strng{authorbibnamehash}{d196913c72044bcd6517e6969c2c56de}
+      \strng{authornamehash}{d196913c72044bcd6517e6969c2c56de}
+      \strng{authorfullhash}{d196913c72044bcd6517e6969c2c56de}
+      \field{sortinit}{R}
+      \field{sortinithash}{b9c68a358aea118dfa887b6e902414a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Airplane Design 8 vol}
+      \field{year}{1985}
+    \endentry
+    \entry{Sadraey_Mohammad}{book}{}
+      \name{author}{1}{}{%
+        {{hash=d3468c3731b1a4675664e639165350dc}{%
+           family={Sadraey},
+           familyi={S\bibinitperiod},
+           given={Mohammad\bibnamedelima H.},
+           giveni={M\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {CRC Press}%
+      }
+      \strng{namehash}{d3468c3731b1a4675664e639165350dc}
+      \strng{fullhash}{d3468c3731b1a4675664e639165350dc}
+      \strng{bibnamehash}{d3468c3731b1a4675664e639165350dc}
+      \strng{authorbibnamehash}{d3468c3731b1a4675664e639165350dc}
+      \strng{authornamehash}{d3468c3731b1a4675664e639165350dc}
+      \strng{authorfullhash}{d3468c3731b1a4675664e639165350dc}
+      \field{sortinit}{S}
+      \field{sortinithash}{c319cff79d99c853d775f88277d4e45f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9781498776561,978-1-4987-7655-4,1498776566}
+      \field{title}{Aircraft performance : An Engineering Approach}
+      \field{year}{2017}
     \endentry
     \entry{Airbus_replacement_repo}{misc}{}
       \name{author}{1}{}{%

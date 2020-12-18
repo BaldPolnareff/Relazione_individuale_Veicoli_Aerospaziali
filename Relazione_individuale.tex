@@ -15,10 +15,12 @@
 \usepackage{gensymb}
 \usepackage{mathtools}
 \usepackage{fancyref}
+
 \addbibresource{/home/giorgio/Bibliography/bibliography.bib}
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
+    citecolor=blue,
     filecolor=magenta,      
     urlcolor=cyan,
     pdftitle={Relazione Veicoli Aerospaziali},
@@ -28,7 +30,7 @@
 \title{\textbf{RELAZIONE VEICOLI AEROSPAZIALI}}
 
 \begin{document}
-
+\setlength{\parindent}{0pt}
 \maketitle
 \begin{center}
     \textit{Anno accademico 2020-2021}
@@ -375,11 +377,249 @@ a maximum range of 15000 km; however, this range is not reached at maximum paylo
 \subsection{Assignment 2.3\label{Assignment_2.3}}
 \textbf{Assignment:} Once the maximum range requirement is refined,
  identify a set of city-pairs that can be connected with no-stop flight. \\ \\ \\ 
+
+Using an opensource tool \autocite{OSM_radius_plotter} that can plot a circle on a map, given a certain radius, and having
+Rome's Fiumicino Airport as a reference point, it's clearly visible from the picture below that both the 11000 km and the 15000 km ranges
+can cover a substantial portion of the globe.\\ 
+The tool used is based on Open Street Map \autocite{Open_Street_Map} and Leaflet \autocite{Leaflet}, a Javascript library
+designed for maps generation and development. \\ 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.95\textwidth]{Sources/Plots_and_Pictures/OSM_radius.png}
+    \caption{Global coverage at 11000 km and 15000 km. Notice that the circles are concentric,
+    but the maximum range exceeds the global scale of the map, which shifts the largest circle}
+    \label{Global_Coverage}
+\end{figure}
+\clearpage
+
+The aircraft could easily cover a continuous intercontinental flight between many of the major cities around the globe.\\ 
+The following dark theme maps are from \textit{GNOME Maps} \autocite{Gnome_maps}. 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/worldwide_routes.png}
+    \caption{Many major cities linked with Rome}
+    \label{worldwide_maps}
+\end{figure}
+For instance, it could easily link Rome to Los Angeles (10189.91 km), even at full payload
+and still have fuel left.
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/rome_LA.png}
+    \caption{Rome - Los Angeles}
+    \label{rome_LA}
+\end{figure}
+\clearpage
+
+
+
+However, an interesting way of exploiting its range, would be a hypothetical route among multiple city-pairs, with no
+refuel between the trips and immediate departure. \\ \\ 
+Using \textit{DistanceFromTo} \autocite{City_Distance_Calculator}, another tool built with Open Street Map and Leaflet, an example of
+a route starting and coming all the way back to Rome has been estimated to be around 13899.78 km. \\ 
+The route has then been drawn on the map below, using \textit{GIMP} \autocite{GIMP}. \\ 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/route.png}
+    \caption{Example of a long range no-refuel route}
+    \label{Global_Coverage}
+\end{figure}
+\clearpage
+
+
 \pagebreak 
 
 \subsection{Assignment 2.4\label{Assignment_2.4}}
 \textbf{Assignment:} Build the Matching Chart for your case study and define
  Wing Surface and Engine Thrust \\ \\ \\ 
+
+ \subsubsection{Stall Velocity\label{stall_velocity}}
+
+ Stall velocity is calculated by dividing
+ the approach velocity by 1.3 (as described by regulations). \\ 
+ The approach velocity is guessed by comparison with similar aicrafts, as suggested by Daniel P. Raymer \autocite{Raymer_Daniel}.\\ 
+ A value of 145 knots has been chosen, as it's in between the A350-900 and A350-1000.\\ 
+
+ \subsubsection{Key cruise parameters\label{cruise_parameters}}
+
+ Once the necessary fuel for the 11000 km range has been consumed, the landing mass is around 214000 kg,
+ which is in line with the statistical population range of $[205000, 236000] \ kg$.\\ 
+ As suggested by Daniel P. Raymer \autocite{Raymer_Daniel}, an air density equivalent
+ to that of sea level is assumed for all the calculations. \\ 
+ The author also suggests a maximum lift coefficient between 2.2 and 3.2, thus a value
+ of 2.8 has been chosen.\\ 
+ Given the density, the stall velocity and the maximum lift coefficient, the function \autocite{Airbus_replacement_repo}
+ \begin{verbatim}
+    wing_load_distribution.m
+ \end{verbatim}
+calculates the $\frac{W}{S}$  $[\frac{kg}{m^2}]$, which is going to be a recurring variable later on.
+With a result of $575.60 \ \frac{kg}{m^2}$ the value is in the established range. 
+
+Using the design \textit{MTOW}, the estimated wing surface is $489.97 \ m^2$. \\ 
+
+It is crucial that the wing load's numerator is converted to \textit{N}, in order to get a dimensionless
+Thrust to Weight ratio.\\ 
+The ratio is calculated for the maximum cruise speed, by the function 
+\begin{verbatim}
+    thrust_weight_max_speed.m
+\end{verbatim}
+
+
+
+\clearpage
+
+The ratio is then calculated by taking the \textit{TOP} (Take Off Parameter) into account, by the function 
+\begin{verbatim}
+    thrust_weight_TOP.m
+\end{verbatim}
+which takes the lift coefficient at takeoff as an input.\\ 
+
+The \textit{TOP} is estimated to be around $230 \ \frac{lbs}{ft^2}$, with a \textit{ground roll distance}
+of 3000 ft (888 m) and a 1.7 times higher \textit{over 50 feet distance}.\\ 
+As suggested by Jan Roskam \autocite{Roskam}, the lift coefficient at takeoff is the maximum lift coefficient
+divided by a factor of 1.21. \\ 
+
+Another equation for the Thrust to Weight ratio is based on the \textit{ROC} (Rate Of Climb), 
+and has been implemented into the function
+
+\begin{verbatim}
+    thrust_weight_ROC.m
+\end{verbatim}
+\clearpage
+\subsubsection{Design Point and Matching Chart\label{Matching_chart}}
+
+The design point has been chosen in a way that minimizes wing surface, which in turns
+increases the necessary thrust.
+
+However, since the available thrust of the chosen engine is substantially higher than initially
+planned, the tradeoff is acceptable.
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/Matching_chart.png}
+    \caption{Matching Chart}
+    \label{matching_chart}
+\end{figure}
+\clearpage
+
+\section{Assignment 3\label{Assignment_3}}
+
+\subsection{Assignment 3.1\label{Assignment_3.1}}
+
+\textbf{\textit{Assignment:}} Following the procedure suggested in the previous charts,
+and on the basis of the parameters estimated in previous assignments,
+define your own wing airfoil. \\ \\ \\ 
+
+Initially, the profile that was opted for was the \textit{GOE 682}, with a 30 degrees sweep angle, 
+as suggested by Daniel P. Raymer \autocite{Raymer_Daniel}.
+
+However, that allowed for a suboptimal \textit{set angle} of 1 degree, thus leading to another alternative.
+
+After some research on \textit{Airfoiltools} \autocite{Airfoiltools}, the final choice was in favor
+of the \textit{NACA1412}, which provides a maximum lift coefficient of 1.51, as well as an ideal lift coefficient
+for a \textit{set angle} of 3.5 degrees.
+
+The maximum lift coefficient should be more than enough and actually a good safety margin 
+for a stall scenario.
+
+In addition to this, the presence of \textit{HLD} (High Lift Devices) has been assumed, with 
+a 0.9 and 0.4 lift coefficient contribution for flaps and slats, respectively (as suggested by Mohammad H. Sadraey \autocite{Sadraey_Mohammad}).\\ 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/NACA1412.png}
+    \caption{NACA1412}
+    \label{NACA1412}
+\end{figure}
+\clearpage
+
+The function \autocite{Airbus_replacement_repo} 
+\begin{verbatim}
+    max_gross_lift_coeff_calculator.m
+\end{verbatim}
+calculates the \textit{gross lift coefficient}.\\
+
+Given an \textit{Aspect Ratio} of 9, the wing surface and its \textit{sweep angles} of $ \{29, 18 \} \ deg$,
+the function 
+\begin{verbatim}
+    wing_profile_plotter.m
+\end{verbatim}
+plots the wing profile, as seen from an above POV, while also returning a \textit{Taper Ratio} of 0.31915.\\ 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/Main_Wing.png}
+    \caption{Main Wing}
+    \label{Main_wing}
+\end{figure}
+
+The function is also used later on to plot the tail wings, as it requires the type of wing to plot as one of its inputs.\\
+\clearpage
+
+As the highest \textit{Reynolds} given by \textit{Airfoiltools} is $10^6$, a comparative check on the 
+actual \textit{Reynolds} should be run, in order to see whether the values given by the website are 
+accurate or not.\\ 
+For this purpose, the needed \textit{MAC} (Mean Aerodynamic Center) is calculated by the 
+function \autocite{Airbus_replacement_repo}
+\begin{verbatim}
+    mean_aerodynamic_center.m
+\end{verbatim}
+which is based on an approximation given by Daniel P. Raymer \autocite{Raymer_Daniel}. \\ 
+
+Then, the current \textit{Reynolds} is compared to the maximum value given by the website, by the function
+
+\begin{verbatim}
+    reynolds_check.m
+\end{verbatim}
+
+As hoped, the values are not too different, thus validating the rest of the data.\\ 
+\clearpage
+
+\subsection{Assignment 3.2\label{Assignment_3.2}}
+
+\textbf{\textit{Assignment:}} Once the airfoil has been selected, look for reference materials
+showing aerodynamic coefficients trends. 
+Are they in line with your expectations (and requirements)? 
+\clearpage
+
+\subsection{Assignment 3.3\label{Assignment_3.3}}
+
+\textbf{\textit{Assignment:}} Once the wing airfoil is selected, please, 
+try to identify the main parameters for a 3D wing. 
+\clearpage 
+\subsection{Assignment 3.4\label{Assignment_3.4}}
+
+\textbf{\textit{Assignment:}} 2D and 3D CAD Modelling 
+
+\clearpage 
+
+\section{Assignment 4\label{Assignment_4}}
+
+\subsection{Assignment 4.1\label{Assignment_4.1}}
+
+\textbf{\textit{Assignment:}} Design your fuselage following the suggested methodology\\ \\ \\ 
+
+
+
+
+
+\clearpage
+
+\subsection{Assignment 4.2\label{Assignment_4.2}}
+
+\textbf{\textit{Assignment:}} Create your Fuselage in Solidworks 
+and validate your fuselage concept
+
+
 
 \pagebreak
 \printbibliography

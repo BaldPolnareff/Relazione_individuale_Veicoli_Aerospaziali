@@ -143,11 +143,11 @@ close all
         Velocity = velocity / 3600;                                      % [m/s]
         CD_0 = 0.015;
         Aspect_Ratio = 9;
-        e_parameter = 0.921;
+        e_ostwald = 0.921;
 
         % Rapporto peso-spinta in condizione di velocitá massima
 
-        [T_W_max_speed, max_velocity, K_coeff] = thrust_weight_max_speed (rho_0, Velocity, CD_0, Aspect_Ratio, e_parameter);
+        [T_W_max_speed, max_velocity, K_coeff] = thrust_weight_max_speed (rho_0, Velocity, CD_0, Aspect_Ratio, e_ostwald);
         x_space = linspace(0, 700);
 
         plot(x_space, T_W_max_speed(x_space), 'LineWidth', 1.5)
@@ -196,7 +196,7 @@ close all
 
         % N.B. Si fa riferimento ad una massa media tra inizio e fine crociera
 
-        % % Secondo indicazione del Sadraey, é stata ipotizzata la presenza di 
+        % Secondo indicazione del Sadraey, é stata ipotizzata la presenza di 
         % HLD (flap e slat) con un coefficiente di portanza rispettivamente di
         % 0.9 e 0.4 (pag. 236), dei quali si tiene conto nel calcolare la portanza.
 
@@ -207,7 +207,7 @@ close all
         % É stato quindi scelto il profilo NACA1412, poiché fornisce un coefficiente di portanza
         % ideale per 3.5 deg, oltre che possededere un coefficiente di portanza massimo di 1.51,
         % a fronte del valore richiesto di 1.3
-        % Questo valore é abbastanza conservativo e fornisce un buon margine di sicurezza dallo
+        % Questo valore é abbastanza conservativo e fornisce un buon margine di sicurezza dallo stallo.
         % Il Reynolds massimo riportato da AirfoilTools é di 10^6. 
         % Una volta calcolata la corda media aerodinamica, si potrá
         % verificare il Reynolds ottenuto e validare (o scartare) i dati presi dal sito.
