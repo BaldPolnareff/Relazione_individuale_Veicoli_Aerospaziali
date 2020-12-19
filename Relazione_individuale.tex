@@ -608,16 +608,369 @@ try to identify the main parameters for a 3D wing.
 
 \textbf{\textit{Assignment:}} Design your fuselage following the suggested methodology\\ \\ \\ 
 
+The general procedure was implemented following Muhammad H. Sadraey's workflow and suggested values \autocite{Sadraey_Mohammad},
+and by taking the \textit{EASA CS-25.807, Amendment 3} \autocite{EASA_CS25} regulations into account.\\ 
 
+The configuration that was opted for is the following: 
+\begin{itemize}
+    \item \textit{Business} (26 seats)
+        \begin{itemize}
+            \item 1, 2, 1
+            \begin{itemize}
+                \item $\left ( 70, 104, 75 \right ) \ cm$ \\ (Corridor Width, Room between seats, Seat Width)
+            \end{itemize}
+        \end{itemize}
+    \item \textit{First Class} (48 seats)
+        \begin{itemize}
+            \item 2, 2, 2
+            \begin{itemize}
+                \item $\left ( 60, 92, 60 \right ) \ cm$ \\ (Corridor Width, Room between seats, Seat Width)
+            \end{itemize}
+        \end{itemize}
+    \item \textit{Economy Class} (315 seats)
+        \begin{itemize}
+            \item 3, 3, 3
+            \begin{itemize}
+                \item $\left ( 50, 72, 46 \right ) \ cm$ \\ (Corridor Width, Room between seats, Seat Width)
+            \end{itemize}
+        \end{itemize}
+\end{itemize}
+\clearpage
 
+As suggested by the author, the nose length is calculated with a slightly different
+formula for each class and the tail zone is 1 m longer than the nose. 
 
+The doors dimensions are strictly tied to the regulations and both the number and type have been 
+chosen accordingly, as visible in the CAD model. 
+Furthermore, a thickness of 102 mm has been added to the fuselage, as established by regulations. 
+
+Four \textit{1X1 m} toilet modules have been installed and considered in the calculations, this time according to Daniel P. Raymer \autocite{Raymer_Daniel}.\\ 
+
+The function \autocite{Airbus_replacement_repo}
+\begin{verbatim}
+    passenger_mass_calculator.m
+\end{verbatim}
+
+estimates and returns a vector with the mass of passengers for each available class, based on the number of seats and
+the average human mass, as well as an extra mass budget for each seat, which varies with the class itself.\\ 
+
+The resulting mass is $\left \{ 3328,  \  6144, \  37485 \right \} \ kg$ for Business, First Class and Economy respectively. \\ 
+
+The function 
+\begin{verbatim}
+    fuselage_size_calculator.m
+\end{verbatim}
+
+accepts as inputs each class' geometry vectors, as well as a vector with the number of seats for each class, 
+and returns a dimensions vector for each class, as well as the total fuselage length. \\ 
+
+The results are the following:
+\begin{itemize}
+    \item \textit{Business Dimensions} (W X L)
+        \subitem  $\left \{4.4000, \ 6.7600 \right \} \ m$
+    \item \textit{First Class Dimensions} (W X L)
+        \subitem  $\left \{4.8000, \ 7.3600 \right \} \ m$
+    \item \textit{Economy Dimensions} (W X L)
+        \subitem  $\left \{5.1400, \ 25.2000 \right \} \ m$
+    \item \textit{Total Fuselage Length}
+        \subitem  67.304 m
+\end{itemize}
 
 \clearpage
+
 
 \subsection{Assignment 4.2\label{Assignment_4.2}}
 
 \textbf{\textit{Assignment:}} Create your Fuselage in Solidworks 
 and validate your fuselage concept
+
+\clearpage
+
+\section{Assignment 5\label{Assignment_5}}
+
+\subsection{Assignment 5.1\label{Assignment_5.1}}
+
+\textbf{\textit{Assignment:}} Select and briefly justify the most appropriate
+ tail configuration for your case study \\ \\ \\ 
+
+The conventional or inverted T-shape configuration was an immediate choice, as it's a simple, widely
+used and yet effective design. 
+
+In addition to this, as suggested by Mohammad H. Sadraey \autocite{Sadraey_Mohammad}, this traditional design is more appropriate
+for inexperienced aircraft designers. \\ 
+
+This configuration includes one horizontal tail mounted on the
+aft fuselage and one vertical tail on top of the aft fuselage.
+
+While they both deal with various stability requirements, the former handles longitudinal trim, 
+the latter handles directional trim. \\ 
+
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/tail_config.png}
+    \caption{Several tail configurations: \textbf{(a) Conventional}; (b) T-tail; (c) Cruciform; (d) H-tail;
+    (e)V-tail; (f) Y-tail; (g) Twin vertical tail; (h) Boom mounted \autocite{Sadraey_Mohammad}}
+    \label{tail_config}
+\end{figure}
+
+\clearpage
+
+\subsection{Assignment 5.2\label{Assignment_5.2}}
+
+\textbf{\textit{Assignment:}} Follow the procedure reported in these charts
+ and size your horizontal tail plane. \\ \\ \\ 
+
+As once again suggested by Mohammad H. Sadraey \autocite{Sadraey_Mohammad}, a \textit{NACA0012} profile 
+has been chosen, as it's symmetric and not excessively thick. \\ 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/NACA0012.png}
+    \caption{NACA0012 \autocite{Airfoiltools}}
+    \label{NACA0012}
+\end{figure}
+
+
+The author supplies a table with typical volume coefficients for both the horizontal and the vertical tail.
+The reference values are, of course, those for \textit{Jet Transport} aircrafts.\\ 
+
+\begin{table}[h!]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}lcc@{}}
+    \rowcolor[HTML]{9B9B9B} 
+    \textbf{Aircraft} &
+      \multicolumn{1}{l}{\cellcolor[HTML]{9B9B9B}\textbf{Horizontal tail Volume Coefficient}} &
+      \multicolumn{1}{l}{\cellcolor[HTML]{9B9B9B}\textbf{Vertical Tail Volume Coefficient}} \\
+    \rowcolor[HTML]{FFFFFF} 
+    Glider and motor glider      & 0.6 & 0.03 \\
+    \rowcolor[HTML]{EFEFEF} 
+    GA twin prop-driven engine   & 0.5 & 0.04 \\
+    \rowcolor[HTML]{FFFFFF} 
+    GA single prop-driven engine & 0.7 & 0.04 \\
+    \rowcolor[HTML]{EFEFEF} 
+    GA twin prop-driven engine   & 0.8 & 0.07 \\
+    \rowcolor[HTML]{FFFFFF} 
+    GA with canard               & 0.6 & 0.05 \\
+    \rowcolor[HTML]{EFEFEF} 
+    Agricultural                 & 0.5 & 0.04 \\
+    \rowcolor[HTML]{FFFFFF} 
+    Twin turboprop               & 0.9 & 0.08 \\
+    \rowcolor[HTML]{EFEFEF} 
+    Jet trainer                  & 0.7 & 0.06 \\
+    \rowcolor[HTML]{FFFFFF} 
+    Fighter aircraft             & 0.4 & 0.07 \\
+    \rowcolor[HTML]{EFEFEF} 
+    Fighter (with canard)        & 0.1 & 0.06 \\
+    \rowcolor[HTML]{FFFFFF} 
+    Bomber/military transport    & 1   & 0.08 \\
+    \rowcolor[HTML]{EFEFEF} 
+    Jet transport                & 1.1 & 0.09
+    \end{tabular}%
+    }
+    \caption{Typical values for horizontal and vertical tail volume coefficients \autocite{Sadraey_Mohammad}}
+    \label{tab:volume_coefficients}
+    \end{table}
+\clearpage
+
+
+ The function \autocite{Airbus_replacement_repo}
+
+\begin{verbatim}
+    tail_surface_calculator.m
+\end{verbatim}
+
+has been implemented: it evaluates the optimal distance and use it to return the wing surface, following the author's workflow. 
+
+The same function is later used to calculate the vertical wing's surface, as it takes the tail wing type as one of the inputs.
+
+The result was a $94.435 \ m^2$ surface. \\ 
+
+The Taper Ratio is recommended to be between 0.4 and 0.7, thus a value of 0.6 has been chosen.
+
+This allows for a wing span of 20 m, which is comparable to the 18 m of the A350. \\ 
+
+As for the set angle, the function \autocite{Airbus_replacement_repo}
+
+\begin{verbatim}
+    set_angle_calculator.m
+\end{verbatim}
+
+returns its value, after taking some typical wing angles as an input. The assumption made was that of horizontal
+cruise, at constant velocity. \\ 
+
+The function 
+
+\begin{verbatim}
+    horizontal_tail_aero_coefficients_calculator.m
+\end{verbatim}
+
+calculates a pair of useful aerodynamic coefficients for the tail wing, returning the following values:
+
+\begin{itemize}
+    \item ${C_{M0}^{\ (wing body)} = -0.014731} $
+    \item ${C_{L}^{\ (tail)}} = 0.069604$
+\end{itemize}
+
+
+\clearpage
+
+The sweep angles are the same as the main wing, the \textit{MAC} (Mean Aerodynamic Center) is calculated
+and the wing is plotted with the same functions implemented for the main wing [\ref{Assignment_3.1}].
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/Tail_Wing.png}
+    \caption{Horizontal Tail Wing}
+    \label{Horizontal_tail}
+\end{figure}
+
+
+\clearpage
+
+\subsection{Assignment 5.3\label{Assignment_5.3}}
+
+\textbf{\textit{Assignment:}} Follow the procedure reported in these charts
+ and size your vertical tail plane. \\ \\ \\ 
+
+The procedure for the vertical tail wing is very similar to the horizontal one and, as suggested by 
+Mohammad H. Sadraey \autocite{Sadraey_Mohammad}, the optimal distance between the \textit{MAC} and the tail
+is the same as the horizontal one.\\ 
+
+The \textit{NACA0012} \autocite{Airfoiltools} has been chosen again, mostly for its symmetry and relatively
+low thickness.\\ 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/NACA0012.png}
+    \caption{NACA0012 \autocite{Airfoiltools}}
+    \label{NACA0012_vert}
+\end{figure}
+
+The set angle is null, as the aircraft is equipped with twin engines that provide a symmetrical and 
+equally distributed thrust, unlike single front fan aircrafts, where a set angle might be used
+in order to compensate the net reaction torque generated by the single engine. 
+
+The \textit{Aspect Ratio} and the \textit{Taper Ratio} have been kept equal to those of the Airbus A350-900 \autocite{Airbus_A350-900}.
+
+As suggested by Mohammad H. Sadraey \autocite{Sadraey_Mohammad}, the highest \textit{Sweep Angle} has been
+chosen to be $35^{\circ}$, which is in line with the statistical population as well. 
+
+Using trigonometry, the other angle is geometrically calculated, with an estimated value of $10.767^{\circ}$. 
+\clearpage 
+
+With the workflow seen in section \ref{Assignment_5.2}, a wing surface of $210.51 \ m^2$ has been calculated
+and the vertical tail wing has been plotted.
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/Vertical_Wing.png}
+    \caption{NACA0012}
+    \label{vertical_wing}
+\end{figure}
+
+
+\clearpage
+
+\subsection{Assignment 5.4\label{Assignment_5.4}}
+
+\textbf{\textit{Assignment:}} Develop a CAD model 
+of the sized aircraft tail \\ \\ \\ 
+
+\clearpage
+
+\section{Assignment 6\label{Assignment_6}}
+
+\subsection{Assignment 6.1\label{Assignment_6.1}}
+
+\textbf{\textit{Assignment:}} Apply the lifting-line theory to the 3D wing model already defined
+and if necessary, indicate possible improvements to be performed to guarantee sufficient lift generation \\ \\ \\ 
+
+\clearpage
+
+
+\subsection{Assignment 6.2\label{Assignment_6.2}}
+
+\textbf{\textit{Assignment:}} Apply one of the two suggested methods and define your selected engine \\ \\ \\ 
+
+\clearpage
+
+
+
+\subsection{Assignment 6.3\label{Assignment_6.3}}
+
+\textbf{\textit{Assignment:}} Verify whether or not the propulsive characteristics of the selected 
+engine are in line with requirements and with the assumptions of the Conceptual Design \\ \\ \\ 
+
+\clearpage
+
+
+
+
+\subsection{Assignment 6.4\label{Assignment_6.4}}
+
+\textbf{\textit{Assignment:}} Create a representative CAD model 
+(Mass and Volume should be correct) \\ \\ \\ 
+
+\clearpage
+
+
+
+
+
+\subsection{Assignment 6.5\label{Assignment_6.5}}
+
+\textbf{\textit{Assignment:}} Evaluate and graphically plot the Take-off run and Take-off distance.
+Comments upon the obtained results, also comparing them 
+with the requirements set at the beginning of the design process. \\ \\ \\ 
+
+\clearpage
+
+
+
+
+
+
+\subsection{Assignment 6.6\label{Assignment_6.6}}
+
+\textbf{\textit{Assignment:}} Reproduce the BFL for your case study and plot the graphical solution. 
+Comments upon the obtained results, specifically identifying which of the initially 
+defined airports can host the operations of this aircraft. \\ \\ \\ 
+
+\clearpage
+
+
+
+
+
+
+\subsection{Assignment 6.7\label{Assignment_6.7}}
+
+\textbf{\textit{Assignment:}} Create an Assembly file encompassing: 
+fuselage, wing, empennages and engines. \\ \\ \\ 
+
+\clearpage
+
+\subsection{Assignment 6.8\label{Assignment_6.8}}
+
+\textbf{\textit{Assignment:}} Create a 3D view dimensioned drawings. \\ \\ \\ 
+
+\clearpage
+
+\subsection{Assignment 6.9\label{Assignment_6.9}}
+
+\textbf{\textit{Assignment:}} dentify the CoG location of the aircraft concept and comments
+on its weight and balance characteristics. 
+Compare it with the A350 reference configuration. \\ \\ \\ 
+
+\clearpage
+
 
 
 

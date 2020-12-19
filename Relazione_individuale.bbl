@@ -74,6 +74,26 @@
       \field{howpublished}{\url{https://www.distancefromto.net/}}
       \field{title}{DistanceFromTo}
     \endentry
+    \entry{EASA_CS25}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=e7a864088ca5cfac83bba94004eeb6e1}{%
+           family={EASA},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{e7a864088ca5cfac83bba94004eeb6e1}
+      \strng{fullhash}{e7a864088ca5cfac83bba94004eeb6e1}
+      \strng{bibnamehash}{e7a864088ca5cfac83bba94004eeb6e1}
+      \strng{authorbibnamehash}{e7a864088ca5cfac83bba94004eeb6e1}
+      \strng{authornamehash}{e7a864088ca5cfac83bba94004eeb6e1}
+      \strng{authorfullhash}{e7a864088ca5cfac83bba94004eeb6e1}
+      \field{sortinit}{E}
+      \field{sortinithash}{c554bd1a0b76ea92b9f105fe36d9c7b0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.easa.europa.eu/certification-specifications/cs-25-large-aeroplanes}}
+      \field{note}{Accessed on 2020-15-12}
+      \field{title}{CS-25}
+    \endentry
     \entry{Octave}{misc}{}
       \name{author}{2}{}{%
         {{hash=a789af59278b89f0b2c01d3480e87176}{%
