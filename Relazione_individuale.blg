@@ -1,18 +1,18 @@
 [0] Config.pm:312> INFO - This is Biber 2.15
 [0] Config.pm:315> INFO - Logfile is 'Relazione_individuale.blg'
-[49] biber:330> INFO - === Sat Dec 19, 2020, 04:50:12
-[56] Biber.pm:415> INFO - Reading 'Relazione_individuale.bcf'
-[99] Biber.pm:952> INFO - Found 14 citekeys in bib section 0
-[108] Biber.pm:4334> INFO - Processing section 0
-[114] Biber.pm:4523> INFO - Looking for bibtex format file '/home/giorgio/Bibliography/bibliography.bib' for section 0
-[115] bibtex.pm:1682> INFO - LaTeX decoding ...
-[131] bibtex.pm:1494> INFO - Found BibTeX data source '/home/giorgio/Bibliography/bibliography.bib'
-[159] Utils.pm:384> WARN - ISBN '1624104908,9781624104909' in entry 'Raymer_Daniel' is invalid - run biber with '--validate_datamodel' for details.
-[171] Utils.pm:384> WARN - ISBN '9781498776561,978-1-4987-7655-4,1498776566' in entry 'Sadraey_Mohammad' is invalid - run biber with '--validate_datamodel' for details.
-[185] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[185] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[185] Biber.pm:4162> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
-[185] Biber.pm:4168> INFO - No sort tailoring available for locale 'en-US'
-[191] bbl.pm:651> INFO - Writing 'Relazione_individuale.bbl' with encoding 'UTF-8'
-[193] bbl.pm:754> INFO - Output to Relazione_individuale.bbl
-[193] Biber.pm:128> INFO - WARNINGS: 2
+[50] biber:330> INFO - === Sun Dec 20, 2020, 03:58:30
+[58] Biber.pm:415> INFO - Reading 'Relazione_individuale.bcf'
+[102] Biber.pm:952> INFO - Found 16 citekeys in bib section 0
+[111] Biber.pm:4334> INFO - Processing section 0
+[117] Biber.pm:4523> INFO - Looking for bibtex format file '/home/giorgio/Bibliography/bibliography.bib' for section 0
+[118] bibtex.pm:1682> INFO - LaTeX decoding ...
+[136] bibtex.pm:1494> INFO - Found BibTeX data source '/home/giorgio/Bibliography/bibliography.bib'
+[165] Utils.pm:384> WARN - ISBN '1624104908,9781624104909' in entry 'Raymer_Daniel' is invalid - run biber with '--validate_datamodel' for details.
+[176] Utils.pm:384> WARN - ISBN '9781498776561,978-1-4987-7655-4,1498776566' in entry 'Sadraey_Mohammad' is invalid - run biber with '--validate_datamodel' for details.
+[195] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[195] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[195] Biber.pm:4162> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
+[195] Biber.pm:4168> INFO - No sort tailoring available for locale 'en-US'
+[202] bbl.pm:651> INFO - Writing 'Relazione_individuale.bbl' with encoding 'UTF-8'
+[205] bbl.pm:754> INFO - Output to Relazione_individuale.bbl
+[205] Biber.pm:128> INFO - WARNINGS: 2

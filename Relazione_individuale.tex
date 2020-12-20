@@ -491,7 +491,17 @@ and has been implemented into the function
 \begin{verbatim}
     thrust_weight_ROC.m
 \end{verbatim}
+
+Finally, knowing the $\frac{W}{S}$, the design \textit{MTOW} and the \textit{Thrust to Weight Ratio} at takeoff, 
+the function 
+\begin{verbatim}
+    thrust_design.m
+\end{verbatim}
+
+calculates the design \textit{Required Thrust}, which amounts to 691849 N.
+
 \clearpage
+
 \subsubsection{Design Point and Matching Chart\label{Matching_chart}}
 
 The design point has been chosen in a way that minimizes wing surface, which in turns
@@ -892,12 +902,87 @@ of the sized aircraft tail \\ \\ \\
 \textbf{\textit{Assignment:}} Apply the lifting-line theory to the 3D wing model already defined
 and if necessary, indicate possible improvements to be performed to guarantee sufficient lift generation \\ \\ \\ 
 
+Wing lift analysis is very sensitive to \textit{Taper Ratio} variations, whose value is typically between 
+0.3 and 0.4 in literature, as this range allows for the minimum \textit{Lift-induced Drag}, thus leading to 
+an optimal lift distribution. \\ 
+
+The function \autocite{Airbus_replacement_repo}
+
+\begin{verbatim}
+    lifting_line_plotter.m
+\end{verbatim}
+
+is an implementation of the \textit{Lifting line theory} and is based upon a script provided by Mohammad H. Sadraey \autocite{Sadraey_Mohammad}. 
+
+It returns the wing's \textit{Lift coefficient}, which resulted to be 0.39334 and plots the lift coefficient as a function of the semi-wingspan.
+
+The function also runs a check to verify whether the contribution of the wing to the total lift is at least $85 \%$ (the test was passed). \\ 
+
+This theory is based upon very strong assumptions and oversimplifications, which make it suitable for cruise
+conditions only. 
+
+The wing aerodynamic performance derived from this model can't therefore be used for more critical scenarios, like
+specific maneuvers, proximity to stall conditions or landing and takeoff. \\ 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.55\textwidth]{Sources/Plots_and_Pictures/Linea_Portante.png}
+    \caption{Lifting line: The result is close to an elliptical distribution, which would be the ideal case}
+    \label{lifting_line}
+\end{figure}
+
+
 \clearpage
 
 
 \subsection{Assignment 6.2\label{Assignment_6.2}}
 
 \textbf{\textit{Assignment:}} Apply one of the two suggested methods and define your selected engine \\ \\ \\ 
+
+As seen in section \ref{cruise_parameters}, the total \textit{Required Thrust} amounts to 691849 N, which
+translates to 345.924 kN per engine, in a twin engine design.\\ 
+
+Given its widespread use for this class of aircraft and its efficiency, the engine research focused on a 
+\textit{Turbofan}, rather than a \textit{Turbojet} or \textit{Turboprop}. 
+
+The chosen approach was that of looking for an already existing engine in the market, as there's plenty of available
+options that would satisfy the requirements. \\ 
+
+A great source of public domain information on all kinds of aeronautic engines is the well known \textit{ICAO}
+database on engines' emissions \autocite{ICAO_engine_database}.
+
+The database provides an exhaustive list of all sorts of engines, as well as accurate and up to date info on their market availability
+status and, of course, their key parameters, like thrust and many others. \\ 
+
+Having taken a good look at the database and having seen the typical options for aircrafts of the same family,
+the most appealing options were \textit{Rolls Royce} and \textit{General Electric} engines. \\ 
+
+After some more in depth research, the final choice was in favor of the \textit{General Electric GE90-94B}. 
+
+An essential design point is that the available thrust is higher than the required one. 
+This engine meets this vital requirement, while also being an overall reliable and high performance device. 
+
+
+\clearpage
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/engine.jpeg}
+    \caption{General Electric GE90-94B \autocite{ge90}}
+    \label{General_electric}
+\end{figure}
+
+\begin{itemize}
+    \item Overall Length: 7.283 m
+    \item Overall WIdth: 3.871 m
+    \item Overall Height: 3.952 m
+    \item Dry Weight: 7892 kg
+    \item Sea Level Static Thrust (Maximum Continuous): 402.920 kN
+    \item Fuel: Jet A
+    \item BPR: 8.33
+\end{itemize}
 
 \clearpage
 
@@ -907,6 +992,21 @@ and if necessary, indicate possible improvements to be performed to guarantee su
 
 \textbf{\textit{Assignment:}} Verify whether or not the propulsive characteristics of the selected 
 engine are in line with requirements and with the assumptions of the Conceptual Design \\ \\ \\ 
+
+As mentioned in the previous section \ref{Assignment_6.2}, the thrust requirement is met.\\
+
+Another important parameter is \textit{SFC} (Specific Fuel Consumption), which was initially supposed to be 
+$0.478 \ \frac{lb}{lbf \ h}$  ($13.54 \ \frac{mg}{N \ s}$). 
+
+The exact value for this engine wasn't readily available on the internet and different sources
+declare different values, which are, however, all comparable to the initial guess.
+
+In addition to this, the \textit{GE90} series have been notorious for having a lower \textit{SFC} 
+than their main competitors, at the time of release (November 1995).\\ 
+
+The initial concept design established the presence of twin turboengines, both mounted below the main wing.
+This engine is generally used in this configuration with aircrafts of comparable size and performance.
+
 
 \clearpage
 
@@ -930,6 +1030,32 @@ engine are in line with requirements and with the assumptions of the Conceptual 
 Comments upon the obtained results, also comparing them 
 with the requirements set at the beginning of the design process. \\ \\ \\ 
 
+Given the thrust, the number of engines, the friction, the minimum velocity and other inputs, the function \autocite{Airbus_replacement_repo}
+
+\begin{verbatim}
+    meaningful_distances_plotter.m
+\end{verbatim}
+
+returns:
+
+\begin{itemize}
+    \item Ground Roll Distance: 1000.2 m
+    \item Takeoff Run: 1350.7 m
+    \item Takeoff Distance: 1563.3 m
+\end{itemize}
+
+As suggested by the name, the function plots these distances, as well as the actual trajectory of the aircraft. \\ 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.9\textwidth]{Sources/Plots_and_Pictures/Distances.png}
+    \caption{Meaningful distances}
+    \label{distances}
+\end{figure}
+
+The only initially guessed value was a ground roll distance of 888 m (\ref{cruise_parameters}), which was clearly lower than this more accurate result.
+
 \clearpage
 
 
@@ -942,6 +1068,16 @@ with the requirements set at the beginning of the design process. \\ \\ \\
 \textbf{\textit{Assignment:}} Reproduce the BFL for your case study and plot the graphical solution. 
 Comments upon the obtained results, specifically identifying which of the initially 
 defined airports can host the operations of this aircraft. \\ \\ \\ 
+
+The function seen in the previous section \ref{Assignment_6.5} plots the \textit{BFL} as well. \\ 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.9\textwidth]{Sources/Plots_and_Pictures/BFL.png}
+    \caption{Balance Field Length}
+    \label{BFL}
+\end{figure}
 
 \clearpage
 

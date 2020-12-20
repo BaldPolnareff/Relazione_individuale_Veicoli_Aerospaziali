@@ -2223,6 +2223,11 @@
     <bcf:citekey order="39">Airfoiltools</bcf:citekey>
     <bcf:citekey order="40">Airbus_A350-900</bcf:citekey>
     <bcf:citekey order="41">Sadraey_Mohammad</bcf:citekey>
+    <bcf:citekey order="42">Airbus_replacement_repo</bcf:citekey>
+    <bcf:citekey order="43">Sadraey_Mohammad</bcf:citekey>
+    <bcf:citekey order="44">ICAO_engine_database</bcf:citekey>
+    <bcf:citekey order="45">ge90</bcf:citekey>
+    <bcf:citekey order="46">Airbus_replacement_repo</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

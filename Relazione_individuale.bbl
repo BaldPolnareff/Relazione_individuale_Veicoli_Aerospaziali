@@ -121,6 +121,27 @@
       \field{title}{GNU Octave}
       \field{year}{2020}
     \endentry
+    \entry{ge90}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=39523c9ddeb1966659f6fa54ba128848}{%
+           family={Electric},
+           familyi={E\bibinitperiod},
+           given={General},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{39523c9ddeb1966659f6fa54ba128848}
+      \strng{fullhash}{39523c9ddeb1966659f6fa54ba128848}
+      \strng{bibnamehash}{39523c9ddeb1966659f6fa54ba128848}
+      \strng{authorbibnamehash}{39523c9ddeb1966659f6fa54ba128848}
+      \strng{authornamehash}{39523c9ddeb1966659f6fa54ba128848}
+      \strng{authorfullhash}{39523c9ddeb1966659f6fa54ba128848}
+      \field{sortinit}{E}
+      \field{sortinithash}{c554bd1a0b76ea92b9f105fe36d9c7b0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.geaviation.com/commercial/engines/ge90-engine}}
+      \field{title}{General Electric GE90 Series}
+    \endentry
     \entry{Gnome_maps}{misc}{}
       \name{author}{1}{}{%
         {{hash=41439715a59be0104628a93b484b05f7}{%
@@ -141,6 +162,26 @@
       \field{labeltitlesource}{title}
       \field{howpublished}{\url{https://wiki.gnome.org/Apps/Maps}}
       \field{title}{GNOME Maps}
+    \endentry
+    \entry{ICAO_engine_database}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=4c8229ed0cbcf3a14a58fbf654dcab94}{%
+           family={ICAO},
+           familyi={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{4c8229ed0cbcf3a14a58fbf654dcab94}
+      \strng{fullhash}{4c8229ed0cbcf3a14a58fbf654dcab94}
+      \strng{bibnamehash}{4c8229ed0cbcf3a14a58fbf654dcab94}
+      \strng{authorbibnamehash}{4c8229ed0cbcf3a14a58fbf654dcab94}
+      \strng{authornamehash}{4c8229ed0cbcf3a14a58fbf654dcab94}
+      \strng{authorfullhash}{4c8229ed0cbcf3a14a58fbf654dcab94}
+      \field{sortinit}{I}
+      \field{sortinithash}{9417e9a1288a9371e2691d999083ed39}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.easa.europa.eu/domains/environment/icao-aircraft-engine-emissions-databank}}
+      \field{title}{ICAO Aircraft Engine Emissions Databank}
+      \field{year}{2020}
     \endentry
     \entry{Open_Street_Map}{misc}{}
       \field{sortinit}{O}
