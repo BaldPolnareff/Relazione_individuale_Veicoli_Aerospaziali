@@ -163,7 +163,7 @@ close all
 
         CL_max_takeoff = 2.5;
         CL_takeoff = CL_max_takeoff / 1.21;
-        CD_0_takeoff = 0.075 + 2;
+        CD_0_takeoff = 0.075 + 0.02;
         ROC = 3000 * 0.00508;                                               % [m/s]
 
         % Rapporto peso-spinta in base al Take Off Parameter
