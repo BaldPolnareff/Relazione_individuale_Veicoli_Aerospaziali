@@ -122,12 +122,13 @@ close all
 
         CL_max = 2.8;
         sigma_0 = 1;
+        sigma = 0.26;
         W_S = wing_load_distribution (rho_0, stall_velocity, CL_max);   % [kg/m²]
         figure()
         hold on
         line("xdata", [W_S, W_S], "ydata", [-1000, 1000], "linewidth", 2)
         hold on 
-        line("xdata", [-1000, 1000], "ydata", [1 / (sigma_0 * Efficienza_max), 1 / (sigma_0 * Efficienza_max)], "linewidth", 3)
+        line("xdata", [-1000, 1000], "ydata", [1 / (sigma * Efficienza_max), 1 / (sigma * Efficienza_max)], "linewidth", 3)
         xlabel('W/S [kg/m²]')
         ylabel('T/W')
         title('Matching Chart') 

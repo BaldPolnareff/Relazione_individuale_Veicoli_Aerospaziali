@@ -69,16 +69,21 @@ reported in Sect.1.4
     \item Max Payload: over 50 metric tonnes
     \item Number of engines: 2
 \end{itemize}
-\pagebreak
+
+The market analysis took several competitors into account, aiming to give birth to a brand new product, with overall improvements
+in performance, while also focusing on environmental sustainability and cost reduction, whenever possible. \\ 
+\clearpage 
 \textbf{Operational requirements\label{Operational_requirements}}
 \begin{itemize}
     \item Cruise altitude: 10 - 13 km
     \item Turn around time: under 60 mins
-    \item Takeoff distance: under 1 km
+    \item Takeoff distance: under 2 km
     \item Landing distance: under 2.5 km
     \item Rate of climb: 3000 ft/min (Initial climb)
     \item Ceiling: 13.15 km (FL431)
 \end{itemize}
+
+The mission analysis and its breaking down into phases aimed to identify certain vital \textit{operational requirements} that need to be satisfied. \\ \\ 
 
 \textbf{Analysis of applicable regulations\label{Analysis_applicable_regulations}}
 \begin{itemize}
@@ -88,7 +93,18 @@ reported in Sect.1.4
     %\item N max in condizioni operative: 2.5
     %\item N min in condizioni operative: -1
 \end{itemize}
-\pagebreak
+
+Any aircraft is tightly bound to strict regulations (especially when it comes to safety), during all stages of its design, 
+manufacturing and production, operation and maintenance, retirement and disposal.
+
+These regulations include, among many others, limits regarding noise pollution.
+
+For a large jet transport, the regulations to refer to (in Europe) are the \textit{CS-25} from \textit{EASA} \autocite{EASA_CS25}.
+
+Considering that the aircraft is supposed to be released in the year 2030, one thing to notice
+is the fact that regulations might receive updates, especially those concerning emissions and environmental sustainability in general.
+
+\clearpage
 \subsection{Assignment 1.2\label{Assignment_1.2}}
 \textbf{Assignment}: On the basis of the list of Requirements elicited
 in the previous step, identify a good list of reference aircraft and
@@ -96,7 +112,9 @@ collect data to be used as meaningful statistical population.\\ \\ \\
 
 Several commercial aicrafts from \textit{Airbus} and \textit{Boeing} have been chosen, with
 the goal of having a statistical population to compare to in mind, as well as a reference list for 
-inspiration with consolidated concept designs and technologies.\\
+inspiration with consolidated concept designs and technologies.
+The statistical sample includes some aircrafts that are not strictly comparable in size to the A350, as this
+creates a more varied population, as well as outliars, to better represent a wider \textit{jet transport} category.\\
 Acquiring all the data for the entire population was not easy, as their availability is scattered and varies from source
 to source.\\
 Despite the overall scarcity of clear, organized and transparent information, a significant amount of statistically meaningful
@@ -241,14 +259,25 @@ literature (e.g. Raymer) or suggest improvements to the simple
 mathematical models (e.g. updates of coefficients).\\ \\ \\ 
 
 Among all of the acquired data, the \textit{Empty Mass Fraction} is a particularly significant
-statistical trend. \\
-The raw data trend has been comparatively plot in the script, along with an improved algorithm, 
-proposed by \textit{Daniel P. Raymer} \autocite{Raymer_Daniel}.
+statistical trend, as it allows a preliminary guess on the involved masses. \\
+
+This fraction is the ratio between \textit{Empty Mass} and \textit{MTOW}, driven by coefficients A = 1.3485
+and b = -0.0782, as follows:
+\begin{equation}
+    \phantomsection
+    \label{empty_mass_fraction_equation}
+    \frac{M_e}{MTOW} = A\cdot MTOW^{b} 
+\end{equation}
+
+The raw data trend has been comparatively plot in the script, along with the mentioned improved algorithm, 
+proposed by \textit{Daniel P. Raymer} \autocite{Raymer_Daniel}, with the only difference that
+the coefficients have been calculated by interpolation of the expanded statistical population, since
+the ones given in the book (published in 1992) were not adequate for more modern aircrafts.
 
 \begin{figure}[h!]
     \phantomsection
     \centering
-    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/Empty_mass_trend.png}\\
+    \includegraphics[width=0.9\textwidth]{Sources/Plots_and_Pictures/Empty_mass_trend.png}\\
     \label{Empty_mass_trend}
     \caption{\textit{Empty Mass Trend}}
 \end{figure} 
@@ -256,7 +285,7 @@ proposed by \textit{Daniel P. Raymer} \autocite{Raymer_Daniel}.
 As clearly visible, the improved trend is substantially more in line with the acquired data.
 
 
-\pagebreak
+\clearpage
 \subsection{Assignment 1.4\label{Assignments_1.4}}
 \textbf{Assignment}: \textit{Guess data estimation for the reference
 case study}. Apply the original or improved statistical trends to
@@ -271,18 +300,111 @@ The entire calculation is made assuming a range of 11 km and a maximum range of 
 a 50 metric tonnes design payload, with the awareness that a lighter payload might be necessary
 in order to improve range.\\ \\
 The function \begin{verbatim} mtow_range_plotter.m \end{verbatim} takes a guess \textit{MTOW} value as one of its inputs, generates some mass coefficients,
-elaborates and uses them to finally return the desired \textit{MTOW} as one of its outputs (see repository \autocite{Airbus_replacement_repo} for the implementation).\\ 
-The function also plots the MTOW as a function of the range.\\
-One issue that has been immediately noticed is an instability with the plot around 15000 km,
-therefore a compromise payload of 40 metric tonnes has been used for this specific plot, in order to 
-get a more accurate visualization. \\ 
+elaborates and iteratively solves the equation
+
+\begin{equation}
+    \phantomsection
+    \label{mtow_esitmate_equation}
+    \frac{m_{crew} + m_{payload}}{1 - \frac{m_{fuel}}{MTOW} - \frac{m_{empty}}{MTOW}} 
+\end{equation}
+
+in order to return the desired \textit{MTOW} as one of its outputs (see repository \autocite{Airbus_replacement_repo} for the implementation).\\ 
+
+The mass of the crew is estimated to be 680 kg, with a crew of 8 (according to \textit{CS-25} \autocite{EASA_CS25} there should be two crew members for each emergency exit, see section \ref{Assignment_4.1}) and an average human mass of 85 kg.
+
+
+The mass of the payload is, as established by design, 50 metric tonnes, the \textit{Empty Mass Fraction} was calculated in 
+equation (\ref{empty_mass_fraction_equation}). 
+
+As for the \textit{Fuel Mass Ratio} coefficients, a standard mission profile has been used, such that:
+
 \begin{figure}[h!]
     \centering
     \phantomsection
-    \includegraphics[width=0.7\textwidth]{Sources/Plots_and_Pictures/MTOW_range.png}
+    \includegraphics[width=0.7\textwidth]{Sources/Plots_and_Pictures/standard_mission_profile.png}
+    \label{mission_profile}
+    \caption{Standard Mission Profile \autocite{standardmission_profile}}
+\end{figure}
+
+\clearpage
+
+\begin{equation}
+    \phantomsection
+    \label{fuel_mass_equation_phase1}
+    \frac{m_{fuel1}}{MTOW} = 0.97
+\end{equation}
+
+\begin{equation}
+    \phantomsection
+    \label{fuel_mass_equation_phase2}
+    \frac{m_{fuel2}}{m_{fuel1}} = 0.985
+\end{equation}
+
+\begin{equation}
+    \phantomsection
+    \label{fuel_mass_equation_phase3}
+    \frac{m_{fuel3}}{m_{fuel2}} = e^{- \frac{R \cdot sfc}{v\left(\frac{L}{D}\right) }}
+\end{equation}
+
+\begin{equation}
+    \phantomsection
+    \label{fuel_mass_equation_phase4}
+    \frac{m_{fuel4}}{m_{fuel3}} = 0.985
+\end{equation}
+
+\begin{equation}
+    \phantomsection
+    \label{fuel_mass_equation_phase5}
+    \frac{m_{fuel5}}{m_{fuel4}} = 0.995
+\end{equation}
+
+\begin{equation}
+    \phantomsection
+    \label{fuel_mass_equation_final}
+    \frac{m_{fuel5}}{MTOW} = \prod {ratio_i} = 0.6335
+\end{equation}
+
+\begin{equation}
+    \phantomsection
+    \label{fuel_mass_equation_final_corrected}
+    \frac{m_{fuel}}{MTOW} = 1.06 \cdot \left(1 - \frac{m_{fuel5}}{MTOW}\right) = 0.3888 
+\end{equation}
+
+
+In equation (\ref{fuel_mass_equation_phase3}):
+
+\begin{itemize}
+    \item $R = 11000 \ km$ (range)
+    \item $sfc = 0.478 \frac{lb}{lbf \cdot h} $ (specific fuel consumption)
+    \item $v = M \cdot \sqrt{\gamma RT} = 916272 \frac{m}{h} $ (cruise speed)
+    \item $\left(\frac{L}{D}\right)_{max}  = k_{LD} \cdot \sqrt{A_w} = 20$ (maximum flight efficiency)
+    \begin{itemize}
+        \item $k_{LD} = 15.5$ (value for jet transports \autocite{Raymer_Daniel})
+        \item $A_w = \frac{AR}{\frac{S_{wet}}{S_{ref}}} = 1.5833$ (wetted aspect ratio \autocite{Raymer_Daniel})
+    \end{itemize}
+\end{itemize}
+
+Equation (\ref{fuel_mass_equation_final}) is the raw fuel ratio, which is corrected in equation (\ref{fuel_mass_equation_final_corrected})
+by taking into account a 6 \% residual fuel, as suggested by Daniel P. Raymer \autocite{Raymer_Daniel}.\\ 
+
+With an initial \textit{MTOW} guess of 275 metric tonnes (same as the A350 \autocite{Airbus_A350-900}), the 
+final design MTOW resulted to be 282024 kg.
+
+\clearpage 
+
+The function finally plots the MTOW as a function of the range.\\
+
+
+\begin{figure}[h!]
+    \centering
+    \phantomsection
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/MTOW_range.png}
     \label{MTOW_Range}
     \caption{MTOW-Range}
 \end{figure}
+
+
+
 \clearpage
 Similarly, with the function \autocite{Airbus_replacement_repo}
 \begin{verbatim}
@@ -297,7 +419,7 @@ range of 11000 km first, then with the maximum range of 15000 km, as pictured be
     \centering
     \phantomsection
     \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/MTOW_payload.png}
-    \label{MTOW_Payload_11}
+    \label{fig:MTOW_Payload_11}
     \caption{MTOW-Payload (11000 km)}
 \end{figure}
 \clearpage
@@ -308,10 +430,12 @@ range of 11000 km first, then with the maximum range of 15000 km, as pictured be
     \label{MTOW_Payload_15}
     \caption{MTOW-Payload (15000 km)}
 \end{figure}
-As you can see, there are areas where the function drops to a null value,
+As you can see, there are some areas of instability, where the function drops to a null value,
 but that's because the MTOW ceases to have a physical meaning above or below certain
-thresholds, depending on the input parameters. \\ 
-However there seems to be a convergence slightly above 40 metric tonnes.
+thresholds, depending on the input parameters and function implementation. \\ 
+The overall trend of figures (\ref{fig:MTOW_Payload_11}, \ref{MTOW_Payload_15}) should be linear, while
+there should be no lower discontinuity in the 11000 km plot.
+However there seems to be a common discontinuity point, slightly above 400 metric tonnes.
 \clearpage
 
 \section{Assignment 2\label{Assignment_2}}
@@ -356,13 +480,24 @@ a randomized color palette.
 \end{figure}
 \clearpage
 
-As expected, the same fuel conditions for each sample case will produce the same slopes for each segment; moreover a higher
+As expected, the same fuel conditions for each sample case will produce a similar linear trend for each segment; moreover a higher
 payload implies a higher MTOW (provided that all other factors are equalized), which in turn will reduce total range.\\ 
 More precisely, the surface subtended by each segment defines three different areas (from left to right respectively) [\ref{Payload_Range}]:
 \begin{itemize}
-    \item Maximum payload
-    \item Tradeoff between fuel and payload
-    \item Tradeoff between payload and range
+    \item \textit{Maximum payload}: \\ 
+        In this area, payload mass is constant at its maximum value (50 metric tonnes), while fuel tanks are
+        filled until the highest MTOW is reached. 
+        \begin{equation}
+            \phantomsection
+            m_{fuel} = MTOW - A \cdot MTOW^{b+1} - m_{crew} - m_{payload}
+            \label{payload_range_fuel_mass}
+        \end{equation}
+    \item \textit{Tradeoff between fuel and payload}: \\ 
+        The highest MTOW has been reached, however there's still space left in the tanks for more fuel.
+        The MTOW should not vary, thus the fuel capacity can be increased at the expense of the payload mass.
+    \item \textit{Tradeoff between payload and range}: \\ 
+        Since the MTOW can't vary and the fuel tanks are completely full, the only way to increase range is cutting down
+        on some payload mass.
 \end{itemize}
 
 With a maximum design range of 15000 km and a starting payload of 50 metric tonnes, 
@@ -371,7 +506,7 @@ In order to achieve that range, some payload capacity needs to be sacrificed for
 However, with a minimum goal range of 11000 km, there is still is a chance to use the highest payload possible,
 while increasing fuel, as that range falls within the first segment area. \\ 
 It turns out that even the Airbus A350-900 XWB (which is the target retiring aircraft) declares
-a maximum range of 15000 km; however, this range is not reached at maximum payload \autocite{Airbus_A350-900}.
+a maximum range of 15000 km; however, taking a deeper look at the data, this range is not reached at maximum payload \autocite{Airbus_A350-900}.
 
 \pagebreak
 \subsection{Assignment 2.3\label{Assignment_2.3}}
@@ -459,10 +594,20 @@ The route has then been drawn on the map below, using \textit{GIMP} \autocite{GI
 
  \subsubsection{Stall Velocity\label{stall_velocity}}
 
- Stall velocity is calculated by dividing
- the approach velocity by 1.3 (as described by regulations). \\ 
- The approach velocity is guessed by comparison with similar aicrafts, as suggested by Daniel P. Raymer \autocite{Raymer_Daniel}.\\ 
- A value of 145 knots has been chosen, as it's in between the A350-900 and A350-1000.\\ 
+ Stall velocity has been derived from the \textit{Wing Load} equation: 
+
+ \begin{equation}
+     \phantomsection
+     \label{wing_load_equation}
+     \frac{W}{S} = \frac{1}{2} \rho V^{2}_{stall} C_{L_{max}} 
+ \end{equation}
+ 
+ 
+ It has been calculated by dividing
+ the approach velocity by 1.3, as this safety factor takes into account possible \textit{wind shear} phenomena (as described by Daniel P. Raymer \autocite{Raymer_Daniel}). \\ 
+ The approach velocity has been guessed by comparison with similar aircrafts, as suggested again by the author.\\ 
+ A value of 145 knots ($74.59444 \ m/s$) has been chosen, as it's in between the A350-900 and A350-1000.\\ 
+ Density is assumed to be $\rho = 1.225 \frac{kg}{m^3}$ (sea level). \\ 
 
  \subsubsection{Key cruise parameters\label{cruise_parameters}}
 
@@ -483,14 +628,29 @@ Using the design \textit{MTOW}, the estimated wing surface is $489.97 \ m^2$. \\
 
 It is crucial that the wing load's numerator is converted to \textit{N}, in order to get a dimensionless
 Thrust to Weight ratio.\\ 
-The ratio is calculated for the maximum cruise speed, by the function 
+\begin{equation}
+    \phantomsection
+    \label{thrust_weight_equation}
+    \frac{T}{W} = \frac{\rho_0 V^{2}_{max}C_{D_{0}}}{2\frac{W}{S}} + \frac{2KW}{\rho \sigma S V^{2}_{max}}
+\end{equation}
+
+In equation (\ref{thrust_weight_equation}):
+\begin{itemize}
+    \item $V_{max} = 1.25 \ V_{cruise} = 318.15 \ m/s$
+    \item $\sigma = \frac{\rho}{\rho_0} = 0.2607$
+    \item $C_{D_{0}} = 0.015$ (value for \textit{jet transport} \autocite{Sadraey_Mohammad})
+    \item $K = \frac{1}{\pi e AR}$
+        \begin{itemize}
+            \item $e = 0.92$ (\textit{Oswald efficiency number})
+            \item $AR = 9$ (Design \textit{Aspect Ratio})
+        \end{itemize}
+\end{itemize}
+
+The ratio is calculated for the maximum cruise speed condition, by the function 
 \begin{verbatim}
     thrust_weight_max_speed.m
 \end{verbatim}
 
-
-
-\clearpage
 
 The ratio is then calculated by taking the \textit{TOP} (Take Off Parameter) into account, by the function 
 \begin{verbatim}
@@ -498,17 +658,69 @@ The ratio is then calculated by taking the \textit{TOP} (Take Off Parameter) int
 \end{verbatim}
 which takes the lift coefficient at takeoff as an input.\\ 
 
-The \textit{TOP} is estimated to be around $230 \ \frac{lbs}{ft^2}$, with a \textit{ground roll distance}
+The \textit{TOP} is a takeoff parameter, strictly correlated with the \textit{Takeoff Run} (see section \ref{Assignment_6.5}) and associated
+with the \textit{Thrust to Weight ratio} by the equation:
+
+\begin{equation}
+    \phantomsection
+    \label{thrust_weight_equation_TOP}
+    \frac{W}{S} = \left(TOP\right)\sigma C_{L_{TO}} \frac{T}{W} 
+\end{equation}
+
+The \textit{TOP} is estimated to be around $230 \ \frac{lbs}{ft^2}$ ($1114.1 \ \frac{kg}{m^2}$), with a \textit{ground roll distance}
 of 3000 ft (888 m) and a 1.7 times higher \textit{over 50 feet distance}.\\ 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.5\textwidth]{Sources/Plots_and_Pictures/TOP.png}
+    \caption{Takeoff Distance - TOP \autocite{Raymer_Daniel}}
+    \label{TOP}
+\end{figure}
 As suggested by Jan Roskam \autocite{Roskam}, the lift coefficient at takeoff is the maximum lift coefficient
 divided by a factor of 1.21. \\ 
 
-Another equation for the Thrust to Weight ratio is based on the \textit{ROC} (Rate Of Climb), 
-and has been implemented into the function
+Another equation for the Thrust to Weight ratio is based on the \textit{ROC} (Rate Of Climb):
+
+\begin{equation}
+    \phantomsection
+    \label{ROC}
+    \frac{T}{W} = \frac{ROC}{\sqrt{\frac{2\frac{W}{S}}{\rho \sqrt{\frac{C_{D0_{TO}}}{K}}}}} + \frac{1}{\left(\frac{L}{D}_{max}\right)}
+\end{equation}
+
+In equation (\ref{ROC}):
+
+\begin{itemize}
+    \item $ROC = 3000 \ ft/min (15.24 \ m/s)$ 
+    \item $C_{D0_{TO}} = 0.0950$ (with landing gear and high-lift devices \autocite{Raymer_Daniel})
+\end{itemize}
+
+It has been implemented into the function
 
 \begin{verbatim}
     thrust_weight_ROC.m
 \end{verbatim}
+
+which takes the \textit{ROC} as one of its inputs. \\ 
+
+The \textit{ceiling}, which is the altitude with a $ROC = 0$ has been plot with the built-in 
+\textit{line()} function and was derived from the equation:
+
+\begin{equation}
+    \phantomsection
+    \label{ceiling_equation}
+    \frac{T}{W} = \frac{1}{\sigma_c \left(\frac{L}{D}\right)_{max}}
+\end{equation}
+
+In equation (\ref{ceiling_equation}:)
+
+\begin{itemize}
+    \item $\sigma_c = \frac{\rho_c}{\rho_0} = 0.2537$
+        \begin{itemize}
+            \item $\rho_c = 0.311 \frac{kg}{m^3}$
+            \item $\rho_0 = 1.225 \frac{kg}{m^3}$
+        \end{itemize}
+\end{itemize}
 
 Finally, knowing the $\frac{W}{S}$, the design \textit{MTOW} and the \textit{Thrust to Weight Ratio} at takeoff, 
 the function 
@@ -522,11 +734,11 @@ calculates the design \textit{Required Thrust}, which amounts to 691849 N.
 
 \subsubsection{Design Point and Matching Chart\label{Matching_chart}}
 
-The design point has been chosen in a way that minimizes wing surface, which in turns
+The design point has been chosen in a way that minimizes wing surface, which in turn
 increases the necessary thrust.
 
 However, since the available thrust of the chosen engine is substantially higher than initially
-planned, the tradeoff is acceptable.
+planned, the tradeoff is acceptable (see section \ref{Assignment_6.2}).
 
 \begin{figure}[h!]
     \phantomsection
@@ -544,6 +756,17 @@ planned, the tradeoff is acceptable.
 \textbf{\textit{Assignment:}} Following the procedure suggested in the previous charts,
 and on the basis of the parameters estimated in previous assignments,
 define your own wing airfoil. \\ \\ \\ 
+
+A \textit{Low Wing} architecture has been chosen, as it's standard with \textit{jet transport} airplanes,
+since it provides the best compromise between overall performance and aerodynamic performance.\\ 
+
+Desired targets for the profile research were: 
+
+\begin{itemize}
+    \item Avoiding \textit{Sharp Leading Edge} profiles, which are not optimized for high-subsonic flights
+    \item Looking for \textit{Double Cambered} profiles, which perform better than flat lower-profile airfoils
+    \item Maximizing the $\left(\frac{t}{c}\right)_{max}$, within reason, in order to increase inner wing volume for subsystems or fuel tanks.
+\end{itemize}
 
 Initially, the profile that was opted for was the \textit{GOE 682}, with a 30 degrees sweep angle, 
 as suggested by Daniel P. Raymer \autocite{Raymer_Daniel}.
@@ -563,12 +786,28 @@ a 0.9 and 0.4 lift coefficient contribution for flaps and slats, respectively (a
 \begin{figure}[h!]
     \phantomsection
     \centering
-    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/NACA1412.png}
+    \includegraphics[width=0.9\textwidth]{Sources/Plots_and_Pictures/NACA1412.png}
     \caption{NACA1412}
     \label{NACA1412}
 \end{figure}
 \clearpage
 
+This profile satisfied all of the following requirements:
+
+\begin{itemize}
+    \item $C_{L_c} = \frac{2W_{mean}}{\rho V_c S} = 0.4371$ (\textit{Ideal cruise lift coefficient})
+    \item $C_{L_cw} = \frac{C_{L_c}}{k_w} = 0.4601$ (\textit{Wing lift coefficient})
+        \begin{itemize}
+            \item $k_w = 0.95$
+        \end{itemize}
+    \item $C_{L_i} = \frac{C_{L_cw}}{k_a}$ (\textit{Wing airfoil ideal lift coefficient})
+        \begin{itemize}
+            \item $k_a = 0.95$
+        \end{itemize}
+    \item $C_{L_{max}} = \frac{2W_{TO}}{\rho_0 (1.1 \ V_s)^2S} = 2.3140$ (\textit{Aircraft maximum lift coefficient})
+\end{itemize}
+
+\clearpage
 The function \autocite{Airbus_replacement_repo} 
 \begin{verbatim}
     max_gross_lift_coeff_calculator.m
@@ -593,6 +832,14 @@ plots the wing profile, as seen from an above POV, while also returning a \texti
 The function is also used later on to plot the tail wings, as it requires the type of wing to plot as one of its inputs.\\
 \clearpage
 
+
+
+\subsection{Assignment 3.2\label{Assignment_3.2}}
+
+\textbf{\textit{Assignment:}} Once the airfoil has been selected, look for reference materials
+showing aerodynamic coefficients trends. 
+Are they in line with your expectations (and requirements)? \\ \\ \\ 
+
 As the highest \textit{Reynolds} given by \textit{Airfoiltools} is $10^6$, a comparative check on the 
 actual \textit{Reynolds} should be run, in order to see whether the values given by the website are 
 accurate or not.\\ 
@@ -601,7 +848,9 @@ function \autocite{Airbus_replacement_repo}
 \begin{verbatim}
     mean_aerodynamic_center.m
 \end{verbatim}
-which is based on an approximation given by Daniel P. Raymer \autocite{Raymer_Daniel}. \\ 
+which is based on an approximation given by Daniel P. Raymer \autocite{Raymer_Daniel}. \\
+
+The result is $MAC = 8.0336 \ m$ \\ 
 
 Then, the current \textit{Reynolds} is compared to the maximum value given by the website, by the function
 
@@ -611,14 +860,6 @@ Then, the current \textit{Reynolds} is compared to the maximum value given by th
 
 As hoped, the values are not too different, thus validating the rest of the data.\\ 
 \clearpage
-
-\subsection{Assignment 3.2\label{Assignment_3.2}}
-
-\textbf{\textit{Assignment:}} Once the airfoil has been selected, look for reference materials
-showing aerodynamic coefficients trends. 
-Are they in line with your expectations (and requirements)? 
-
-
 
 \clearpage
 
@@ -753,15 +994,15 @@ the latter handles directional trim. \\
 \textbf{\textit{Assignment:}} Follow the procedure reported in these charts
  and size your horizontal tail plane. \\ \\ \\ 
 
-As once again suggested by Mohammad H. Sadraey \autocite{Sadraey_Mohammad}, a \textit{NACA0012} profile 
-has been chosen, as it's symmetric and not excessively thick. \\ 
+As once again suggested by Mohammad H. Sadraey \autocite{Sadraey_Mohammad}, a \textit{NACA0009} profile 
+has been chosen, as it's symmetric and not excessively thick, compared to the main wing profile. \\ 
 
 \begin{figure}[h!]
     \phantomsection
     \centering
-    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/NACA0012.png}
-    \caption{NACA0012 \autocite{Airfoiltools}}
-    \label{NACA0012}
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/NACA0009.png}
+    \caption{NACA0009 \autocite{Airfoiltools}}
+    \label{NACA0009}
 \end{figure}
 
 
@@ -872,15 +1113,15 @@ The procedure for the vertical tail wing is very similar to the horizontal one a
 Mohammad H. Sadraey \autocite{Sadraey_Mohammad}, the optimal distance between the \textit{MAC} and the tail
 is the same as the horizontal one.\\ 
 
-The \textit{NACA0012} \autocite{Airfoiltools} has been chosen again, mostly for its symmetry and relatively
+The \textit{NACA0009} \autocite{Airfoiltools} has been chosen again, mostly for its symmetry and relatively
 low thickness.\\ 
 
 \begin{figure}[h!]
     \phantomsection
     \centering
-    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/NACA0012.png}
-    \caption{NACA0012 \autocite{Airfoiltools}}
-    \label{NACA0012_vert}
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/NACA0009.png}
+    \caption{NACA0009 \autocite{Airfoiltools}}
+    \label{NACA0009_vert}
 \end{figure}
 
 The set angle is null, as the aircraft is equipped with twin engines that provide a symmetrical and 
@@ -902,7 +1143,7 @@ and the vertical tail wing has been plotted.
     \phantomsection
     \centering
     \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/Vertical_Wing.png}
-    \caption{NACA0012}
+    \caption{NACA0009}
     \label{vertical_wing}
 \end{figure}
 

@@ -300,6 +300,13 @@
       \field{title}{Aircraft performance : An Engineering Approach}
       \field{year}{2017}
     \endentry
+    \entry{standardmission_profile}{misc}{}
+      \field{sortinit}{S}
+      \field{sortinithash}{c319cff79d99c853d775f88277d4e45f}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.researchgate.net/figure/The-Simple-Mission-Profile-of-a-Regional-Jet-Aircraft_fig12_297758919}}
+      \field{title}{Standard Mission Profile}
+    \endentry
     \entry{Airbus_replacement_repo}{misc}{}
       \name{author}{1}{}{%
         {{hash=f1135c1601dac8fe71e92c62c7736132}{%
