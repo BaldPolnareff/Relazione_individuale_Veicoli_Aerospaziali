@@ -142,6 +142,28 @@
       \field{howpublished}{\url{https://www.geaviation.com/commercial/engines/ge90-engine}}
       \field{title}{General Electric GE90 Series}
     \endentry
+    \entry{libreoffice}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=8adbc933356338dcb1f13331a1ad17c6}{%
+           family={Foundation},
+           familyi={F\bibinitperiod},
+           given={The\bibnamedelima Document},
+           giveni={T\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \strng{namehash}{8adbc933356338dcb1f13331a1ad17c6}
+      \strng{fullhash}{8adbc933356338dcb1f13331a1ad17c6}
+      \strng{bibnamehash}{8adbc933356338dcb1f13331a1ad17c6}
+      \strng{authorbibnamehash}{8adbc933356338dcb1f13331a1ad17c6}
+      \strng{authornamehash}{8adbc933356338dcb1f13331a1ad17c6}
+      \strng{authorfullhash}{8adbc933356338dcb1f13331a1ad17c6}
+      \field{extraname}{1}
+      \field{sortinit}{F}
+      \field{sortinithash}{fb0c0faa89eb6abae8213bf60e6799ea}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.libreoffice.org/}}
+      \field{title}{LibreOffice Suite}
+    \endentry
     \entry{Gnome_maps}{misc}{}
       \name{author}{1}{}{%
         {{hash=41439715a59be0104628a93b484b05f7}{%
@@ -156,6 +178,7 @@
       \strng{authorbibnamehash}{41439715a59be0104628a93b484b05f7}
       \strng{authornamehash}{41439715a59be0104628a93b484b05f7}
       \strng{authorfullhash}{41439715a59be0104628a93b484b05f7}
+      \field{extraname}{2}
       \field{sortinit}{F}
       \field{sortinithash}{fb0c0faa89eb6abae8213bf60e6799ea}
       \field{labelnamesource}{author}

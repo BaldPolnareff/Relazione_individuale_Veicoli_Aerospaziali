@@ -796,6 +796,9 @@ This profile satisfied all of the following requirements:
 
 \begin{itemize}
     \item $C_{L_c} = \frac{2W_{mean}}{\rho V_c S} = 0.4371$ (\textit{Ideal cruise lift coefficient})
+        \begin{itemize}
+            \item $W_{mean} = \frac{W_{startcruise}+W_{endcruise}}{2}$
+        \end{itemize}
     \item $C_{L_cw} = \frac{C_{L_c}}{k_w} = 0.4601$ (\textit{Wing lift coefficient})
         \begin{itemize}
             \item $k_w = 0.95$
@@ -805,31 +808,20 @@ This profile satisfied all of the following requirements:
             \item $k_a = 0.95$
         \end{itemize}
     \item $C_{L_{max}} = \frac{2W_{TO}}{\rho_0 (1.1 \ V_s)^2S} = 2.3140$ (\textit{Aircraft maximum lift coefficient})
+    \item $C_{L_{max_{w}}} = \frac{C_{L_{max}}}{k_w} = 2.4358$ (\textit{Wing maximum lift coefficient})
+    \item $C_{l_{maxgross}} = \frac{C_{L_{max_{w}}}}{k_a} = 2.7065$ (\textit{Airfoil maximum gross lift coefficient}) \\ \\ 
+        Calculated by the function \autocite{Airbus_replacement_repo} 
+        \begin{verbatim}
+            max_gross_lift_coeff_calculator.m
+        \end{verbatim}
+
+    \item $C_{l_{max}} = C_{l_{maxgross}} - \Delta C_{l_{HLD}} = 1.4065$ (\textit{Wing airfoil net maximum lift coefficient})
+        \begin{itemize}
+            \item $\Delta C_{l_{HLD}} = \Delta C_{l_{FLAP}} + \Delta C_{l_{SLAT}} = 1.3$
+        \end{itemize}
 \end{itemize}
 
-\clearpage
-The function \autocite{Airbus_replacement_repo} 
-\begin{verbatim}
-    max_gross_lift_coeff_calculator.m
-\end{verbatim}
-calculates the \textit{gross lift coefficient}.\\
 
-Given an \textit{Aspect Ratio} of 9, the wing surface and its \textit{sweep angles} of $ \{29, 18 \} \ deg$,
-the function 
-\begin{verbatim}
-    wing_profile_plotter.m
-\end{verbatim}
-plots the wing profile, as seen from an above POV, while also returning a \textit{Taper Ratio} of 0.31915.\\ 
-
-\begin{figure}[h!]
-    \phantomsection
-    \centering
-    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/Main_Wing.png}
-    \caption{Main Wing}
-    \label{Main_wing}
-\end{figure}
-
-The function is also used later on to plot the tail wings, as it requires the type of wing to plot as one of its inputs.\\
 \clearpage
 
 
@@ -859,20 +851,97 @@ Then, the current \textit{Reynolds} is compared to the maximum value given by th
 \end{verbatim}
 
 As hoped, the values are not too different, thus validating the rest of the data.\\ 
-\clearpage
 
 \clearpage
 
 \subsection{Assignment 3.3\label{Assignment_3.3}}
 
 \textbf{\textit{Assignment:}} Once the wing airfoil is selected, please, 
-try to identify the main parameters for a 3D wing. 
+try to identify the main parameters for a 3D wing. \\ \\ \\ 
+
+As anticipated in section \ref{Assignment_3.2}: 
+
+\begin{itemize}
+    \item $\alpha_w = 3.5^{\circ}$ (\textit{Angle of attack}) \\ 
+        This is the angle of incidence that grants an ideal lift coefficient, as seen from the \textit{Airfoiltools}
+        \autocite{Airfoiltools} data for the chosen profile and it's in the range of $3^{\circ} \ to \ 5^{\circ}$, 
+        which is appropriate for \textit{jet transport} aircrafts, as suggested by Mohammad H. Sadraey \autocite{Sadraey_Mohammad}.
+    \item $AR = 9$ (\textit{Aspect Ratio}) \\ 
+        As established by design. 
+    \item $b = \sqrt{AR \cdot S} = 66.406 \ m$ (\textit{Wing span}) \\ 
+        Given by the function \autocite{Airbus_replacement_repo}: 
+
+        \begin{verbatim}
+            wing_span_calculator.m
+        \end{verbatim}
+    \item $\vec{\Lambda} = \binom{29^{\circ}}{18^{\circ}}$ (\textit{Sweep angles})
+    \item $\lambda = \frac{c_{tip}}{c_{root}} = 0.31915$ (\textit{Taper Ratio}, see section \ref{Assignment_3.2})
+    \item $\Gamma = 5^{\circ}$ (\textit{Dihedral Angle}) \\
+        Typically between $3^{\circ} \ and \ 8^{\circ}$ for \textit{Low Wing} architectures in 
+        high-subsonic flights.
+\end{itemize}
+\clearpage 
+
+Given an \textit{Aspect Ratio} of 9, the wing surface and its \textit{sweep angles} of $ \{29, 18 \} \ deg$,
+the function 
+\begin{verbatim}
+    wing_profile_plotter.m
+\end{verbatim}
+plots the wing profile, as seen from an above POV, while also returning a \textit{Taper Ratio} of 0.31915.\\ 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/Main_Wing.png}
+    \caption{Main Wing}
+    \label{Main_wing}
+\end{figure}
+
+The function is also used later on to plot the tail wings, as it requires the type of wing to plot as one of its inputs.\\
+
 \clearpage 
 \subsection{Assignment 3.4\label{Assignment_3.4}}
 
-\textbf{\textit{Assignment:}} 2D and 3D CAD Modelling 
+\textbf{\textit{Assignment:}} 2D and 3D CAD Modelling \\ \\ \\ 
+
+\textit{Airfoiltools} \autocite{Airfoiltools} provides airfoil's coordinates in the form of a text file, normalized
+for a 1 mm chord.
+
+Once renormalized for $c_{root} = 11.1866 \ m$ and $c_{tip} = 3.5702 \ m$, as well as for
+ \textit{sweep angles} and \textit{dihedral angle} in a \textit{LibreOffice Calc}
+spreadsheet \autocite{libreoffice}, the raw data can 
+be imported in \textit{Solidworks}, in order to create two \textit{splines}, distanced in 3D space
+and later joined by the \textit{loft} function.
+
+Once the semi-wing has been created, the entire wing was simply created with a \textit{mirror} function.
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/wing_solidworks.png}
+    \caption{Main wing in Solidworks workbench}
+    \label{wing_solidworks}
+\end{figure}
 
 \clearpage 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.7\textwidth]{Sources/Plots_and_Pictures/wingCAD_above.png}
+    \caption{Main wing seen from above}
+    \label{wing_above}
+\end{figure}
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/wingCAD_side.png}
+    \caption{Main wing seen from a front view}
+    \label{wing_front}
+\end{figure}
+
+\clearpage
 
 \section{Assignment 4\label{Assignment_4}}
 
@@ -883,7 +952,7 @@ try to identify the main parameters for a 3D wing.
 The general procedure was implemented following Muhammad H. Sadraey's workflow and suggested values \autocite{Sadraey_Mohammad},
 and by taking the \textit{EASA CS-25.807, Amendment 3} \autocite{EASA_CS25} regulations into account.\\ 
 
-The configuration that was opted for is the following: 
+The configuration that was opted for is the following, with comfort standards increasing with class tier: 
 \begin{itemize}
     \item \textit{Business} (26 seats)
         \begin{itemize}
@@ -914,9 +983,10 @@ formula for each class and the tail zone is 1 m longer than the nose.
 
 The doors dimensions are strictly tied to the regulations and both the number and type have been 
 chosen accordingly, as visible in the CAD model. 
-Furthermore, a thickness of 102 mm has been added to the fuselage, as established by regulations. 
+Furthermore, a thickness of 105 mm has been added to the fuselage circular section area, as established by regulations. 
 
-Four \textit{1X1 m} toilet modules have been installed and considered in the calculations, this time according to Daniel P. Raymer \autocite{Raymer_Daniel}.\\ 
+Four \textit{1X1 m} toilet modules have been installed (and considered in the calculations) on each side, plus two more in between the 
+\textit{Economy} and the \textit{First class}, this time according to Daniel P. Raymer \autocite{Raymer_Daniel}.\\ 
 
 The function \autocite{Airbus_replacement_repo}
 \begin{verbatim}
@@ -946,15 +1016,63 @@ The results are the following:
         \subitem  $\left \{5.1400, \ 25.2000 \right \} \ m$
     \item \textit{Total Fuselage Length}
         \subitem  67.304 m
+    \item \textit{Total Fuselage Diameter}
+        \subitem $5.14 \ m + \ 2 \cdot 0.105 \ m = 5.344 \ m$
 \end{itemize}
 
 \clearpage
 
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/fuselage_map.png}
+    \caption{Fuselage map}
+    \label{fuselage_map}
+\end{figure}
 
+\clearpage
 \subsection{Assignment 4.2\label{Assignment_4.2}}
 
 \textbf{\textit{Assignment:}} Create your Fuselage in Solidworks 
-and validate your fuselage concept
+and validate your fuselage concept \\ \\ \\ 
+
+The fuselage has been created with a traditional CAD workflow. 
+
+Planar geometry of each class'
+section area has been sketched on reference parallel planes, all distanced according to the results
+seen in section \ref{Assignment_4.1}. 
+
+The \textit{loft} function has been used 
+to join the reference sketches with a cylinder surface of constant radius.
+
+With the help of longitudinal curved guidelines, nose and tail surfaces have been once again
+generated with the \textit{loft} function.
+
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/reference_planes_fuselage.png}
+    \caption{Reference planes}
+    \label{fuselage_reference_planes}
+\end{figure}
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/fuselage_CAD.png}
+    \caption{Fuselage: Orthographic view}
+    \label{fuselage_cad_3D}
+\end{figure}
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/fuselage_pianta.png}
+    \caption{Fuselage side view}
+    \label{fuselage_cad_3D}
+\end{figure}
+
 
 \clearpage
 
@@ -1055,13 +1173,19 @@ The reference values are, of course, those for \textit{Jet Transport} aircrafts.
     tail_surface_calculator.m
 \end{verbatim}
 
-has been implemented: it evaluates the optimal distance and use it to return the wing surface, following the author's workflow. 
+has been implemented: it evaluates the optimal distance and use it to return the wing surface, following the author's workflow,
+based on the equations:
+
+\begin{itemize}
+    \item $V_H = \frac{lS_H}{CS}$
+    \item $l_{opt} = K_c \sqrt{\frac{4CSV_H}{\pi D_f}}$
+\end{itemize}
 
 The same function is later used to calculate the vertical wing's surface, as it takes the tail wing type as one of the inputs.
 
 The result was a $94.435 \ m^2$ surface. \\ 
 
-The Taper Ratio is recommended to be between 0.4 and 0.7, thus a value of 0.6 has been chosen.
+The Taper Ratio is recommended to be between 0.4 and 0.7 (mostly for weight reduction), thus a value of 0.6 has been chosen.
 
 This allows for a wing span of 20 m, which is comparable to the 18 m of the A350. \\ 
 
@@ -1090,8 +1214,8 @@ calculates a pair of useful aerodynamic coefficients for the tail wing, returnin
 
 \clearpage
 
-The sweep angles are the same as the main wing, the \textit{MAC} (Mean Aerodynamic Center) is calculated
-and the wing is plotted with the same functions implemented for the main wing [\ref{Assignment_3.1}].
+The sweep angles and the dihedral angle are the same as the main wing, the \textit{MAC} (Mean Aerodynamic Center) is calculated
+and the wing is plotted with the same functions implemented for the main wing in section \ref{Assignment_3.1}.
 
 \begin{figure}[h!]
     \phantomsection
@@ -1155,8 +1279,47 @@ and the vertical tail wing has been plotted.
 \textbf{\textit{Assignment:}} Develop a CAD model 
 of the sized aircraft tail \\ \\ \\ 
 
+The workflow for both the empennages is analogous to the one seen in section \ref{Assignment_3.4}, with airfoil coordinates
+being rescaled according to the profile's extreme chords, as well as being rearranged in 3D space using 
+the respective sweep angles and dihedral angles and finally being joined with the \textit{loft} function 
+in \textit{Solidworks}.
+The \textit{mirror} function, as expected, has not been used for the vertical tail. 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.7\textwidth]{Sources/Plots_and_Pictures/htail_cad.png}
+    \caption{Horizontal tail in orthographic view}
+    \label{horizontal_tail_CAD}
+\end{figure}
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.7\textwidth]{Sources/Plots_and_Pictures/htailpianta.png}
+    \caption{Horizontal tail viewed from above and in front view}
+    \label{horizontal_tail_pianta}
+\end{figure}
+
 \clearpage
 
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.7\textwidth]{Sources/Plots_and_Pictures/vtail_cad.png}
+    \caption{Vertical tail in orthographic view}
+    \label{vertical_tail_CAD}
+\end{figure}
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.7\textwidth]{Sources/Plots_and_Pictures/vtailpianta.png}
+    \caption{Vertical tail in side view}
+    \label{vertical_tail_pianta}
+\end{figure}
+
+\clearpage
 \section{Assignment 6\label{Assignment_6}}
 
 \subsection{Assignment 6.1\label{Assignment_6.1}}
@@ -1180,24 +1343,42 @@ It returns the wing's \textit{Lift coefficient}, which resulted to be 0.39334 an
 
 The function also runs a check to verify whether the contribution of the wing to the total lift is at least $85 \%$ (the test was passed). \\ 
 
-This theory is based upon very strong assumptions and oversimplifications, which make it suitable for cruise
+This theory was developed by Prandtl and it's based on the assumption of linearization, which make it suitable for cruise
 conditions only. 
 
 The wing aerodynamic performance derived from this model can't therefore be used for more critical scenarios, like
-specific maneuvers, proximity to stall conditions or landing and takeoff. \\ 
+specific maneuvers, proximity to stall conditions or landing and takeoff, which are characterized by non-linear phenomena. \\ 
+
+
+
+\clearpage
+
+The \textit{twist angle} is a critical parameter to take into consideration for aerodynamic improvements:
+starting with a null value and after quite a bit of trial and error, a twist angle $\alpha_{twist} = -2^{\circ}$ has shown
+a considerable improvement, according to the lifting line theory, as it kept the curve closer to an 
+ellipse.\\ 
+
+As mentioned earlier, the analysis is also very sensitive to \textit{Taper Ratio} variations. 
+
+Having permanently set $\alpha_{twist} = -2^{\circ}$, after some more trial and error, a \textit{Taper Ratio} 
+$TR = 0.3192$ has been found to be a significant improvement to the initial design.
+
+Anything above this threshold would drastically diminish the wing's lift coefficient; anything below
+it would output a worse distribution. \\ 
+
+Another potential improvement could be achieved by adding \textit{winglets}, as they provide an efficient
+way to reduce vorticity ad the tip of the wings.
 
 \begin{figure}[h!]
     \phantomsection
     \centering
-    \includegraphics[width=0.55\textwidth]{Sources/Plots_and_Pictures/Linea_Portante.png}
-    \caption{Lifting line: The result is close to an elliptical distribution, which would be the ideal case}
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/Linea_Portante.png}
+    \caption{Lifting line (200 segments): The result is close to an elliptical distribution, which would be the ideal case}
     \label{lifting_line}
 \end{figure}
 
 
 \clearpage
-
-
 \subsection{Assignment 6.2\label{Assignment_6.2}}
 
 \textbf{\textit{Assignment:}} Apply one of the two suggested methods and define your selected engine \\ \\ \\ 

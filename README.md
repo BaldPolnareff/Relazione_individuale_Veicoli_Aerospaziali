@@ -22,6 +22,7 @@ You can find the *bibliography* used in this work (as well as all my other Unive
         + A **GE Aircraft Engines** directory, containing lots of datasheet pdfs of *General Electric* engines
         + A **Plots_and_Pictures** directory, containing all image files used in the assignment
         + A **CAD** directory, containing all Solidworks parts and assembly
+        + An **AifroilData** directory, containing raw data for some airfoils and *spreadsheets* with the renormalized data
 
 ## How to Download this repository (or any git repository)
 
