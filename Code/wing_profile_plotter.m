@@ -48,16 +48,17 @@ function [Ratio, Corde_estreme] = wing_profile_plotter (Wing_Surface, Aspect_Rat
 
     elseif strcmp(Type, 'vertical') == 1
 
-        TR = 0.3902;
+        TR = 0.65;
         AR = 1.72;
         Ratio = TR;
+        Wing_Surface = Wing_Surface / 2;
         b = sqrt(AR * Wing_Surface);
         c_root = 2 * Wing_Surface / ((1 + TR) * b);
         c_tip = TR * c_root;
         Corde_estreme = [c_root, c_tip];
         b_avg = b / 2;
         z1 = c_root - b_avg * tand(max(Sweep_Angles));
-        z2 = z1 - c_tip;
+        z2 = (z1 - c_tip);
         figure()
         plot([0 b_avg], [0, z2], 'Linewidth', 2)
         hold on

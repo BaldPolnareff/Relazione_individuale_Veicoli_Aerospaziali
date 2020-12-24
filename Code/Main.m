@@ -329,7 +329,7 @@ close all
         i_set_vert = 0;
         Volume_coeff_vert = 0.08;
         Vert_surface = tail_surface_calculator (k_c, Volume_coeff_vert, MAC, Surface_w, Economy_dim, 'Vertical');
-        Sweep_Angles_vert = [35, 10.767];
+        Sweep_Angles_vert = [38, 15.767];
 
         [TR_vert, Corde_estreme_vert] = wing_profile_plotter(Vert_surface, Aspect_Ratio, Sweep_Angles_vert, 'Vertical');
 
