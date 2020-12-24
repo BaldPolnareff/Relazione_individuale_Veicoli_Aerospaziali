@@ -323,6 +323,27 @@
       \field{title}{Aircraft performance : An Engineering Approach}
       \field{year}{2017}
     \endentry
+    \entry{turbofan_scheme}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=8b9138e1c222cd7c57a45158105fecc1}{%
+           family={Salvat},
+           familyi={S\bibinitperiod},
+           given={Nicolas},
+           giveni={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{8b9138e1c222cd7c57a45158105fecc1}
+      \strng{fullhash}{8b9138e1c222cd7c57a45158105fecc1}
+      \strng{bibnamehash}{8b9138e1c222cd7c57a45158105fecc1}
+      \strng{authorbibnamehash}{8b9138e1c222cd7c57a45158105fecc1}
+      \strng{authornamehash}{8b9138e1c222cd7c57a45158105fecc1}
+      \strng{authorfullhash}{8b9138e1c222cd7c57a45158105fecc1}
+      \field{sortinit}{S}
+      \field{sortinithash}{c319cff79d99c853d775f88277d4e45f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.researchgate.net/profile/Nicolas-Salvat/publication/290996684/figure/fig1/AS:669551482134539@1536644921156/Turbofan-engine-components.png}}
+      \field{title}{Turbofan Engine}
+    \endentry
     \entry{standardmission_profile}{misc}{}
       \field{sortinit}{S}
       \field{sortinithash}{c319cff79d99c853d775f88277d4e45f}
@@ -352,6 +373,48 @@
       \field{note}{Accessed on 2020-15-12}
       \field{title}{Airbus A-350 Replacement Project, Personal Repository}
       \field{year}{2020}
+    \endentry
+    \entry{long_stability}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=78ca897080ceb772cdefafed883c117d}{%
+           family={Vigurs},
+           familyi={V\bibinitperiod},
+           given={G.\bibnamedelimi J.},
+           giveni={G\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \strng{namehash}{78ca897080ceb772cdefafed883c117d}
+      \strng{fullhash}{78ca897080ceb772cdefafed883c117d}
+      \strng{bibnamehash}{78ca897080ceb772cdefafed883c117d}
+      \strng{authorbibnamehash}{78ca897080ceb772cdefafed883c117d}
+      \strng{authornamehash}{78ca897080ceb772cdefafed883c117d}
+      \strng{authorfullhash}{78ca897080ceb772cdefafed883c117d}
+      \field{sortinit}{V}
+      \field{sortinithash}{02432525618c08e2b03cac47c19764af}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://upload.wikimedia.org/wikipedia/commons/7/7d/AirStability.svg}}
+      \field{title}{Aircraft longitudinal stability diagram}
+    \endentry
+    \entry{grabcad_ge9094b}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=6b17c6f8201f54282a1840814e769cdb}{%
+           family={William},
+           familyi={W\bibinitperiod},
+           given={Mathias},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{6b17c6f8201f54282a1840814e769cdb}
+      \strng{fullhash}{6b17c6f8201f54282a1840814e769cdb}
+      \strng{bibnamehash}{6b17c6f8201f54282a1840814e769cdb}
+      \strng{authorbibnamehash}{6b17c6f8201f54282a1840814e769cdb}
+      \strng{authornamehash}{6b17c6f8201f54282a1840814e769cdb}
+      \strng{authorfullhash}{6b17c6f8201f54282a1840814e769cdb}
+      \field{sortinit}{W}
+      \field{sortinithash}{1af34bd8c148ffb32de1494636b49713}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://grabcad.com/library/general-electric-ge90-94b-turbofan-engine-1}}
+      \field{title}{General Electric GE90-94B Turbofan Engine}
     \endentry
   \enddatalist
 \endrefsection

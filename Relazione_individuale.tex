@@ -27,13 +27,13 @@
     bookmarks=true,
 }
 \author{Giorgio De Trane s275514}
-\title{\textbf{RELAZIONE VEICOLI AEROSPAZIALI}}
+\title{\textbf{AIRBUS A350-900 REPLACEMENT REPORT}}
 
 \begin{document}
 \setlength{\parindent}{0pt}
 \maketitle
 \begin{center}
-    \textit{Anno accademico 2020-2021}
+    \textit{Academic year 2020-2021}
 \end{center}
 \begin{figure}[h!]
     \centering
@@ -300,7 +300,7 @@ The entire calculation is made assuming a range of 11 km and a maximum range of 
 a 50 metric tonnes design payload, with the awareness that a lighter payload might be necessary
 in order to improve range.\\ \\
 The function \begin{verbatim} mtow_range_plotter.m \end{verbatim} takes a guess \textit{MTOW} value as one of its inputs, generates some mass coefficients,
-elaborates and iteratively solves the equation
+elaborates and iteratively solves the expression
 
 \begin{equation}
     \phantomsection
@@ -658,7 +658,7 @@ The ratio is then calculated by taking the \textit{TOP} (Take Off Parameter) int
 \end{verbatim}
 which takes the lift coefficient at takeoff as an input.\\ 
 
-The \textit{TOP} is a takeoff parameter, strictly correlated with the \textit{Takeoff Run} (see section \ref{Assignment_6.5}) and associated
+The \textit{TOP} is a takeoff parameter, strictly correlated with the \textit{Takeoff Distance} (see section \ref{Assignment_6.5}) and associated
 with the \textit{Thrust to Weight ratio} by the equation:
 
 \begin{equation}
@@ -852,6 +852,23 @@ Then, the current \textit{Reynolds} is compared to the maximum value given by th
 
 As hoped, the values are not too different, thus validating the rest of the data.\\ 
 
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.75\textwidth]{Sources/Plots_and_Pictures/cl_alpha_1412.png}
+    \caption{Lift coefficient as a function of the attack angle \autocite{Airfoiltools}}
+    \label{NACA1412}
+\end{figure}
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.7\textwidth]{Sources/Plots_and_Pictures/cm_alpha_1412.png}
+    \caption{Pitch coefficient as a function of the attack angle \autocite{Airfoiltools}}
+    \label{NACA1412}
+\end{figure}
+
+
 \clearpage
 
 \subsection{Assignment 3.3\label{Assignment_3.3}}
@@ -875,14 +892,14 @@ As anticipated in section \ref{Assignment_3.2}:
             wing_span_calculator.m
         \end{verbatim}
     \item $\vec{\Lambda} = \binom{29^{\circ}}{18^{\circ}}$ (\textit{Sweep angles})
-    \item $\lambda = \frac{c_{tip}}{c_{root}} = 0.31915$ (\textit{Taper Ratio}, see section \ref{Assignment_3.2})
+    \item $\lambda = \frac{c_{tip}}{c_{root}} = 0.31915$ (\textit{Taper Ratio}, more on this in section \ref{Assignment_6.1})
     \item $\Gamma = 5^{\circ}$ (\textit{Dihedral Angle}) \\
         Typically between $3^{\circ} \ and \ 8^{\circ}$ for \textit{Low Wing} architectures in 
         high-subsonic flights.
 \end{itemize}
 \clearpage 
 
-Given an \textit{Aspect Ratio} of 9, the wing surface and its \textit{sweep angles} of $ \{29, 18 \} \ deg$,
+Given an \textit{Aspect Ratio} of 9, the wing surface and its \textit{sweep angles},
 the function 
 \begin{verbatim}
     wing_profile_plotter.m
@@ -952,7 +969,7 @@ Once the semi-wing has been created, the entire wing was simply created with a \
 The general procedure was implemented following Muhammad H. Sadraey's workflow and suggested values \autocite{Sadraey_Mohammad},
 and by taking the \textit{EASA CS-25.807, Amendment 3} \autocite{EASA_CS25} regulations into account.\\ 
 
-The configuration that was opted for is the following, with comfort standards increasing with class tier: 
+The configuration that was opted for is the following, with comfort standards increasing the higher the class tier: 
 \begin{itemize}
     \item \textit{Business} (26 seats)
         \begin{itemize}
@@ -1389,6 +1406,14 @@ translates to 345.924 kN per engine, in a twin engine design.\\
 Given its widespread use for this class of aircraft and its efficiency, the engine research focused on a 
 \textit{Turbofan}, rather than a \textit{Turbojet} or \textit{Turboprop}. 
 
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.6\textwidth]{Sources/Plots_and_Pictures/Turbofan-engine.png}
+    \caption{Turbofan Engine \autocite{turbofan_scheme}}
+    \label{turbofan}
+\end{figure}
+
 The chosen approach was that of looking for an already existing engine in the market, as there's plenty of available
 options that would satisfy the requirements. \\ 
 
@@ -1418,13 +1443,13 @@ This engine meets this vital requirement, while also being an overall reliable a
 \end{figure}
 
 \begin{itemize}
-    \item Overall Length: 7.283 m
-    \item Overall WIdth: 3.871 m
-    \item Overall Height: 3.952 m
-    \item Dry Weight: 7892 kg
-    \item Sea Level Static Thrust (Maximum Continuous): 402.920 kN
-    \item Fuel: Jet A
-    \item BPR: 8.33
+    \item \textit{Overall Length}: 7.283 m
+    \item \textit{Overall Width}: 3.871 m
+    \item \textit{Overall Height}: 3.952 m
+    \item \textit{Dry Weight}: 7892 kg
+    \item \textit{Sea Level Static Thrust} (Maximum Continuous): 402.920 kN
+    \item \textit{Fuel}: Jet A
+    \item \textit{BPR}: 8.33
 \end{itemize}
 
 \clearpage
@@ -1455,7 +1480,7 @@ This engine is generally used in this configuration with aircrafts of comparable
     \centering
     \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/engine_location.png}
     \caption{The location options for a multi-engine podded configuration with respect to the
-    wing: \textbf{(a) Engine under wing}; (b) Engine over wing; and (c) Engine on the wing (prop-driven)}
+    wing: \textbf{(a) Engine under wing}; (b) Engine over wing; and (c) Engine on the wing (prop-driven) \autocite{Sadraey_Mohammad}}
     \label{engine_location}
 \end{figure}
 
@@ -1469,6 +1494,34 @@ This engine is generally used in this configuration with aircrafts of comparable
 
 \textbf{\textit{Assignment:}} Create a representative CAD model 
 (Mass and Volume should be correct) \\ \\ \\ 
+
+The exact \textit{CAD} model for the engine was downloaded from \textit{Grabcad} \autocite{grabcad_ge9094b}, a \textit{Copyleft}
+repository of 3D models for CAD and other modeling softwares. \\ 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.7\textwidth]{Sources/Plots_and_Pictures/engine_cad_3D.png}
+    \caption{Orthographic view of the engine (Mathias Williams \autocite{grabcad_ge9094b})}
+    \label{engine_cad}
+\end{figure}
+
+Mass and volume have been rescaled to proportions with Solidworks' built-in functions
+\textit{override mass properties} and \textit{non-uniform scaling} respectively.
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.7\textwidth]{Sources/Plots_and_Pictures/engine_pianta.png}
+    \caption{Planar views of the engine (Mathias Williams \autocite{grabcad_ge9094b})}
+    \label{engine_pianta}
+\end{figure}
+
+\begin{itemize}
+    \item $\rho = 860.63 \frac{kg}{m^3}$
+    \item $m = 7893.58 \ kg$
+    \item $V = 9.17 \ m^3$
+\end{itemize}
 
 \clearpage
 
@@ -1491,9 +1544,9 @@ Given the thrust, the number of engines, the friction, the minimum velocity and 
 returns:
 
 \begin{itemize}
-    \item Ground Roll Distance: 1000.2 m
-    \item Takeoff Run: 1350.7 m
-    \item Takeoff Distance: 1563.3 m
+    \item \textit{Ground Roll Distance}: 1000.2 m
+    \item \textit{Takeoff Run}: 1350.7 m
+    \item \textit{Takeoff Distance}: 1563.3 m
 \end{itemize}
 
 As suggested by the name, the function plots these distances, as well as the actual trajectory of the aircraft. \\ 
@@ -1513,7 +1566,13 @@ ground roll distance is expected. \\
 
 As for the design points, a takeoff distance under 2 km has been satisfied with ample margin.
 
-
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/distances_diagram.png}
+    \caption{Meaningful distances (drawn in \textit{GIMP} \autocite{GIMP})}
+    \label{distances}
+\end{figure}
 
 \clearpage
 
@@ -1528,7 +1587,8 @@ As for the design points, a takeoff distance under 2 km has been satisfied with 
 Comments upon the obtained results, specifically identifying which of the initially 
 defined airports can host the operations of this aircraft. \\ \\ \\ 
 
-The function seen in the previous section \ref{Assignment_6.5} plots the \textit{BFL} as well. \\ 
+The function seen in the previous section \ref{Assignment_6.5} plots the \textit{BFL} as well, assuming
+there's no wind or adverse precipitations influence, no runway slope and the runway itself is in ideal maintenance conditions. \\ 
 
 \begin{figure}[h!]
     \phantomsection
@@ -1539,7 +1599,15 @@ The function seen in the previous section \ref{Assignment_6.5} plots the \textit
 \end{figure}
 
 All of the cities mentioned in section \ref{Assignment_2.3} have large international airports, that should be 
-capable of handling the requirements for the takeoff and landing of the aircraft, with runways usually longer than 3 km. \\
+capable of handling the requirements for the takeoff and landing of the aircraft, with primary runways usually longer than 3 km 
+and hosting larger aircrafts like \textit{Boeing 747} or \textit{Airbus A380}. \\
+
+In fact, following \textit{EASA}'s \textit{CS-25} \autocite{EASA_CS25}, the takeoff distance and the accelerate-stop distance
+need to be less than or equal to the available runway length, with or without the assumption of an engine failure.
+
+With a runway as long as the \textit{BFL}, there's only one ultimate decision speed for a critical takeoff arrest.
+However, with plenty of extra runway, the critical speed could be extended to a slightly looser
+range.
 
 \clearpage
 
@@ -1553,11 +1621,48 @@ capable of handling the requirements for the takeoff and landing of the aircraft
 \textbf{\textit{Assignment:}} Create an Assembly file encompassing: 
 fuselage, wing, empennages and engines. \\ \\ \\ 
 
+All the parts have been put together into a final assembly, mostly based on the proportions seen 
+in the \textit{A350-900}, as well as the rough calculations seen in the previous sections \ref{Assignment_5.2} and \ref{Assignment_5.3}. \\ 
+
+
+
 \clearpage
 
 \subsection{Assignment 6.8\label{Assignment_6.8}}
 
 \textbf{\textit{Assignment:}} Create a 3D view dimensioned drawings. \\ \\ \\ 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.9\textwidth]{Sources/Plots_and_Pictures/Assembly_side.png}
+    \caption{Assembly: side view}
+    \label{Assembly_side}
+\end{figure}
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.64\textwidth]{Sources/Plots_and_Pictures/Assembly_up.png}
+    \caption{Assembly: top view}
+    \label{Assembly_up}
+\end{figure}
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=0.8\textwidth]{Sources/Plots_and_Pictures/Assembly_front.png}
+    \caption{Assembly: front view}
+    \label{Assembly_front}
+\end{figure}
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/Assembly_ortho.png}
+    \caption{Assembly: orthographic view}
+    \label{Assembly_ortho}
+\end{figure}
 
 \clearpage
 
@@ -1567,11 +1672,193 @@ fuselage, wing, empennages and engines. \\ \\ \\
 on its weight and balance characteristics. 
 Compare it with the A350 reference configuration. \\ \\ \\ 
 
+All the components have a mass that can be roughly estimated through the workflow provided 
+by Daniel P. Raymer \autocite{Raymer_Daniel}. \\ 
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[h!]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}lccccc@{}}
+    \rowcolor[HTML]{9B9B9B} 
+    \textbf{} &
+      \textbf{\begin{tabular}[c]{@{}c@{}}Fighters\\ {[}kg/m²{]}\end{tabular}} &
+      \textbf{\begin{tabular}[c]{@{}c@{}}Transport and bomber\\ {[}kg/m²{]}\end{tabular}} &
+      \textbf{\begin{tabular}[c]{@{}c@{}}General aviation\\ {[}kg/m²{]}\end{tabular}} &
+      \textbf{Multiplier} &
+      \textbf{Approximate location} \\
+    \rowcolor[HTML]{FFFFFF} 
+    Wing              & 44    & 49    & 12    & Exposed Platform & 40\% MAC       \\
+    \rowcolor[HTML]{EFEFEF} 
+    Horizontal tail   & 20    & 27    & 10    & Exposed Platform & 40\% MAC       \\
+    \rowcolor[HTML]{FFFFFF} 
+    Vertical tail     & 26    & 27    & 10    & Exposed Platform & 40\% MAC       \\
+    \rowcolor[HTML]{EFEFEF} 
+    Fuselage          & 23    & 24    & 7     & Wetted area      & 40-50\% length \\
+    \rowcolor[HTML]{FFFFFF} 
+     &
+      \cellcolor[HTML]{C0C0C0}\textbf{Weight ratio} &
+      \cellcolor[HTML]{C0C0C0}\textbf{Weight ratio} &
+      \cellcolor[HTML]{C0C0C0}\textbf{Weight ratio} &
+       &
+       \\
+    \rowcolor[HTML]{EFEFEF} 
+    Landing gear      & 0.033 & 0.043 & 0.057 & TOGW             & centroid       \\
+    \rowcolor[HTML]{FFFFFF} 
+    Landing gear-navy & 0.045 & N.A.  & N.A.  & TOGW             & centroid       \\
+    \rowcolor[HTML]{EFEFEF} 
+    Installed engine  & 1.3   & 1.3   & 1.4   & Engine weight    & centroid       \\
+    \rowcolor[HTML]{FFFFFF} 
+    All-else empty    & 0.17  & 0.17  & 0.1   & TOGW             & 40-50\% length
+    \end{tabular}%
+    }
+    \caption{Mass ratios}
+    \label{tab:mass_ratios}
+    \end{table}
+
+The \textit{CAD} software has a \textit{measure} function that can calculate the total surface of each component. 
+
+The surface mass distribution in table \ref{tab:mass_ratios} allows for a rough mass estimate with 
+the equation $m_{comp} = \sigma_{comp} \cdot S_{comp}$.
+
+By using the built-in \textit{mass property} function, a volume is assigned to each component. 
+
+Thus, a rough average density can be calculated for each component. 
+
+Finally, the total mass is estimated. \\ 
 \clearpage
 
+A brief summary:
 
+\begin{itemize}
+    \item \textbf{\textit{Wing}}
+        \begin{itemize}
+            \item $\sigma = 49 \frac{kg}{m^2}$
+            \item $S = 1008.08 \ m^2$
+            \item $m = 49395 \ kg$
+            \item $V = 325 \ m^3$
+            \item $\rho = 151.94 \frac{kg}{m^3}$
+        \end{itemize}
+    \item \textbf{\textit{Fuselage}}
+        \begin{itemize}
+            \item $\sigma = 24 \frac{kg}{m^2}$
+            \item $S = 1023.88 \ m^2$
+            \item $m = 24573 \ kg$
+            \item $V = 1284.3 \ m^3$
+            \item $\rho = 19.14 \frac{kg}{m^3}$
+        \end{itemize}
+    \item \textbf{\textit{Horizontal tail}}
+        \begin{itemize}
+            \item $\sigma = 27 \frac{kg}{m^2}$
+            \item $S = 192.74 \ m^2$
+            \item $m = 5204 \ kg$
+            \item $V = 27.8 \ m^3$
+            \item $\rho = 187.05 \frac{kg}{m^3}$
+        \end{itemize}
+    \item \textbf{\textit{Vertical tail}}
+        \begin{itemize}
+            \item $\sigma = 27 \frac{kg}{m^2}$
+            \item $S = 141.45 \ m^2$
+            \item $m = 3819 \ kg$
+            \item $V = 29 \ m^3$
+            \item $\rho = 131.69 \frac{kg}{m^3}$
+        \end{itemize}
+    \item \textbf{\textit{Engine}}
+        \begin{itemize}
+            \item $m = 7894 \ kg$
+        \end{itemize}
+    \item \textbf{\textit{Total mass}}
+        \begin{itemize}
+            \item $m_{tot} = m_{CAD} + m_{payload} + m_{fuel,2} = 237609 \ kg$
+        \end{itemize}
+        
+\end{itemize}
 
+\clearpage
 
+When comparing the result with the design \textit{MTOW}, there's a $\Delta m = 44 \ metric \ tonnes$. \\ 
+
+This weight difference might look completely out of proportions at first glance, however, many overlooked components
+are comprised within the extra mass budget, including (but not limited to) the \textit{Auxiliary Power Unit}, 
+the \textit{avionics}, the \textit{hydraulic subsystem}, all the wires and pipes, pumps, sensors, etc. \\ 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/COG.png}
+    \caption{Critical points for mass balance}
+    \label{COG}
+\end{figure}
+
+\clearpage
+
+Further considerations could be made in regard to \textit{longitudinal static stability}.\\ 
+
+\begin{figure}[h!]
+    \phantomsection
+    \centering
+    \includegraphics[width=\textwidth]{Sources/Plots_and_Pictures/static_stability.png}
+    \caption{Aircraft longitudinal stability diagram \autocite{long_stability}}
+    \label{static_stability}
+\end{figure}
+
+Using classical \textit{flight mechanics}, the neutral point is given by:
+
+\begin{equation}
+    \phantomsection
+    \label{equation_neutral_point}
+    \frac{x_N}{c} = \frac{x^{'}_{a}}{c} + V_H \cdot \frac{a_t}{a}\left(1-\frac{\partial \epsilon}{\partial \alpha}\right) = 1.82 
+\end{equation}
+
+In equation (\ref{equation_neutral_point}):
+
+\begin{itemize}
+    \item $c = 8.0336 \ m$ (see section \ref{Assignment_3.2})
+    \item $x^{'}_{a} = 9.60 \ m$ 
+    \item $a_t = C^{'}_{L,tail} \simeq 2\pi$
+    \item $a = C^{'}_{L,tot} \simeq 2\pi$
+    \item $V_H = 0.9 $ (see section \ref{Assignment_5.2})
+    \item $1-\frac{\partial \epsilon}{\partial \alpha} = 0.7$ (\textit{Downwash factor} \autocite{Sadraey_Mohammad})
+\end{itemize}
+
+\clearpage
+
+A first rough approach to evaluate longitudinal \textit{static stability} would be checking 
+the angular derivative of the total pitch coefficient:
+
+\begin{equation}
+    \phantomsection
+    \label{equation_stability}
+    C^{'}_{M} = a \cdot \frac{x_g - x_N}{c} = -0.2735 < 0
+\end{equation}
+
+The derivative is negative, so it's very likely that the stability is granted. \\ 
+
+This is not entirely accurate, as a better and reliable way to check for stability would be 
+calculating the \textit{static margin}. 
+However, this value is extremely sensitive to the slighest mass and
+geometry variations and its calculation would require a better
+refined dataset, which is not available at this preliminary stage of the project. 
+
+In fact, further advanced tests and iterations would be necessary to calculate the value. \\ 
+
+As seen in section \ref{Assignment_5.2}, the tail lift coefficient is estimated to be around 0.7.
+
+By using the data for \textit{NACA0009} in \textit{Airfoiltools} \autocite{Airfoiltools}, this lift coefficient
+is roughly obtained with an attack angle $\alpha_h = 0.8^{\circ}$. \\ 
+
+Using once again the custom function \autocite{Airbus_replacement_repo}
+
+\begin{verbatim}
+    set_angle_calculator.m
+\end{verbatim}
+
+and by feeding it its inputs with the assumption of a constant velocity horizontal cruise, 
+a set angle $i_h = 2.85^{\circ}$ is obtained for the horizontal tail, as a further improvement.
 \pagebreak
 \printbibliography
     
